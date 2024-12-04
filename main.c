@@ -26,7 +26,8 @@ int main(int argc, char *argv[])
 	data.mlx = mlx_init();
 	data.mlx_win = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "miniRT");
 	data.img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel, &data.line_length, &data.endian);
+	data.addr = mlx_get_data_addr(data.img, &data.bits_per_pixel,
+								  &data.line_length, &data.endian);
 
 	mlx_put_image_to_window(data.mlx, data.mlx_win, data.img, 0, 0);
 

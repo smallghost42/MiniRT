@@ -15,7 +15,7 @@ void  ft_checker(char *str, int *amb_light)
       index++;
     else if (str[i])
     {
-
+      
     }
   }
 }
