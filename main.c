@@ -17,11 +17,8 @@ int main(int argc, char *argv[])
 {
 	t_data data;
 
-	if (argc != 2 || file_parser(argv[1]) == 1)
-	{
-		write(2, "\033[031merror: i will not allow it !-_-!\033[0m\n", 33);
+	if (argc != 2 || file_parser(argv[1]) == 1)	
 		return (1);
-	}
 
 	data.mlx = mlx_init();
 	data.mlx_win = mlx_new_window(data.mlx, WIN_WIDTH, WIN_HEIGHT, "miniRT");

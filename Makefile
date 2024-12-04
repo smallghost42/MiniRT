@@ -2,7 +2,7 @@ NAME = miniRT
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 INCLUDE_DIRS = -I/usr/include -Iminilibx-linux
-SRC = main.c parser.c
+SRC = main.c ./parser/check_file.c
 OBJ = $(SRC:.c=.o)
 LDFLAGS = -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 MLX_PATH = ./minilibx-linux/

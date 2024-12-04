@@ -1,4 +1,4 @@
-#include "mini.h"
+#include "../mini.h"
 
 void  ft_checker(char *str, int *amb_light)
 {

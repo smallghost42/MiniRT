@@ -2,7 +2,7 @@
 #define MINI_H
 
 #include "minilibx-linux/mlx.h"
-#include "utils1.c/get_next_line.h"
+#include "parser/get_next_line.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
