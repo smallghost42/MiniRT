@@ -1,20 +1,16 @@
 NAME = miniRT
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-INCLUDE_DIRS = -I/usr/include -Iminilibx-linux
-SRC = main.c ./parser/check_file.c
+SRC = main.c ./file_parser/parser.c ./file_parser/get_next_line.c ./file_parser/get_next_line_utils.c
 OBJ = $(SRC:.c=.o)
-LDFLAGS = -Lminilibx-linux -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
-MLX_PATH = ./minilibx-linux/
 
 all: $(NAME)
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDE_DIRS) -O3 -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-	@make -C $(MLX_PATH)
-	$(CC) $(INCLUDE_DIRS) $(OBJ) -o $(NAME) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 
 clean:
 	rm -f $(OBJ)

@@ -1,11 +1,11 @@
 #ifndef MINI_H
 #define MINI_H
 
-#include "minilibx-linux/mlx.h"
-#include "parser/get_next_line.h"
+#include "file_parser/get_next_line.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
 
 # define WIN_WIDTH 1600
 # define WIN_HEIGHT 800
