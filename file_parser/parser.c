@@ -16,8 +16,8 @@ int check_file_extention(char *filename)
 		return (0);
 	str = ft_substr(filename, ft_strlen(filename) - 3, 3);
 	if (strcmp(str, ".rt"))
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 int check_first_and_count_param(char *str, t_count *count)
@@ -26,33 +26,60 @@ int check_first_and_count_param(char *str, t_count *count)
 	int i;
 
 	i = 0;
-	str2 = ft_split(str, " ");
+	str2 = ft_split(str, ' ');
 	while (str2[i])
 		i++;
-	if (strcmp(str2[0], "A") && i == 3)
-		count->a_l++;
-	else if (strcmp(str2[0], "C") && i == 4)
-		count->cam++;
-	else if (strcmp(str2[0], "L") && i == 3)
-		count->light++;
+	if (!strcmp(str2[0], "A") && i == 3)
+		count->a_l += 1;
+	else if (!strcmp(str2[0], "C") && i == 4)
+		count->cam += 1;
+	else if (!strcmp(str2[0], "L") && i == 3)
+		count->light += 1;
+	else if (!strcmp(str2[0], "sp") && i == 4)
+		count->sp += 1;
+	else if (!strcmp(str2[0], "pl") && i == 4)
+		count->pl += 1;
+	else if (!strcmp(str2[0], "cy") && i == 6)
+		count->cy += 1;
+	else
+		return (1);
+	return (0);
+}
+
+int count_init(t_count *count)
+{
+	count = malloc(sizeof(t_count));
+	if (count == NULL)
+	{
+		perror("malloc failed ");
+		return (1);
+	}
+	count->cy = 0;
+	count->pl = 0;
+	count->sp = 0;
+	count->a_l = 0;
+	count->cam = 0;
+	count->light = 0;
 	return (0);
 }
 
 int check_first_word_and_count_A_C_L(char *str, int file)
 {
 	t_count *count;
-	int i;
-	i = 0;
 
+	count = NULL;
+	if (count_init(count))
+		return (1);
 	while (str)
 	{
-		if (strcmp(str, "\n"))
-			i++;
+		if (!strcmp(str, "\n"))
+			;
 		else
 		{
 			if (check_first_and_count_param(str, count) || count->a_l > 1 ||
 				count->cam > 1 || count->light > 1)
 				return (1);
+			free(str);
 			str = get_next_line(file, 1);
 		}
 	}
@@ -70,18 +97,20 @@ int check_file_content(int file)
 		return (1);
 	}
 	if (check_first_word_and_count_A_C_L(str, file))
+	{
+		free(str);
 		return (1);
+	}
 	return (0);
 }
 
 int file_parser(char *filename)
 {
 	int file;
-
 	int stat;
 
 	stat = 0;
-	if (check_file_extention(filename) == 0)
+	if (check_file_extention(filename))
 	{
 		ft_perror("error , file extention ", 22);
 		return (1);

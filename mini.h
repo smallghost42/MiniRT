@@ -27,8 +27,12 @@ typedef struct s_count
 	int a_l;
 	int cam;
 	int light;
+	int sp;
+	int pl;
+	int cy;
 } t_count;
 
 int file_parser(char *filename);
+char	**ft_split(char const *s, char c);
 
 #endif
