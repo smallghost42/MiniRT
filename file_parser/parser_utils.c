@@ -5,66 +5,70 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/07 13:28:27 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/07 13:42:49 by ferafano         ###   ########.fr       */
+/*   Created: 2024/12/07 13:57:36 by ferafano          #+#    #+#             */
+/*   Updated: 2024/12/07 14:11:06 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../mini.h"
 
-int is_valid_float(char *str)
+int check_file_extention(char *filename)
 {
-	int dot_count = 0;
-	int after = 0;
+	char *str;
 
-	dot_count = 0;
-	after = 0;
-	for (int i = 0; str[i] != '\0'; i++)
+	if (ft_strlen(filename) < 4)
+		return (0);
+	str = ft_substr(filename, ft_strlen(filename) - 3, 3);
+	if (strcmp(str, ".rt"))
 	{
-		if (str[i] == '.')
-		{
-			dot_count++;
-			if (dot_count > 1)
-				return (1);
-		}
-		else if (!isdigit(str[i]))
-			return 1;
-		else if (dot_count == 1)
-		{
-			after++;
-			if (after > 1)
-				return (1);
-		}
+		free(str);
+		return (1);
 	}
+	free(str);
 	return (0);
 }
 
-double ft_atof(const char *str)
+void free_split(char **str)
 {
-	double result;
-	double decimal_place;
-	int is_decimal;
 	int i;
 
 	i = 0;
-	result = 0;
-	decimal_place = 0.1;
-	is_decimal = 0;
-	while (str[i] != '\0')
+	while (str && str[i])
 	{
-		if (str[i] == '.')
-			is_decimal = 1;
-		else
-		{
-			if (!is_decimal)
-				result = result * 10 + (str[i] - '0');
-			else
-			{
-				result += (str[i] - '0') * decimal_place;
-				decimal_place /= 10;
-			}
-		}
+		if (str[i])
+			free(str[i]);
 		i++;
 	}
-	return (result);
+	free(str);
+	str = NULL;
+}
+
+int check_first_and_count_param(char *str, t_count *count)
+{
+	char **str2;
+	int i;
+
+	i = 0;
+	str2 = ft_split(str, ' ');
+	while (str2[i])
+		i++;
+	if (!strcmp(str2[0], "A") && i == 3 && !valid_range_ambient(str2))
+		count->a_l += 1;
+	else if (!strcmp(str2[0], "C") && i == 4 && valid_range())
+		count->cam += 1;
+	else if (!strcmp(str2[0], "L") && i == 4 && valid_range())
+		count->light += 1;
+	else if (!strcmp(str2[0], "sp") && i == 4 && valid_range())
+		count->sp += 1;
+	else if (!strcmp(str2[0], "pl") && i == 4 && valid_range())
+		count->pl += 1;
+	else if (!strcmp(str2[0], "cy") && i == 6 && valid_range())
+		count->cy += 1;
+	else
+	{
+		free_split(str2);
+		return (1);
+	}
+	free_split(str2);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:18:47 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/07 14:00:54 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/07 14:06:30 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int valid_range_ambient(char **str2)
 	if (is_valid_float(str2[1]))
 		return (1);
 	value = ft_atof(str2[1]);
-	// check_valid_rgb();
+	if (value <= 0.0 || value >= 1.0)
+		return (1);
+	check_valid_rgb();
 	return (0);
 }
