@@ -1,7 +1,7 @@
 #ifndef MINI_H
 #define MINI_H
 
-#include "libft/get_next_line.h"
+#include "./libft/get_next_line.h"
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>

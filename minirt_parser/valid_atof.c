@@ -6,11 +6,11 @@
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:28:27 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/07 14:09:58 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/07 14:23:54 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../mini.h"
+#include "mini.h"
 
 int is_valid_float(char *str)
 {

@@ -1,4 +1,4 @@
-#include "../mini.h"
+#include "mini.h"
 
 void ft_perror(char *message, int err_stat)
 {

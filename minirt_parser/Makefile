@@ -1,7 +1,7 @@
 NAME = miniRT
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
-SRC = main.c ./file_parser/parser.c ./file_parser/parser_utils.c ./file_parser/valid_atof.c ./file_parser/range_check_ambient.c ./libft/ft_split.c ./libft/get_next_line.c ./libft/get_next_line_utils.c
+SRC = main.c parser.c parser_utils.c valid_atof.c range_check_ambient.c ./libft/ft_split.c ./libft/get_next_line.c ./libft/get_next_line_utils.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
