@@ -1,11 +1,12 @@
 #ifndef MINI_H
 #define MINI_H
 
-#include "file_parser/get_next_line.h"
+#include "libft/get_next_line.h"
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <string.h>
 
 #define WIN_WIDTH 1600
 #define WIN_HEIGHT 800
@@ -37,5 +38,7 @@ char **ft_split(char const *s, char c);
 int valid_range_ambient(char **str2);
 double ft_atof(const char *str);
 int is_valid_float(char *str);
+int check_first_and_count_param(char *str, t_count *count);
+int check_file_extention(char *filename);
 
 #endif
