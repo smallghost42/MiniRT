@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   range_check_ambient.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 09:43:42 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/07 13:48:28 by ferafano         ###   ########.fr       */
+/*   Created: 2024/12/07 13:18:47 by ferafano          #+#    #+#             */
+/*   Updated: 2024/12/07 13:43:05 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "../mini.h"
 
-int main(int argc, char *argv[])
+int valid_range_ambient(char **str2)
 {
-	if (argc != 2 || file_parser(argv[1]) == 1)
+	double value;
+	float amb_light_ratio;
+
+	value = 0.0;
+	if (is_valid_float(str2[1]))
 		return (1);
-	printf("\033[32mparse success\n\033[0m");
+	value = ft_atof(str2[1]);
+	// check_valid_rgb();
 	return (0);
 }

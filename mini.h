@@ -2,10 +2,10 @@
 #define MINI_H
 
 #include "file_parser/get_next_line.h"
+#include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <unistd.h>
 
 #define WIN_WIDTH 1600
 #define WIN_HEIGHT 800
@@ -33,6 +33,9 @@ typedef struct s_count
 } t_count;
 
 int file_parser(char *filename);
-char	**ft_split(char const *s, char c);
+char **ft_split(char const *s, char c);
+int valid_range_ambient(char **str2);
+double ft_atof(const char *str);
+int is_valid_float(char *str);
 
 #endif
