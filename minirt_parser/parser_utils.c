@@ -56,7 +56,7 @@ int check_first_and_count_param(char *str, t_count *count)
 		i++;
 	if (!strcmp(str2[0], "A") && i == 3 && !valid_range_ambient(str2))
 		count->a_l += 1;
-	else if (!strcmp(str2[0], "C") && i == 4)
+	else if (!strcmp(str2[0], "C") && i == 4 && !valid_range_camera(str2))
 		count->cam += 1;
 	else if (!strcmp(str2[0], "L") && i == 4)
 		count->light += 1;

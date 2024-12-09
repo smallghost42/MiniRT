@@ -38,11 +38,14 @@ char **ft_split(char const *s, char c);
 void free_split(char **str);
 int valid_range_ambient(char **str2);
 double ft_atof(const char *str);
-int is_valid_float(char *str);
+int is_valid_float(char *str, int x);
 int check_first_and_count_param(char *str, t_count *count);
 int check_file_extention(char *filename);
 int check_valid_rgb(char *color);
-long	ft_atoi(const char *nptr);
-int	ft_valid_int(const char *str);
+long ft_atoi(const char *nptr);
+int ft_valid_int(const char *str);
+int check_valid_coordinate(char *cord);
+int valid_range_camera(char **str2);
+int check_3dnormaliser(char *cord);
 
 #endif
