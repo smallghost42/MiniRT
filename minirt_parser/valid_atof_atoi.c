@@ -12,10 +12,10 @@
 
 #include "mini.h"
 
-int	ft_valid_int(const char *str)
+int ft_valid_int(const char *str)
 {
-	int		i;
-	int		tmp;
+	int i;
+	int tmp;
 
 	i = 0;
 	if (str[i] == '\0')
@@ -36,10 +36,10 @@ int	ft_valid_int(const char *str)
 		return (1);
 }
 
-long	ft_atoi(const char *nptr)
+long ft_atoi(const char *nptr)
 {
-	int		paire;
-	int	nb;
+	int paire;
+	int nb;
 
 	nb = 0;
 	paire = nb;
@@ -64,14 +64,16 @@ long	ft_atoi(const char *nptr)
 	return (-nb);
 }
 
-int is_valid_float(char *str)
+int is_valid_float(char *str, int x)
 {
 	int dot;
 	int after;
+	int i;
 
 	dot = 0;
 	after = 0;
-	for (int i = 0; str[i] != '\0'; i++)
+	i = 0;
+	while (str[i] != '\0')
 	{
 		if (str[i] == '.')
 		{
@@ -80,13 +82,14 @@ int is_valid_float(char *str)
 				return (1);
 		}
 		else if (!isdigit(str[i]))
-			return 1;
+			return (1);
 		else if (dot == 1)
 		{
 			after++;
-			if (after > 1)
+			if (after > x)
 				return (1);
 		}
+		i++;
 	}
 	return (0);
 }
