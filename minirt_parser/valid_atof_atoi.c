@@ -81,6 +81,8 @@ int is_valid_float(char *str, int x)
 			if (dot > 1)
 				return (1);
 		}
+		else if (i == 0 && str[1] != '\0' && (str[i] == '-' || str[i] == '+'))
+			;
 		else if (!isdigit(str[i]))
 			return (1);
 		else if (dot == 1)
