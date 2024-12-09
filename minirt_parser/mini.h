@@ -47,5 +47,6 @@ int ft_valid_int(const char *str);
 int check_valid_coordinate(char *cord);
 int valid_range_camera(char **str2);
 int check_3dnormaliser(char *cord);
+int valid_range_light(char **str2);
 
 #endif
