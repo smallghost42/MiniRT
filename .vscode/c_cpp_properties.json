@@ -1,0 +1,19 @@
+{
+    "configurations": [
+      {
+        "name": "Linux",
+        "includePath": [
+          "${workspaceFolder}/includes",
+          "${workspaceFolder}/lib/mlx",
+          "${workspaceFolder}/lib/libft"
+        ],
+        "defines": [],
+        "compilerPath": "/usr/bin/cc",
+        "cStandard": "c11",
+        "cppStandard": "c++17",
+        "intelliSenseMode": "linux-gcc-x64"
+      }
+    ],
+    "version": 4
+  }
+  
