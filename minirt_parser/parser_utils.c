@@ -51,14 +51,14 @@ int check_first_and_count_param(char *str, t_count *count)
 	i = 0;
 	str2 = ft_split(str, ' ');
 	if (!str2)
-	  return (1);
+		return (1);
 	while (str2[i])
 		i++;
 	if (!strcmp(str2[0], "A") && i == 3 && !valid_range_ambient(str2))
 		count->a_l += 1;
 	else if (!strcmp(str2[0], "C") && i == 4 && !valid_range_camera(str2))
 		count->cam += 1;
-	else if (!strcmp(str2[0], "L") && i == 4)
+	else if (!strcmp(str2[0], "L") && i == 4 && !valid_range_light(str2))
 		count->light += 1;
 	else if (!strcmp(str2[0], "sp") && i == 4)
 		count->sp += 1;
