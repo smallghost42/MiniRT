@@ -35,10 +35,14 @@ typedef struct s_count
 
 int file_parser(char *filename);
 char **ft_split(char const *s, char c);
+void free_split(char **str);
 int valid_range_ambient(char **str2);
 double ft_atof(const char *str);
 int is_valid_float(char *str);
 int check_first_and_count_param(char *str, t_count *count);
 int check_file_extention(char *filename);
+int check_valid_rgb(char *color);
+long	ft_atoi(const char *nptr);
+int	ft_valid_int(const char *str);
 
 #endif

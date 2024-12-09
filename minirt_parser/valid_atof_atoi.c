@@ -12,24 +12,76 @@
 
 #include "mini.h"
 
+int	ft_valid_int(const char *str)
+{
+	int		i;
+	int		tmp;
+
+	i = 0;
+	if (str[i] == '\0')
+		return (1);
+	while (str[i] != '\0')
+	{
+		if (i == 0 && str[1] != '\0' && (str[i] == '-' || str[i] == '+'))
+			i++;
+		else if ((str[i] >= 48 && str[i] <= 57) || str[i] == '\n')
+			i++;
+		else
+			return (1);
+	}
+	tmp = ft_atoi(str);
+	if (tmp >= -2147483648 && tmp <= 2147483647)
+		return (0);
+	else
+		return (1);
+}
+
+long	ft_atoi(const char *nptr)
+{
+	int		paire;
+	int	nb;
+
+	nb = 0;
+	paire = nb;
+	while ((*nptr >= 9 && *nptr <= 13) || *nptr == 32)
+		nptr++;
+	while (*nptr == '+' || *nptr == '-')
+	{
+		if (*nptr == '-')
+			paire++;
+		nptr++;
+		if (*nptr == '+' || *nptr == '-')
+			return (0);
+	}
+	while (*nptr >= 48 && *nptr <= 57)
+	{
+		nb *= 10;
+		nb += *nptr - 48;
+		nptr++;
+	}
+	if (!(paire % 2))
+		return (nb);
+	return (-nb);
+}
+
 int is_valid_float(char *str)
 {
-	int dot_count = 0;
-	int after = 0;
+	int dot;
+	int after;
 
-	dot_count = 0;
+	dot = 0;
 	after = 0;
 	for (int i = 0; str[i] != '\0'; i++)
 	{
 		if (str[i] == '.')
 		{
-			dot_count++;
-			if (dot_count > 1)
+			dot++;
+			if (dot > 1)
 				return (1);
 		}
 		else if (!isdigit(str[i]))
 			return 1;
-		else if (dot_count == 1)
+		else if (dot == 1)
 		{
 			after++;
 			if (after > 1)

@@ -15,13 +15,16 @@
 int valid_range_ambient(char **str2)
 {
 	double value;
+	//int color;
 
 	value = 0.0;
 	if (is_valid_float(str2[1]))
 		return (1);
 	value = ft_atof(str2[1]);
-	if (value <= 0.0 || value >= 1.0)
+	if (value < 0.0 || value > 1.0)
 		return (1);
-	//check_valid_rgb();
+	if (check_valid_rgb(str2[2]))
+		return (1);
+	//color = rgb_to_hex();
 	return (0);
 }
