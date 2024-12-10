@@ -8,21 +8,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#define WIN_WIDTH 1600
-#define WIN_HEIGHT 800
-
-typedef struct s_data
-{
-	void *img;
-	void *mlx;
-	void *mlx_win;
-	char *addr;
-	int bits_per_pixel;
-	int line_length;
-	int endian;
-	struct s_var *var;
-} t_data;
-
 typedef struct s_count
 {
 	int a_l;
@@ -48,5 +33,8 @@ int check_valid_coordinate(char *cord);
 int valid_range_camera(char **str2);
 int check_3dnormaliser(char *cord);
 int valid_range_light(char **str2);
+int valid_range_sphere(char **str2);
+int valid_range_plane(char **str2);
+int valid_range_cylinder(char **str2);
 
 #endif

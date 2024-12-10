@@ -6,7 +6,7 @@
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:57:36 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/07 14:23:54 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/10 07:54:34 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int check_first_and_count_param(char *str, t_count *count)
 		count->cam += 1;
 	else if (!strcmp(str2[0], "L") && i == 4 && !valid_range_light(str2))
 		count->light += 1;
-	else if (!strcmp(str2[0], "sp") && i == 4)
+	else if (!strcmp(str2[0], "sp") && i == 4 && !valid_range_sphere(str2))
 		count->sp += 1;
-	else if (!strcmp(str2[0], "pl") && i == 4)
+	else if (!strcmp(str2[0], "pl") && i == 4 && !valid_range_plane(str2))
 		count->pl += 1;
-	else if (!strcmp(str2[0], "cy") && i == 6)
+	else if (!strcmp(str2[0], "cy") && i == 6 && !valid_range_cylinder(str2))
 		count->cy += 1;
 	else
 	{
