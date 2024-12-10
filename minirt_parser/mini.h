@@ -41,8 +41,34 @@ typedef struct s_sphere
 	double z_coord;
 	double diameter;
 	int color;
-	s_sphere *next;
+	struct s_sphere *next;
 } t_sphere;
+
+typedef struct s_cylinder
+{
+	double x_coord;
+	double y_coord;
+	double z_coord;
+	double x_3d_norm_vector_axis;
+	double y_3d_norm_vector_axis;
+	double z_3d_norm_vector_axis;
+	double diameter;
+	double height;
+	int color;
+	struct s_cylinder *next;
+} t_cylinder;
+
+typedef struct s_plane
+{
+	double x_coord;
+	double y_coord;
+	double z_coord;
+	double x_3d_norm_vector;
+	double y_3d_norm_vector;
+	double z_3d_norm_vector;
+	int color;
+	struct s_plane *next;
+} t_plane;
 
 typedef struct s_shape
 {
@@ -53,10 +79,10 @@ typedef struct s_shape
 
 typedef struct s_data
 {
-	struct s_data *ambient_lightning;
-	struct s_data *camera;
-	struct s_data *light;
-	struct s_data *shape;
+	t_ambient_lightning *ambient_lightning;
+	t_camera *camera;
+	t_light *light;
+	t_shape *shape;
 } t_data;
 
 typedef struct s_count
