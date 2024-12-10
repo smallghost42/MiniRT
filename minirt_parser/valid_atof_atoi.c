@@ -36,7 +36,7 @@ int ft_valid_int(const char *str)
 		return (1);
 }
 
-long ft_atoi(const char *nptr)
+int ft_atoi(const char *nptr)
 {
 	int paire;
 	int nb;

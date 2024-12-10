@@ -6,10 +6,11 @@
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:57:36 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/10 09:03:35 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/10 10:34:31 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft/libft.h"
 #include "mini.h"
 
 int check_file_extention(char *filename)
@@ -45,10 +46,14 @@ void free_split(char **str)
 
 int check_first_and_count_param(char *str, t_count *count)
 {
+	t_data *data;
 	char **str2;
 	int i;
 
 	i = 0;
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (1);
 	str2 = ft_split(str, ' ');
 	if (!str2)
 		return (1);
@@ -61,7 +66,7 @@ int check_first_and_count_param(char *str, t_count *count)
 	else if (!strcmp(str2[0], "L") && i == 4 && !valid_range_light(str2))
 		count->light += 1;
 	else if (!strcmp(str2[0], "sp") && i == 4 && !valid_range_sphere(str2))
-		;
+		ft_lstadd_back(data->shape->sphere, create_sphere(str2));
 	else if (!strcmp(str2[0], "pl") && i == 4 && !valid_range_plane(str2))
 		;
 	else if (!strcmp(str2[0], "cy") && i == 6 && !valid_range_cylinder(str2))

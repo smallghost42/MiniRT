@@ -1,12 +1,20 @@
 #ifndef MINI_H
 #define MINI_H
 
-#include "./libft/get_next_line.h"
+#include "./libft/get_next_line_bonus.h"
+#include "./libft/libft.h"
 #include <ctype.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
+
+typedef struct s_vec3
+{
+    float   x;
+    float   y;
+    float   z;
+}   t_vec3;
 
 typedef struct s_ambient_lightning
 {
@@ -16,29 +24,21 @@ typedef struct s_ambient_lightning
 
 typedef struct s_camera
 {
-	double x_coord;
-	double y_coord;
-	double z_coord;
-	double x_3d_norm_vector;
-	double y_3d_norm_vector;
-	double z_3d_norm_vector;
+	t_vec3 position;
+	t_vec3 orientation;
 	int field_view;
 } t_camera;
 
 typedef struct s_light
 {
-	double x_coord;
-	double y_coord;
-	double z_coord;
+	t_vec3 position;
 	double brightness_ratio;
 	int color;
 } t_light;
 
 typedef struct s_sphere
 {
-	double x_coord;
-	double y_coord;
-	double z_coord;
+	t_vec3 center;
 	double diameter;
 	int color;
 	struct s_sphere *next;
@@ -46,12 +46,8 @@ typedef struct s_sphere
 
 typedef struct s_cylinder
 {
-	double x_coord;
-	double y_coord;
-	double z_coord;
-	double x_3d_norm_vector_axis;
-	double y_3d_norm_vector_axis;
-	double z_3d_norm_vector_axis;
+	t_vec3 center;
+	t_vec3 orientation;
 	double diameter;
 	double height;
 	int color;
@@ -60,12 +56,8 @@ typedef struct s_cylinder
 
 typedef struct s_plane
 {
-	double x_coord;
-	double y_coord;
-	double z_coord;
-	double x_3d_norm_vector;
-	double y_3d_norm_vector;
-	double z_3d_norm_vector;
+	t_vec3 center;
+	t_vec3 orientation;
 	int color;
 	struct s_plane *next;
 } t_plane;
@@ -101,7 +93,7 @@ int is_valid_float(char *str, int x);
 int check_first_and_count_param(char *str, t_count *count);
 int check_file_extention(char *filename);
 int check_valid_rgb(char *color);
-long ft_atoi(const char *nptr);
+int ft_atoi(const char *nptr);
 int ft_valid_int(const char *str);
 int check_valid_coordinate(char *cord);
 int valid_range_camera(char **str2);
