@@ -32,7 +32,7 @@ int check_first_word_and_count_A_C_L(char *str, int file)
 		if (!strcmp(str, "\n"))
 		{
 			free(str);
-			str = get_next_line(file, 1);
+			str = get_next_line(file);
 		}
 		else
 		{
@@ -43,7 +43,7 @@ int check_first_word_and_count_A_C_L(char *str, int file)
 				return (1);
 			}
 			free(str);
-			str = get_next_line(file, 1);
+			str = get_next_line(file);
 		}
 	}
 	return (0);
@@ -53,7 +53,7 @@ int check_file_content(int file)
 {
 	char *str;
 
-	str = get_next_line(file, 1);
+	str = get_next_line(file);
 	if (str == NULL)
 	{
 		ft_perror("error , empty line ", 22);
