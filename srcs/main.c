@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:49:52 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/07 10:57:03 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/09 10:25:06 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	init_scene(&scene);
+	draw_sphere(WIN_WIDTH / 2, WIN_HEIGHT / 2, 400, &scene);
 	mlx_put_image_to_window(scene.mlx, scene.win, scene.img, 0, 0);
 	hook_loop(scene);
 	return (0);

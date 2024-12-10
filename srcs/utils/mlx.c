@@ -6,13 +6,27 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/07 11:00:08 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/09 09:59:35 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	ft_mlx_pixel_put(t_scene *scene, float x, float y, int color)
+void	int_mlx_pixel_put(t_scene *scene, int x, int y, int color)
+{
+	char	*dst;
+
+	if (x >= 0 && x < WIN_WIDTH)
+	{
+		if (y >= 0 && y < WIN_HEIGHT)
+		{
+			dst = scene->addr + (y * scene->line_length + x * (scene->bpp / 8));
+			*(unsigned int *)dst = color;
+		}
+	}
+}
+
+void	float_mlx_pixel_put(t_scene *scene, float x, float y, int color)
 {
 	int		real_x;
 	int		real_y;
