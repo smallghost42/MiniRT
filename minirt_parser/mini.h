@@ -8,14 +8,62 @@
 #include <stdio.h>
 #include <string.h>
 
+typedef struct s_ambient_lightning
+{
+	double lightning_ratio;
+	int color;
+} t_ambient_lightning;
+
+typedef struct s_camera
+{
+	double x_coord;
+	double y_coord;
+	double z_coord;
+	double x_3d_norm_vector;
+	double y_3d_norm_vector;
+	double z_3d_norm_vector;
+	int field_view;
+} t_camera;
+
+typedef struct s_light
+{
+	double x_coord;
+	double y_coord;
+	double z_coord;
+	double brightness_ratio;
+	int color;
+} t_light;
+
+typedef struct s_sphere
+{
+	double x_coord;
+	double y_coord;
+	double z_coord;
+	double diameter;
+	int color;
+	s_sphere *next;
+} t_sphere;
+
+typedef struct s_shape
+{
+	t_sphere *sphere;
+	t_cylinder *cylinder;
+	t_plane *plane;
+} t_shape;
+
+typedef struct s_data
+{
+	struct s_data *ambient_lightning;
+	struct s_data *camera;
+	struct s_data *light;
+	struct s_data *shape;
+} t_data;
+
 typedef struct s_count
 {
 	int a_l;
 	int cam;
 	int light;
-	int sp;
-	int pl;
-	int cy;
 } t_count;
 
 int file_parser(char *filename);
