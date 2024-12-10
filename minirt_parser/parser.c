@@ -14,9 +14,6 @@ int count_init(t_count **count)
 		perror("malloc failed ");
 		return (1);
 	}
-	(*count)->cy = 0;
-	(*count)->pl = 0;
-	(*count)->sp = 0;
 	(*count)->a_l = 0;
 	(*count)->cam = 0;
 	(*count)->light = 0;
