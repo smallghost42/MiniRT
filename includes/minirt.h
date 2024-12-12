@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/09 10:32:08 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:25:17 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 # include <stdlib.h>
 
+#include <stdio.h>
+
 # include <unistd.h>
 
 # include <math.h>
@@ -35,6 +37,8 @@
 # include "../lib/libft/libft.h"
 
 # include "vector.h"
+
+# include "ray.h"
 
 typedef struct s_scene
 {
@@ -46,18 +50,17 @@ typedef struct s_scene
 	int		bpp;
 	int		line_length;
 	int		endian;
-	// map;
+	//t_data	*data;
 }	t_scene;
 
 
 //mlx
-void	float_mlx_pixel_put(t_scene *scene, float x, float y, int color);
-void	int_mlx_pixel_put(t_scene *scene, int x, int y, int color);
-void	hook_loop(t_scene scene);
+void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color);
+void	run_hook_cycle(t_scene scene);
 
 //color
-int		trgb_to_color(int t, int r, int g, int b);
-int		*color_to_trgb(int color);
+int		get_trgb_from_color(int t, int r, int g, int b);
+int		*get_color_from_trgb(int color);
 
 //components
 int		draw_sphere(int x, int y, int radius, t_scene *scene);

@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   plane.c                                            :+:      :+:    :+:   */
+/*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 08:29:59 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/12 14:17:37 by trazanad         ###   ########.fr       */
+/*   Created: 2024/12/12 09:48:01 by trazanad          #+#    #+#             */
+/*   Updated: 2024/12/12 14:22:38 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#ifndef RAY_H
 
-int draw_plane(int x, int y, t_scene *scene)
+#define RAY_H
+
+#include "vector.h"
+
+typedef struct s_scene t_scene;
+
+typedef struct s_ray
 {
-    int i;
-    int j;
+    t_vec3  origin;
+    t_vec3  direction;
+}   t_ray;
 
-    i = 0;
-    while (i <= x)
-    {
-        j = 0;
-        while (j <= y)
-        {
-            my_mlx_pixel_put(scene, i , j, COLOR);
-            // ft_printf("%d, %d\n" , i, j);
-            j++;
-        }
-        i++;
-    }
-    return (0);
-}
+t_ray   *ray_create(t_vec3 origin, t_vec3 direction);
+t_vec3  *get_intersection(t_ray ray, float ray_param);
+void draw_sphere_tttttt(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float radius);
+
+#endif
