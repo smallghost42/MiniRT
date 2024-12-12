@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:31:05 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/12 14:40:22 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:30:18 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,62 @@ t_vec3  *get_intersection(t_ray ray, float ray_param)
 
 int is_ray_hitting_sphere(t_ray ray, t_vec3 center, float radius)
 {
-    t_vec3  *oc;
-    float   disciminant;
-    float   quadratic_params[3];
+    t_vec3  *oc; // Vector from sphere center to ray origin
+    float   a;   // dot(ray.direction, ray.direction)
+    float   b;   // 2 * dot(oc, ray.direction)
+    float   c;   // dot(oc, oc) - radius^2
 
+    // Calculate vector OC (ray.origin - center)
+    // oc = vec3_substract(ray.origin, center);
     oc = vec3_substract(center, ray.origin);
-    quadratic_params[0] = vec3_get_dot_product(ray.direction, ray.direction);
-    quadratic_params[1] = -2 * vec3_get_dot_product(ray.direction, *oc);
-    quadratic_params[2] = vec3_get_dot_product(*oc, *oc) - radius * radius;
-    disciminant = quadratic_params[1] * quadratic_params[1];
-    printf("%f %f %f\n", quadratic_params[0], quadratic_params[1], quadratic_params[2]);
-    disciminant -= 4 * quadratic_params[0] * quadratic_params[2];
-    return (disciminant >= 0);
+
+    // Coefficients of the quadratic equation
+    a = vec3_get_dot_product(ray.direction, ray.direction);
+    b = 2 * vec3_get_dot_product(*oc, ray.direction);
+    c = vec3_get_dot_product(*oc, *oc) - radius * radius;
+
+    // Free dynamically allocated memory
+    free(oc);
+
+    // Calculate discriminant
+
+    // Return whether discriminant is non-negative
+    return ((b * b - 4 * a * c) >= 0);
+}
+
+int draw_sphere_0(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float radius)
+{
+    int x, y;
+    float screen_x, screen_y; // Normalized screen coordinates
+    float aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
+    float fov = tan((PI / 180.0f) * 20 / 2); // Field of view, 70 degrees
+    t_ray ray;
+
+    for (y = 0; y < WIN_HEIGHT; y++)
+    {
+        for (x = 0; x < WIN_WIDTH; x++)
+        {
+            // Map pixel to normalized screen coordinates
+            screen_x = (2 * ((x + 0.5f) / WIN_WIDTH) - 1) * aspect_ratio * fov;
+            screen_y = (1 - 2 * ((y + 0.5f) / WIN_HEIGHT)) * fov;
+          
+
+            // Set up the ray
+            ray.origin = camera_pos;
+            // ray.direction = *vec3_create(screen_x, screen_y, -1); // Assuming camera looks in -Z
+            ray.direction = *vec3_create(screen_x, screen_y, -1); // Assuming camera looks in -Z
+            ray.direction = *vec3_const_multiply(ray.direction, 1 / vec3_get_norm(ray.direction)); // Normalize
+
+            // Test for intersection with sphere
+            if (is_ray_hitting_sphere(ray, sphere_center, radius))
+            {
+                // Draw pixel on intersection
+                my_mlx_pixel_put(scene, x, y, COLOR);
+            }
+
+            // Free dynamically allocated memory for ray.direction
+        }
+    }
+    return (0);
 }
 

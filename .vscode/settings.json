@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "minirt.h": "c",
-        "math.h": "c",
-        "vector.h": "c"
-    }
-}

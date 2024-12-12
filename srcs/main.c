@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:49:52 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/12 14:40:37 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:54:05 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,17 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	init_scene(&scene);
-	// draw_sphere(WIN_WIDTH / 2, WIN_HEIGHT / 2, 400, &scene);
-	test_draw_sphere(scene);
+	// t_vec3 *origin = vec3_create(10, 10, 0);
+	// t_vec3 *direction = vec3_create(10, 0, 1);
+	// t_ray *ray = ray_create(*origin, *direction);
+	// t_vec3 *center = vec3_create(500, 300, 0);
+	// draw_hit_sphere(*ray, *center, 50, &scene);
+	 t_vec3 *camera_pos = vec3_create(0, 0, 0); // Camera at origin
+    t_vec3 *sphere_center = vec3_create(0, 0, -5); // Sphere at z = -5
+    float radius = 1.0;
+// draw_sphere(500, 500, 100, &scene);
+draw_sphere_0(&scene, *camera_pos, *sphere_center, radius);
+    // Free memory
 	mlx_put_image_to_window(scene.mlx, scene.win, scene.img, 0, 0);
 	run_hook_cycle(scene);
 	return (0);

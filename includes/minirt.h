@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/12 14:25:17 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:31:31 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 # define INCLUDE_H
 
-# define WIN_WIDTH 1920
+# define WIN_WIDTH 1000
 
-# define WIN_HEIGHT 1080
+# define WIN_HEIGHT 600
 
 # define PI 3.14162
 
@@ -33,6 +33,10 @@
 # include <math.h>
 
 # include <fcntl.h>
+
+# include <X11/keysym.h>
+
+# include <X11/keysymdef.h>
 
 # include "../lib/libft/libft.h"
 

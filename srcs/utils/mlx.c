@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/12 14:23:45 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:32:09 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	on_destroy(t_scene *scene)
 
 static int	on_keydown(int keycode, t_scene *scene)
 {
-	if (keycode == 65307)
+	if (keycode == XK_Escape)
 		on_destroy(scene);
 	return (0);
 }
