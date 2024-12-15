@@ -61,9 +61,12 @@ int check_valid_coordinate(char *cord, t_vec3 *vec3);
 int valid_range_camera(char **str2, t_data *data);
 int check_3dnormaliser(char *cord, t_vec3 *vec3);
 int valid_range_light(char **str2, t_data *data);
-int valid_range_sphere(char **str2);
-int valid_range_plane(char **str2);
-int valid_range_cylinder(char **str2);
+int valid_range_sphere(char **str2, t_data *data);
+int valid_range_plane(char **str2, t_data *data);
+int valid_range_cylinder(char **str2, t_data *data);
 int alloc_data_default(t_data *data);
+void add_back_sphere(t_sphere **lst, t_sphere *new);
+void add_back_plane(t_plane **lst, t_plane *new);
+void add_back_cylinder(t_cylinder **lst, t_cylinder *new);
 
 #endif
