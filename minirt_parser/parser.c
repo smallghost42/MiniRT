@@ -20,7 +20,7 @@ int count_init(t_count **count)
 	return (0);
 }
 
-int check_first_word_and_count_A_C_L(char *str, int file)
+int check_first_word_and_count_A_C_L(char *str, int file, t_data *data)
 {
 	t_count *count;
 
@@ -36,8 +36,8 @@ int check_first_word_and_count_A_C_L(char *str, int file)
 		}
 		else
 		{
-			if (check_first_and_count_param(str, count) || count->a_l > 1 ||
-				count->cam > 1 || count->light > 1)
+			if (check_first_and_count_param(str, count, data) || count->a_l > 1 || count->cam > 1 ||
+				count->light > 1)
 			{
 				free(str);
 				return (1);
@@ -51,15 +51,21 @@ int check_first_word_and_count_A_C_L(char *str, int file)
 
 int check_file_content(int file)
 {
+	t_data *data;
 	char *str;
 
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (1);
+	if (alloc_data_default(data))
+		return (1);
 	str = get_next_line(file);
 	if (str == NULL)
 	{
 		ft_perror("error , empty line ", 22);
 		return (1);
 	}
-	if (check_first_word_and_count_A_C_L(str, file))
+	if (check_first_word_and_count_A_C_L(str, file, data))
 	{
 		ft_perror("error , wrong content ", 22);
 		return (1);
@@ -70,9 +76,7 @@ int check_file_content(int file)
 int file_parser(char *filename)
 {
 	int file;
-	int stat;
 
-	stat = 0;
 	if (check_file_extention(filename))
 	{
 		ft_perror("error , file extention ", 22);

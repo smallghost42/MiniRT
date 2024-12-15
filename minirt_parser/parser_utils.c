@@ -6,7 +6,7 @@
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:57:36 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/10 10:34:31 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/15 10:23:11 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,25 @@ void free_split(char **str)
 	str = NULL;
 }
 
-int check_first_and_count_param(char *str, t_count *count)
+int check_first_and_count_param(char *str, t_count *count, t_data *data)
 {
-	t_data *data;
 	char **str2;
 	int i;
 
 	i = 0;
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (1);
 	str2 = ft_split(str, ' ');
 	if (!str2)
 		return (1);
 	while (str2[i])
 		i++;
-	if (!strcmp(str2[0], "A") && i == 3 && !valid_range_ambient(str2))
+	if (!strcmp(str2[0], "A") && i == 3 && !valid_range_ambient(str2, data))
 		count->a_l += 1;
-	else if (!strcmp(str2[0], "C") && i == 4 && !valid_range_camera(str2))
+	else if (!strcmp(str2[0], "C") && i == 4 && !valid_range_camera(str2, data))
 		count->cam += 1;
-	else if (!strcmp(str2[0], "L") && i == 4 && !valid_range_light(str2))
+	else if (!strcmp(str2[0], "L") && i == 4 && !valid_range_light(str2, data))
 		count->light += 1;
 	else if (!strcmp(str2[0], "sp") && i == 4 && !valid_range_sphere(str2))
-		ft_lstadd_back(data->shape->sphere, create_sphere(str2));
+		;
 	else if (!strcmp(str2[0], "pl") && i == 4 && !valid_range_plane(str2))
 		;
 	else if (!strcmp(str2[0], "cy") && i == 6 && !valid_range_cylinder(str2))
