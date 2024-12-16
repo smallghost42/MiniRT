@@ -6,7 +6,7 @@
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 09:43:42 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/07 14:23:54 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/16 10:24:01 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,19 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc != 2 || file_parser(argv[1]) == 1)
+	t_data *data;
+
+	data = malloc(sizeof(t_data));
+	if (!data)
 		return (1);
+	if (argc != 2 || file_parser(argv[1], data) == 1)
+	{
+		global_free(data);
+		free(data);
+		return (1);
+	}
+	global_free(data);
+	free(data);
 	printf("\033[32mparse success\n\033[0m");
 	return (0);
 }

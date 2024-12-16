@@ -46,7 +46,7 @@ typedef struct s_count
 	int light;
 } t_count;
 
-int file_parser(char *filename);
+int file_parser(char *filename, t_data *data);
 char **ft_split(char const *s, char c);
 void free_split(char **str);
 int valid_range_ambient(char **str2, t_data *data);
@@ -68,5 +68,6 @@ int alloc_data_default(t_data *data);
 void add_back_sphere(t_sphere **lst, t_sphere *new);
 void add_back_plane(t_plane **lst, t_plane *new);
 void add_back_cylinder(t_cylinder **lst, t_cylinder *new);
+void global_free(t_data *data);
 
 #endif

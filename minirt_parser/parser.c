@@ -36,27 +36,25 @@ int check_first_word_and_count_A_C_L(char *str, int file, t_data *data)
 		}
 		else
 		{
-			if (check_first_and_count_param(str, count, data) || count->a_l > 1 || count->cam > 1 ||
-				count->light > 1)
+			if (check_first_and_count_param(str, count, data) ||
+				count->a_l > 1 || count->cam > 1 || count->light > 1)
 			{
 				free(str);
+				free(count);
 				return (1);
 			}
 			free(str);
 			str = get_next_line(file);
 		}
 	}
+	free(count);
 	return (0);
 }
 
-int check_file_content(int file)
+int check_file_content(int file, t_data *data)
 {
-	t_data *data;
 	char *str;
 
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (1);
 	if (alloc_data_default(data))
 		return (1);
 	str = get_next_line(file);
@@ -73,7 +71,7 @@ int check_file_content(int file)
 	return (0);
 }
 
-int file_parser(char *filename)
+int file_parser(char *filename, t_data *data)
 {
 	int file;
 
@@ -88,7 +86,7 @@ int file_parser(char *filename)
 		perror("error ");
 		return (1);
 	}
-	if (check_file_content(file) == 1)
+	if (check_file_content(file, data) == 1)
 	{
 		close(file);
 		return (1);

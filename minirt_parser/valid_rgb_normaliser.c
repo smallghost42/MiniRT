@@ -6,7 +6,7 @@
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:46:25 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/15 10:30:01 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/16 10:21:25 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int check_valid_rgb(char *color)
 		return (1);
 	while (rgb[i])
 	{
-		if (ft_valid_int(rgb[i]) || ft_atoi(rgb[i]) < 0 || ft_atoi(rgb[i]) > 255)
+		if (ft_valid_int(rgb[i]) || ft_atoi(rgb[i]) < 0 ||
+			ft_atoi(rgb[i]) > 255)
 		{
 			free_split(rgb);
 			return (1);
@@ -31,7 +32,11 @@ int check_valid_rgb(char *color)
 		i++;
 	}
 	if (i != 3)
+	{
+		free_split(rgb);
 		return (1);
+	}
+	free_split(rgb);
 	return (0);
 }
 
@@ -57,7 +62,11 @@ int check_valid_coordinate(char *cord, t_vec3 *vec3)
 		i++;
 	}
 	if (i != 3)
+	{
+		free_split(cord2);
 		return (1);
+	}
+	free_split(cord2);
 	return (0);
 }
 
@@ -72,7 +81,8 @@ int check_3dnormaliser(char *cord, t_vec3 *vec3)
 		return (1);
 	while (coord[i])
 	{
-		if (is_valid_float(coord[i], 1) || ft_atof(coord[i]) < -1.0 || ft_atof(coord[i]) > 1.0)
+		if (is_valid_float(coord[i], 1) || ft_atof(coord[i]) < -1.0 ||
+			ft_atof(coord[i]) > 1.0)
 		{
 			free_split(coord);
 			return (1);
@@ -83,6 +93,10 @@ int check_3dnormaliser(char *cord, t_vec3 *vec3)
 		i++;
 	}
 	if (i != 3)
+	{
+		free_split(coord);
 		return (1);
+	}
+	free_split(coord);
 	return (0);
 }
