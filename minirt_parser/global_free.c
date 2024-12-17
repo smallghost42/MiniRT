@@ -6,7 +6,7 @@
 /*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:51:19 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/16 10:46:34 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/17 08:06:26 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void free_data_plane(t_data *data)
 	t_plane *tmp;
 	t_plane *tmp2;
 
-	tmp = data->shape->plane->next;
+	tmp = NULL;
+	if (data->shape->plane)
+		tmp = data->shape->plane->next;
 	while (tmp != NULL)
 	{
 		tmp2 = tmp->next;
@@ -34,7 +36,9 @@ void free_data_sphere(t_data *data)
 	t_sphere *tmp;
 	t_sphere *tmp2;
 
-	tmp = data->shape->sphere->next;
+	tmp = NULL;
+	if (data->shape->sphere)
+		tmp = data->shape->sphere->next;
 	while (tmp != NULL)
 	{
 		tmp2 = tmp->next;
@@ -50,7 +54,9 @@ void free_data_cylinder(t_data *data)
 	t_cylinder *tmp;
 	t_cylinder *tmp2;
 
-	tmp = data->shape->cylinder->next;
+	tmp = NULL;
+	if (data->shape->plane)
+		tmp = data->shape->cylinder->next;
 	while (tmp != NULL)
 	{
 		tmp2 = tmp->next;
