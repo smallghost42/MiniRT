@@ -2,7 +2,7 @@ SRCS = $(wildcard srcs/*.c) $(wildcard srcs/*/*.c)
 
 OBJS = ${SRCS:.c=.o}
 
-CC = cc
+CC = gcc
 
 RM = rm -f
 

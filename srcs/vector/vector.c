@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:31:54 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/09 10:32:18 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/12 08:13:22 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,22 @@ t_vec3  *vec3_create(float x, float y, float z)
     return (vector);
 }
 
-float   vec3_dot_product(t_vec3 u, t_vec3 v)
+float   vec3_get_dot_product(t_vec3 u, t_vec3 v)
 {
     return (u.x * v.x + u.y * v.y + u.z * v.z);
 }
 
-float   vec3_norm(t_vec3 vector)
+float   vec3_get_norm(t_vec3 vector)
 {
     return (sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z));
 }
 
-t_vec3  *vec3_addition(t_vec3 u, t_vec3 v)
+t_vec3  *vec3_add(t_vec3 u, t_vec3 v)
 {
     return (vec3_create(u.x + v.x, u.y + v.y, u.z + v.z));
 }
 
-t_vec3  *vec3_substraction(t_vec3 u, t_vec3 v)
+t_vec3  *vec3_substract(t_vec3 u, t_vec3 v)
 {
     return (vec3_create(u.x - v.x, u.y - v.y, u.z - v.z));
 }
@@ -55,7 +55,7 @@ t_vec3  *vec3_const_multiply(t_vec3 u, float k)
     return (vec3_create(u.x * k, u.y * k, u.z * k));
 }
 
-t_vec3  *vec3_division(t_vec3 u, t_vec3 v)
+t_vec3  *vec3_divide(t_vec3 u, t_vec3 v)
 {
     float   x;
     float   y;

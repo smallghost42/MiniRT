@@ -6,18 +6,18 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 21:03:33 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/07 10:59:54 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/12 08:22:35 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	trgb_to_color(int t, int r, int g, int b)
+int	get_trgb_from_color(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }
 
-int	*color_to_trgb(int color)
+int	*get_color_from_trgb(int color)
 {
 	int	*trgb;
 

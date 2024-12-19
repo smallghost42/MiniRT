@@ -6,39 +6,27 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/09 09:59:35 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/12 16:32:09 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	int_mlx_pixel_put(t_scene *scene, int x, int y, int color)
+void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color)
 {
+	int		_x;
+	int		_y;
+	int		pixel_offset;
 	char	*dst;
 
-	if (x >= 0 && x < WIN_WIDTH)
+	_x = round(x);
+	_y = round(y);
+	if (_x >= 0 && _x < WIN_WIDTH)
 	{
-		if (y >= 0 && y < WIN_HEIGHT)
+		if (_y >= 0 && _y < WIN_HEIGHT)
 		{
-			dst = scene->addr + (y * scene->line_length + x * (scene->bpp / 8));
-			*(unsigned int *)dst = color;
-		}
-	}
-}
-
-void	float_mlx_pixel_put(t_scene *scene, float x, float y, int color)
-{
-	int		real_x;
-	int		real_y;
-	char	*dst;
-
-	real_x = round(x);
-	real_y = round(y);
-	if (real_x >= 0 && real_x < WIN_WIDTH)
-	{
-		if (real_y >= 0 && real_y < WIN_HEIGHT)
-		{
-			dst = scene->addr + (real_y * scene->line_length + real_x * (scene->bpp / 8));
+			pixel_offset = _y * scene->line_length + _x * scene->bpp / 8;
+			dst = scene->addr + pixel_offset;
 			*(unsigned int *)dst = color;
 		}
 	}
@@ -56,12 +44,12 @@ static int	on_destroy(t_scene *scene)
 
 static int	on_keydown(int keycode, t_scene *scene)
 {
-	if (keycode == 65307)
+	if (keycode == XK_Escape)
 		on_destroy(scene);
 	return (0);
 }
 
-void	hook_loop(t_scene scene)
+void	run_hook_cycle(t_scene scene)
 {
 	mlx_hook(scene.win, 2, 1L << 0, on_keydown, &scene);
 	mlx_hook(scene.win, 17, 0L, on_destroy, &scene);

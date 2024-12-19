@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   plane.c                                            :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/10 08:29:59 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/12 14:17:37 by trazanad         ###   ########.fr       */
+/*   Created: 2024/12/18 08:00:47 by trazanad          #+#    #+#             */
+/*   Updated: 2024/12/18 08:04:32 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef UTILS_H
+
+# define UTILS_H
+
 #include "minirt.h"
 
-int draw_plane(int x, int y, t_scene *scene)
-{
-    int i;
-    int j;
+//mlx
+void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color);
+void	run_hook_cycle(t_scene scene);
 
-    i = 0;
-    while (i <= x)
-    {
-        j = 0;
-        while (j <= y)
-        {
-            my_mlx_pixel_put(scene, i , j, COLOR);
-            // ft_printf("%d, %d\n" , i, j);
-            j++;
-        }
-        i++;
-    }
-    return (0);
-}
+//color
+int		get_trgb_from_color(int t, int r, int g, int b);
+int		*get_color_from_trgb(int color);
+
+//image plane
+float   get_aspect_ratio(void);
+float   get_x_image_plane(int x, int fov, float aspect_ratio);
+float   get_y_image_plane(int y, int fov, float aspect_ratio);
+
+#endif
