@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:31:05 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/12 16:30:18 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/19 09:13:35 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,39 +65,39 @@ int is_ray_hitting_sphere(t_ray ray, t_vec3 center, float radius)
     return ((b * b - 4 * a * c) >= 0);
 }
 
-int draw_sphere_0(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float radius)
-{
+int draw_sphere_0(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float radius) {
     int x, y;
     float screen_x, screen_y; // Normalized screen coordinates
     float aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
-    float fov = tan((PI / 180.0f) * 20 / 2); // Field of view, 70 degrees
-    t_ray ray;
+    float fov = tan((PI / 180.0f) * 70.0f / 2); // Field of view, 70 degrees
+    t_ray *ray;
+    t_vec3 *tmp;
 
-    for (y = 0; y < WIN_HEIGHT; y++)
-    {
-        for (x = 0; x < WIN_WIDTH; x++)
-        {
-            // Map pixel to normalized screen coordinates
-            screen_x = (2 * ((x + 0.5f) / WIN_WIDTH) - 1) * aspect_ratio * fov;
-            screen_y = (1 - 2 * ((y + 0.5f) / WIN_HEIGHT)) * fov;
-          
-
+    for (y = 0; y < WIN_HEIGHT; y++) {
+        for (x = 0; x < WIN_WIDTH; x++) {
+            // Map pixel to normalized screen coordinates with aspect ratio correction
+           screen_x = get_x_image_plane(x, 90, aspect_ratio);
+            screen_y = get_y_image_plane(y, 90, aspect_ratio);
             // Set up the ray
-            ray.origin = camera_pos;
-            // ray.direction = *vec3_create(screen_x, screen_y, -1); // Assuming camera looks in -Z
-            ray.direction = *vec3_create(screen_x, screen_y, -1); // Assuming camera looks in -Z
-            ray.direction = *vec3_const_multiply(ray.direction, 1 / vec3_get_norm(ray.direction)); // Normalize
-
+            tmp = vec3_create(screen_x, screen_y, -1); // Assuming camera looks in -Z
+            // Normalize the direction vector
+                         // Normalize
+             // Normalize
+            float norm = vec3_get_norm(*tmp);  // Get the magnitude (norm)
+             if (norm > 0) {  // Prevent division by zero
+                tmp = vec3_const_multiply(*tmp, 1 / norm);  // Normalize by dividing by norm
+            }
+             ray = ray_create(camera_pos, *tmp);
             // Test for intersection with sphere
-            if (is_ray_hitting_sphere(ray, sphere_center, radius))
-            {
+            if (is_ray_hitting_sphere(*ray, sphere_center, radius)) {
                 // Draw pixel on intersection
                 my_mlx_pixel_put(scene, x, y, COLOR);
             }
-
-            // Free dynamically allocated memory for ray.direction
         }
     }
-    return (0);
+
+    return 0;
 }
+
+
 

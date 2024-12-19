@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/12 16:31:31 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/18 10:10:15 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 # define INCLUDE_H
 
-# define WIN_WIDTH 1000
+# define WIN_WIDTH 1920
 
-# define WIN_HEIGHT 600
+# define WIN_HEIGHT 1020
 
 # define PI 3.14162
 
@@ -44,6 +44,8 @@
 
 # include "ray.h"
 
+# include "utils.h"
+
 typedef struct s_scene
 {
 	void	*mlx;
@@ -56,15 +58,6 @@ typedef struct s_scene
 	int		endian;
 	//t_data	*data;
 }	t_scene;
-
-
-//mlx
-void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color);
-void	run_hook_cycle(t_scene scene);
-
-//color
-int		get_trgb_from_color(int t, int r, int g, int b);
-int		*get_color_from_trgb(int color);
 
 //components
 int		draw_sphere(int x, int y, int radius, t_scene *scene);
