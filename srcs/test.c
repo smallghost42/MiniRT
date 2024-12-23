@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:40:30 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/23 13:49:46 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/23 14:07:11 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	draw_some_sphere(t_scene *scene)
 	t_vec3 sphere_center = vec3_create(2500, 0, -500);
 	float radius = 1000.0;                        
 
-	draw_sphere_by_ray(scene, camera_pos, sphere_center, radius);
+	render_sphere(scene, camera_pos, sphere_center, radius);
 	// t_vec3 *camera_pos0 = vec3_create(0, 0, 0);
 	// t_vec3 *sphere_center0 = vec3_create(0, 10, -20);    
 	// float radius0 = 5.0;                                 
