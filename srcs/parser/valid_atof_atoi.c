@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   valid_atof_atoi.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:28:27 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/15 10:29:05 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:28:09 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "parser.h"
 
 int ft_valid_int(const char *str)
 {

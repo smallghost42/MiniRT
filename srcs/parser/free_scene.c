@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   global_free.c                                      :+:      :+:    :+:   */
+/*   free_scene_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 09:51:19 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/17 08:06:26 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:21:24 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
-#include "shape.h"
+#include "parser.h"
 
 void free_data_plane(t_data *data)
 {
@@ -67,7 +66,7 @@ void free_data_cylinder(t_data *data)
 		free(data->shape->cylinder);
 }
 
-void global_free(t_data *data)
+void free_scene_data(t_data *data)
 {
 	if (data->ambient_lightning)
 		free(data->ambient_lightning);

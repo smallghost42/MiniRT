@@ -6,7 +6,7 @@ CC = gcc
 
 RM = rm -f
 
-CFLAGS = -Werror -Wextra -Werror -Iincludes -I${MLX_PATH}
+CFLAGS = -Werror -Wextra -Werror -Iincludes -I${MLX_PATH} -g
 
 MLX_FLAGS = -L${MLX_PATH} -lmlx -L/usr/lib -Imlx -lXext -lX11 -lm -lz
 
@@ -46,5 +46,8 @@ clean:
 fclean:  clean
 		make -sC ${LIBFT_PATH} fclean
 		rm -rf ${NAME}
+
+val: ${NAME}
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes -s ./${NAME}
 
 re:  fclean all

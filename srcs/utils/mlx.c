@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/12 16:32:09 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/23 12:57:55 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color)
 
 static int	on_destroy(t_scene *scene)
 {
-	//clear map;
+	// free_scene_data(scene->data);
+	// free(scene->data);
 	mlx_destroy_image(scene->mlx, scene->img);
 	mlx_destroy_window(scene->mlx, scene->win);
 	mlx_destroy_display(scene->mlx);

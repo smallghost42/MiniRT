@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   range_check_elem.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 07:25:29 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/16 10:15:28 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:28:04 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
-#include "shape.h"
+#include "parser.h"
 
 int valid_range_sphere(char **str2, t_data *data)
 {

@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   default_struct.c                                   :+:      :+:    :+:   */
+/*   init_default_value.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/15 09:33:39 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/16 10:16:44 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:27:37 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
-#include "shape.h"
+#include "parser.h"
 
 void create_default_A_C_L(t_data *data)
 {

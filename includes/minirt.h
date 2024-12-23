@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/18 10:10:15 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/23 12:47:12 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,25 @@
 
 # define INCLUDE_H
 
-# define WIN_WIDTH 1920
+# define WIN_WIDTH 1366
 
-# define WIN_HEIGHT 1020
+# define WIN_HEIGHT 768
 
 # define PI 3.14162
 
 # define COLOR 10523517
 
-# include <mlx.h>
-
-# include <stdlib.h>
-
-#include <stdio.h>
-
-# include <unistd.h>
-
-# include <math.h>
-
-# include <fcntl.h>
-
-# include <X11/keysym.h>
-
-# include <X11/keysymdef.h>
-
-# include "../lib/libft/libft.h"
+# include "clib.h"
 
 # include "vector.h"
 
 # include "ray.h"
 
 # include "utils.h"
+
+# include "parser.h"
+
+#include "test.h" //////////////////////to delete
 
 typedef struct s_scene
 {
@@ -56,7 +44,7 @@ typedef struct s_scene
 	int		bpp;
 	int		line_length;
 	int		endian;
-	//t_data	*data;
+	t_data	*data;
 }	t_scene;
 
 //components

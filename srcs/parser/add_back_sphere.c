@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_back_plane.c                                   :+:      :+:    :+:   */
+/*   add_back_sphere.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/15 11:27:34 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/15 11:28:45 by ferafano         ###   ########.fr       */
+/*   Created: 2024/12/15 11:22:53 by ferafano          #+#    #+#             */
+/*   Updated: 2024/12/23 11:21:24 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "parser.h"
 
-t_plane *lstlast_plane(t_plane *lst)
+t_sphere *lstlast_sphere(t_sphere *lst)
 {
 	if (lst)
 	{
 		if (lst->next)
-			return (lstlast_plane(lst->next));
+			return (lstlast_sphere(lst->next));
 		else
 			return (lst);
 	}
 	return (0);
 }
 
-void add_back_plane(t_plane **lst, t_plane *new)
+void add_back_sphere(t_sphere **lst, t_sphere *new)
 {
 	if (lst)
 	{
 		if (*lst)
 		{
-			lstlast_plane(*lst)->next = new;
+			lstlast_sphere(*lst)->next = new;
 		}
 		else
 			*lst = new;

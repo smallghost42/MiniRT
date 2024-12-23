@@ -1,4 +1,16 @@
-#include "mini.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/23 11:18:35 by trazanad          #+#    #+#             */
+/*   Updated: 2024/12/23 11:50:17 by trazanad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "parser.h"
 
 void ft_perror(char *message, int err_stat)
 {
@@ -29,7 +41,7 @@ int check_first_word_and_count_A_C_L(char *str, int file, t_data *data)
 		return (1);
 	while (str)
 	{
-		if (!strcmp(str, "\n"))
+		if (!ft_strcmp(str, "\n"))
 		{
 			free(str);
 			str = get_next_line(file);
@@ -71,7 +83,7 @@ int check_file_content(int file, t_data *data)
 	return (0);
 }
 
-int file_parser(char *filename, t_data *data)
+int parse_file(char *filename, t_data *data)
 {
 	int file;
 

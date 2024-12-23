@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   valid_rgb_normaliser.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:46:25 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/16 10:21:25 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:28:11 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "parser.h"
 
 int check_valid_rgb(char *color)
 {

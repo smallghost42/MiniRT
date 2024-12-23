@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   range_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ferafano <ferafano@student.42antananarivo  +#+  +:+       +#+        */
+/*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:18:47 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/15 10:27:14 by ferafano         ###   ########.fr       */
+/*   Updated: 2024/12/23 11:21:24 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mini.h"
+#include "parser.h"
 
 int valid_range_ambient(char **str2, t_data *data)
 {
