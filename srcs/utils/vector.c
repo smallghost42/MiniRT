@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:31:54 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/23 13:46:40 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:55:32 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,15 @@ t_vec3  vec3_normalize(t_vec3 vector)
 
     vector_norm = vec3_get_norm(vector);
     return (vec3_const_multiply(vector, 1.0f / vector_norm));
+}
+
+t_vec3 vec3_cross_product(t_vec3 u, t_vec3 v)
+{
+    t_vec3 vector;
+
+    vector.x = u.y * v.z - u.z * v.y;
+    vector.y = u.z * v.x - u.x * v.z;
+    vector.z = u.x * v.y - u.y * v.x;
+
+    return vector;
 }

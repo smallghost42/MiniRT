@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:54:34 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/23 14:00:17 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:07:39 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ float   get_y_image_plane(int y, int fov)
     float	y_image_plane;
 
     aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
+	// y_image_plane = 1 - 2.0f * (y + 0.5f) / WIN_HEIGHT;
 	y_image_plane = 1 - 2.0f * (y + 0.5f) / WIN_HEIGHT;
 	y_image_plane *= tan((PI * fov) / (180.0f * 2.0f));
 	return (y_image_plane);

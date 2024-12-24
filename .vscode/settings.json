@@ -8,6 +8,9 @@
         "span": "c",
         "shape.h": "c",
         "variant": "c",
-        "random": "c"
+        "random": "c",
+        "limits": "c",
+        "algorithm": "c",
+        "test.h": "c"
     }
 }

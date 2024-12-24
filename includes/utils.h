@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 08:00:47 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/23 14:06:27 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/24 14:42:38 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color);
 void	run_hook_cycle(t_scene scene);
 
 //color
-int		get_trgb_from_color(int t, int r, int g, int b);
-int		*get_color_from_trgb(int color);
+int		get_color_from_trgb(int t, int r, int g, int b);
+int		*get_trgb_from_color(int color);
 
 //image plane
 float   get_aspect_ratio(void);
