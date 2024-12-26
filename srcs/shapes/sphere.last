@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/26 07:35:47 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/26 06:07:22 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,16 @@ int get_diffuse_light_color(t_ray ray, float distance, t_vec3 sphere_center)
     int     color;
     int     trgb[4];
 
+    // test light came from camera dude
     normal_vec = get_sphere_normal(ray, distance, sphere_center);
 	//calculate hit point to light vec
-    t_vec3 light_pos = vec3_create(0, 0, 50);
+	t_vec3 light_pos = vec3_create(0, -100, 0);
 	t_vec3 point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
     brightness = fmax(vec3_get_dot_product(normal_vec, point_to_light_vec), 0.1);
     trgb[0] = 1;
-    trgb[1] = roundf(255 * brightness);
-    trgb[2] = roundf(0 * brightness);
-    trgb[3] = roundf(0 * brightness);
+    trgb[1] = roundf(10 * brightness);
+    trgb[2] = roundf(255 * brightness);
+    trgb[3] = roundf(255 * brightness);
     color = get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
     return (color);
 }
@@ -105,34 +106,32 @@ int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_center) {
     float tmp;
     int color;
     int trgb[4];
-    float shininess = 64.0; // Balanced shininess value
+    float shininess = 2.0; // Balanced shininess value
 
     // Normal Vector
     normal_vec = vec3_normalize(get_sphere_normal(ray, distance, sphere_center));
 
     // Light Vector
-    t_vec3 light_pos = vec3_create(0, 0, 50);
+    t_vec3 light_pos = vec3_create(0, 100, 0);
     point_to_light_vec = vec3_normalize(get_point_to_light_vector(light_pos, ray, distance));
 
-    // Like we change coord we don't need to change ray direction
-    view_vec = vec3_normalize(vec3_const_multiply(ray.direction, 1));
+    // View Vector
+    view_vec = vec3_normalize(vec3_const_multiply(ray.direction, -1));
 
     // Halfway Vector
     halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, view_vec));
 
     // Specular Brightness
     tmp = vec3_get_dot_product(normal_vec, halfway_vec);
-    if (tmp > 0)
-        printf("shinerss== %f\n", tmp);
-    spec_brightness = powf(fmax(tmp, 0.1), shininess);
+    spec_brightness = powf(fmax(tmp, 0.0), shininess);
 
     // Specular Color Contribution
     int surface_trgb[4] = {1, 255, 255, 255}; // White light for specular highlights
 
     trgb[0] = 1; // Transparency (constant)
-    trgb[1] = fmin(roundf(surface_trgb[1] * spec_brightness), 255);
-    trgb[2] = fmin(roundf(surface_trgb[2] * spec_brightness), 255);
-    trgb[3] = fmin(roundf(surface_trgb[3] * spec_brightness), 255);
+    trgb[1] = fmin(surface_trgb[1] * spec_brightness * 0.9, 255);
+    trgb[2] = fmin(surface_trgb[2] * spec_brightness * 0.9, 255);
+    trgb[3] = fmin(surface_trgb[3] * spec_brightness * 0.9, 255);
 
     color = get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
     return color;
@@ -190,12 +189,7 @@ int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float
                 if (distance > current_distance)
                     distance = current_distance;
                 //apply diffuse light from camera
-				int	color = blend_colors(get_diffuse_light_color(ray, current_distance, sphere_center), 
-                           get_specular_light_color(ray, current_distance, sphere_center));
-
-				// int color = get_diffuse_light_color(ray, current_distance, sphere_center);
-				// int color = get_specular_light_color(ray, current_distance, sphere_center);
-
+                int color = get_diffuse_light_color(ray, current_distance, sphere_center);
                 my_mlx_pixel_put(scene, coord[0], coord[1], color);
             }
             coord[1]++;

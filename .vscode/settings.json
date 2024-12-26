@@ -11,6 +11,7 @@
         "random": "c",
         "limits": "c",
         "algorithm": "c",
-        "test.h": "c"
+        "test.h": "c",
+        "*.dude": "cpp"
     }
 }
