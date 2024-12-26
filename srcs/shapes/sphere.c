@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/26 07:35:47 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/26 08:04:39 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ int get_diffuse_light_color(t_ray ray, float distance, t_vec3 sphere_center)
     return (color);
 }
 
-int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_center) {
+int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_center) 
+{
     t_vec3 normal_vec;
     t_vec3 point_to_light_vec;
     t_vec3 view_vec;
@@ -105,56 +106,43 @@ int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_center) {
     float tmp;
     int color;
     int trgb[4];
-    float shininess = 64.0; // Balanced shininess value
+    float shininess = 64.0;
 
-    // Normal Vector
     normal_vec = vec3_normalize(get_sphere_normal(ray, distance, sphere_center));
-
-    // Light Vector
     t_vec3 light_pos = vec3_create(0, 0, 50);
-    point_to_light_vec = vec3_normalize(get_point_to_light_vector(light_pos, ray, distance));
+    point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
 
-    // Like we change coord we don't need to change ray direction
-    view_vec = vec3_normalize(vec3_const_multiply(ray.direction, 1));
+    halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, ray.direction));
 
-    // Halfway Vector
-    halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, view_vec));
-
-    // Specular Brightness
     tmp = vec3_get_dot_product(normal_vec, halfway_vec);
-    if (tmp > 0)
-        printf("shinerss== %f\n", tmp);
     spec_brightness = powf(fmax(tmp, 0.1), shininess);
 
-    // Specular Color Contribution
-    int surface_trgb[4] = {1, 255, 255, 255}; // White light for specular highlights
-
-    trgb[0] = 1; // Transparency (constant)
+    //suppose light reflexision is white nigga
+    int surface_trgb[4] = {1, 255, 255, 255};
+    trgb[0] = 1;
     trgb[1] = fmin(roundf(surface_trgb[1] * spec_brightness), 255);
     trgb[2] = fmin(roundf(surface_trgb[2] * spec_brightness), 255);
     trgb[3] = fmin(roundf(surface_trgb[3] * spec_brightness), 255);
 
     color = get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
-    return color;
+    return (color);
 }
 
-int blend_colors(int diffuse_color, int specular_color) {
+int blend_colors(int diffuse_color, int specular_color) 
+{
     int trgb[4];
     int *diffuse_trgb;
     int *specular_trgb;
-
-    // Extract TRGB components from diffuse and specular colors
     
 	diffuse_trgb = get_trgb_from_color(diffuse_color);
 	specular_trgb = get_trgb_from_color(specular_color);
 
-    // Blend colors by averaging their RGB components
-    trgb[0] = 1; // Transparency (constant)
-    trgb[1] = fmin(diffuse_trgb[1] + specular_trgb[1], 255); // Red
-    trgb[2] = fmin(diffuse_trgb[2] + specular_trgb[2], 255); // Green
-    trgb[3] = fmin(diffuse_trgb[3] + specular_trgb[3], 255); // Blue
-
-    // Return the final blended color
+    trgb[0] = 1;
+    trgb[1] = fmin(diffuse_trgb[1] + specular_trgb[1], 255);
+    trgb[2] = fmin(diffuse_trgb[2] + specular_trgb[2], 255);
+    trgb[3] = fmin(diffuse_trgb[3] + specular_trgb[3], 255); 
+    free(diffuse_trgb);
+    free(specular_trgb);
     return get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
 }
 
@@ -197,6 +185,7 @@ int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float
 				// int color = get_specular_light_color(ray, current_distance, sphere_center);
 
                 my_mlx_pixel_put(scene, coord[0], coord[1], color);
+                // my_mlx_pixel_put(scene, coord[0], coord[1], COLOR);
             }
             coord[1]++;
         }
