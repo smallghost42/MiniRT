@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:31:05 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/24 15:07:50 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:27:20 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_vec3  get_ray_direction(float coord[2])
     t_vec3  camera_up;
 
     ray_direction = vec3_create(coord[0], coord[1], -1);
-    camera_orientation = vec3_create(0, 0, -1);
+    camera_orientation = vec3_normalize(vec3_create(0, 0, -1));
     camera_right = vec3_normalize(vec3_cross_product(vec3_create(0, 1, 0), camera_orientation));
     camera_up = vec3_normalize(vec3_cross_product(camera_orientation, camera_right));
     ray_direction = vec3_add(

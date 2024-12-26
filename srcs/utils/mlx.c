@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/23 12:57:55 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:35:37 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,12 @@ void	run_hook_cycle(t_scene scene)
 	mlx_hook(scene.win, 2, 1L << 0, on_keydown, &scene);
 	mlx_hook(scene.win, 17, 0L, on_destroy, &scene);
 	mlx_loop(scene.mlx);
+}
+
+
+void	print_direction()
+{
+	printf("-x to x: from left to right\n");
+	printf("-y to y: from top to bottom\n");
+	printf("-z to z: from the screen to the user\n");
 }

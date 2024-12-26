@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 08:00:47 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/24 14:42:38 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/24 15:32:05 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 //mlx
 void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color);
 void	run_hook_cycle(t_scene scene);
+void	print_direction();
 
 //color
 int		get_color_from_trgb(int t, int r, int g, int b);

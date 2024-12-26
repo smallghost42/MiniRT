@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/24 14:50:57 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/26 03:17:44 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,20 @@ static float is_pixel_visible(float coord[2], t_vec3 camera_pos, t_vec3 sphere_c
     return (get_sphere_pt_distance(ray, sphere_center, radius));
 }
 
+t_vec3	get_sphere_hit_point(t_ray ray, float distance)
+{
+	t_vec3	hit_point;
+
+    hit_point = vec3_add(ray.origin, vec3_const_multiply(ray.direction, distance));
+	return (hit_point);
+}
+
 t_vec3 get_sphere_normal(t_ray ray, float distance, t_vec3 sphere_center)
 {
     t_vec3 hit_point;
     t_vec3 normal_vec;
 
-    // Calculate the hit point
-    hit_point = vec3_add(ray.origin, vec3_const_multiply(ray.direction, distance));
-
+	hit_point = get_sphere_hit_point(ray, distance);
     // Calculate the normal vector
     normal_vec = vec3_substract(hit_point, sphere_center);
     normal_vec = vec3_normalize(normal_vec);
@@ -58,6 +64,40 @@ t_vec3 get_sphere_normal(t_ray ray, float distance, t_vec3 sphere_center)
     return (normal_vec);
 }
 
+t_vec3  get_point_to_light_vector(t_vec3 light_pos, t_ray ray, float distance)
+{
+	t_vec3	point_to_light;
+	t_vec3	hit_point;
+	t_vec3	ajusted_light_pos;
+
+	hit_point = get_sphere_hit_point(ray, distance);
+	ajusted_light_pos = vec3_create(-light_pos.x, -light_pos.y, light_pos.z);
+	point_to_light = vec3_substract(hit_point, ajusted_light_pos);
+	return (vec3_normalize(point_to_light));
+}
+
+int get_diffuse_light_color(t_ray ray, float distance, t_vec3 sphere_center)
+{
+    t_vec3  normal_vec;
+    float   brightness;
+    t_vec3  camera_orientation;
+    int     color;
+    int     trgb[4];
+
+    // test light came from camera dude
+    camera_orientation = vec3_create(0, 0, -1);
+    normal_vec = get_sphere_normal(ray, distance, sphere_center);
+	//calculate hit point to light vec
+	t_vec3 light_pos = vec3_create(0, -100, 0);
+	t_vec3 point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
+    brightness = fmax(vec3_get_dot_product(normal_vec, point_to_light_vec), 0.1);
+    trgb[0] = 1;
+    trgb[1] = roundf(10 * brightness);
+    trgb[2] = roundf(255 * brightness);
+    trgb[3] = roundf(255 * brightness);
+    color = get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
+    return (color);
+}
 
 int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float radius)
 {
@@ -88,13 +128,10 @@ int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float
             current_distance = get_sphere_pt_distance(ray, sphere_center, radius);
             if (current_distance >= 0)
             {
-                distance = current_distance;
-                normal_vec = get_sphere_normal(ray, current_distance, sphere_center);
-
-                // Apply shading (example: dot product with light direction)
-                float brightness = fmax(vec3_get_dot_product(normal_vec, vec3_create(0, 0, -1)), 0.0);
-                int color = (int)(get_color_from_trgb(1, brightness * 5, brightness * 255, brightness * 255));
-                //calculate color
+                if (distance > current_distance)
+                    distance = current_distance;
+                //apply diffuse light from camera
+                int color = get_diffuse_light_color(ray, current_distance, sphere_center);
                 my_mlx_pixel_put(scene, coord[0], coord[1], color);
             }
             coord[1]++;
