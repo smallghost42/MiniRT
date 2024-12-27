@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/27 16:07:24 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:18:18 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_vec3  get_point_to_light_vector(t_vec3 light_pos, t_ray ray, float distance)
 	return (vec3_normalize(point_to_light));
 }
 
-int get_diffuse_light_color(t_ray ray, float distance, t_vec3 sphere_center)
+static int get_diffuse_light_color(t_ray ray, float distance, t_vec3 sphere_center)
 {
     t_vec3  normal_vec;
     float   brightness;
@@ -96,7 +96,7 @@ int get_diffuse_light_color(t_ray ray, float distance, t_vec3 sphere_center)
     return (color);
 }
 
-int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_center) 
+static int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_center) 
 {
     t_vec3 normal_vec;
     t_vec3 point_to_light_vec;
@@ -127,7 +127,7 @@ int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_center)
     return (color);
 }
 
-int add_colors(int diffuse_color, int specular_color) 
+static int add_colors(int diffuse_color, int specular_color) 
 {
     int trgb[4];
     int *diffuse_trgb;

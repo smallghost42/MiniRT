@@ -12,6 +12,7 @@
         "limits": "c",
         "algorithm": "c",
         "test.h": "c",
-        "*.dude": "cpp"
+        "*.dude": "cpp",
+        "iterator": "c"
     }
 }

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:40:30 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/27 16:05:54 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/27 16:52:34 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,16 @@ int	draw_some_cylinder(t_scene *scene)
 	diameter = 20.0;
 	height = 100.0;
 	render_cylinder(scene, camera_pos, cylinder_center, axis_vec, diameter, height);
+	cylinder_center = vec3_create(0, 0, -125);
+	axis_vec = vec3_normalize(vec3_create(1.0, 1.0, 0.0));
+	diameter = 5.0;
+	height = 150.0;
+	render_cylinder(scene, camera_pos, cylinder_center, axis_vec, diameter, height);
+	// cylinder_center = vec3_create(0, 0, 40);
+	// axis_vec = vec3_normalize(vec3_create(0.0, 0.0, 1.0));
+	// diameter = 10.0;
+	// height = 20.0;
+	// render_cylinder(scene, camera_pos, cylinder_center, axis_vec, diameter, height);
 	return (0);
 }
 
