@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:40:30 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/27 13:15:58 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/27 15:54:13 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	draw_some_cylinder(t_scene *scene)
 	float diameter;
 	float height;      
 	
-	cylinder_center = vec3_create(0, -50, -100);
+	cylinder_center = vec3_create(0, 0, -125);
 	axis_vec = vec3_normalize(vec3_create(0.0, 1, 0.0));
 	diameter = 20.0;
 	height = 100.0;
@@ -77,9 +77,9 @@ int	draw_some_plane(t_scene *scene)
 	t_vec3 plane_point;
 	t_vec3 plane_normal;
 
-	// plane_point = vec3_create(0.0,50.0,-100.0);
-	// plane_normal = vec3_normalize(vec3_create(0, 1,0));
-	// render_plane(scene, camera_pos, plane_point, plane_normal);
+	plane_point = vec3_create(0.0,50,-100.0);
+	plane_normal = vec3_normalize(vec3_create(0, 1,0));
+	render_plane(scene, camera_pos, plane_point, plane_normal);
 
 // 	// Test case 2: Vertical plane (like a wall)
 // camera_pos = vec3_create(0.0, 0.0, 50.0);
@@ -92,14 +92,14 @@ int	draw_some_plane(t_scene *scene)
 
 // Test case 4: Ground plane (floor)
 	camera_pos = vec3_create(0.0, 10.0, 0.0);
-	plane_point = vec3_create(0.0, -5.0, 0.0);
+	plane_point = vec3_create(0.0, -50.0, 0.0);
 	plane_normal = vec3_normalize(vec3_create(0.0, 1.0, 0.0));  // Pointing straight up
 	render_plane(scene, camera_pos, plane_point, plane_normal);
 // Test case 3: Tilted plane
-camera_pos = vec3_create(0.0, 20.0, 50.0);
-plane_point = vec3_create(0.0, 0.0, 0.0);
-plane_normal = vec3_normalize(vec3_create(0.3, 0.7, 0.0));  // Tilted upward and to the right
-	render_plane(scene, camera_pos, plane_point, plane_normal);
+// camera_pos = vec3_create(0.0, 20.0, 50.0);
+// plane_point = vec3_create(0.0, 0.0, 0.0);
+// plane_normal = vec3_normalize(vec3_create(0.3, 0.7, 0.0));  // Tilted upward and to the right
+// 	render_plane(scene, camera_pos, plane_point, plane_normal);
 
 	return (0);
 }
