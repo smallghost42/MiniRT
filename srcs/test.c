@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:40:30 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/26 17:01:13 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/27 13:15:58 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	mute_arg(int argc, char **argv)
 int	draw_some_sphere(t_scene *scene)
 {
 	// t_vec3 camera_pos = vec3_create(0, 0, 5000);
-	t_vec3 camera_pos = vec3_create(0.0,0, 50);      
+	t_vec3 camera_pos = vec3_create(0.0,-20, 50);      
 	t_vec3 sphere_center;
 	float radius;                        
 
@@ -52,6 +52,22 @@ int	draw_some_sphere(t_scene *scene)
 	sphere_center = vec3_create(50, -50, -100);    
 	radius = 10.0;                                 
 	render_sphere(scene, camera_pos, sphere_center, radius);
+	return (0);
+}
+
+int	draw_some_cylinder(t_scene *scene)
+{
+	t_vec3 camera_pos = vec3_create(0.0,0, 50);
+	t_vec3 cylinder_center;      
+	t_vec3 axis_vec;
+	float diameter;
+	float height;      
+	
+	cylinder_center = vec3_create(0, -50, -100);
+	axis_vec = vec3_normalize(vec3_create(0.0, 1, 0.0));
+	diameter = 20.0;
+	height = 100.0;
+	render_cylinder(scene, camera_pos, cylinder_center, axis_vec, diameter, height);
 	return (0);
 }
 

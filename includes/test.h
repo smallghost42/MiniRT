@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:40:54 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/26 16:19:51 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/27 08:08:57 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ int	draw_some_sphere(t_scene *scene);
 //
 int	draw_some_plane(t_scene *scene);
 
+//
+int	draw_some_cylinder(t_scene *scene);
 
 #endif
