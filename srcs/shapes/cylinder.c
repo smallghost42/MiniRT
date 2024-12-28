@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 16:56:40 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/27 16:58:42 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/28 04:21:24 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,11 @@
 	m is distance ||C - A|| such as (P - A).V = 0
 	D is the ray direction
 	t is the distance
-	O is the camera position
+	O is the camera postion
 	r is the rayon
 	X = O - C
 */
 
-// t_vec3 get_sphere_normal()
-// {
-// 	t_vec3	normal_vec;
-
-// 	//normal = vec3_normalize(P - C - V * m);
-// 	return (normal_vec);
-// }
 
 /*
 	* To calculate distance, we have
@@ -41,14 +34,15 @@
 		x = (-b -/+ sqrt(delta)) / 2a  and delta = b^2 - 4ac;
 	
 	and for finite cylinder we have to calculate the height
-		m = D.V*t + X.V  and check m is in 0, height
+		m = D.V*t + X.V  and check m is in 0, heigth
 */
+
 
 float	get_cylinder_point_distance(t_ray ray, t_vec3 center, t_vec3 axis_vec, float diameter, float height)
 {
-	float	distance;
+	float	distance = -1;
 	float	discriminant;
-	float	a, b, c, x1, x2, m;
+	float	a, b, c, x1, x2, m1, m2;
 	float	radius;
 	t_vec3	x;
 
@@ -63,14 +57,21 @@ float	get_cylinder_point_distance(t_ray ray, t_vec3 center, t_vec3 axis_vec, flo
 	discriminant = sqrt(discriminant);
 	x1 = (-b - discriminant) / ( 2 * a);
 	x2 = (-b + discriminant) / ( 2 * a);
-	distance = fmax(x1, x2);
-	if (distance < 0)
-		return (-1);
-	m = vec3_get_dot_product(ray.direction, vec3_const_multiply(axis_vec, distance)) + vec3_get_dot_product(x, axis_vec);
-	if (m >= 0 && m <= height)
-		return (distance);
-	return (-1);
+	m1 = vec3_get_dot_product(ray.direction, vec3_const_multiply(axis_vec, x1)) + vec3_get_dot_product(x, axis_vec);
+    m2 = vec3_get_dot_product(ray.direction, vec3_const_multiply(axis_vec, x2)) + vec3_get_dot_product(x, axis_vec);
+
+    if (x1 > 0 && m1 >= 0 && m1 <= height)
+        distance = x1; // First intersection valid
+    if (x2 > 0 && m2 >= 0 && m2 <= height)
+    {
+        if (distance < 0 || x2 < distance)
+            distance = x2;
+    }
+    if (distance < 0)
+        return (-1);
+    return (distance);
 }
+
 float	get_point_heigh(t_ray ray, t_vec3 axis_vec, t_vec3 cylinder_center, float distance)
 {
 	t_vec3	x;
@@ -91,7 +92,7 @@ t_vec3 get_cylinder_normal(t_ray ray, float distance, t_vec3 cylinder_center, t_
 	hit_point = get_sphere_hit_point(ray, distance);
     m = get_point_heigh(ray, axis_vec, cylinder_center, distance);
 	tmp = vec3_add(cylinder_center, vec3_const_multiply(axis_vec, m));
-	normal_vec = vec3_normalize(vec3_substract(hit_point, tmp));
+    normal_vec = vec3_normalize(vec3_substract(hit_point, tmp));
     return (normal_vec);
 }
 
@@ -104,7 +105,7 @@ static int get_diffuse_light_color(t_ray ray, float distance, t_vec3 cylinder_ce
 
     normal_vec = get_cylinder_normal(ray, distance, cylinder_center, axis_vec);
 	//calculate hit point to light vec
-    t_vec3 light_pos = vec3_create(-100, 0, 20);
+    t_vec3 light_pos = vec3_create(50, 0, -75);
 	t_vec3 point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
     brightness = fmax(vec3_get_dot_product(normal_vec, point_to_light_vec), 0.1);
     trgb[0] = 1;
@@ -127,10 +128,12 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 cylinder_c
     float shininess = 128.0;
 
     normal_vec = get_cylinder_normal(ray, distance, cylinder_center, axis_vec);
-    t_vec3 light_pos = vec3_create(-100, 0, 20);
+    t_vec3 light_pos = vec3_create(50, 0, -75);
     point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
 
-    halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, ray.direction));
+    // halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, ray.direction));
+    halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, vec3_const_multiply(ray.direction, -1)));
+
 
     tmp = vec3_get_dot_product(normal_vec, halfway_vec);
     spec_brightness = powf(fmax(tmp, 0.1), shininess);
