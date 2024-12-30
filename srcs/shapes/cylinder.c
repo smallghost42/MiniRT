@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 16:56:40 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/28 04:21:24 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:34:18 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@
 		m = D.V*t + X.V  and check m is in 0, heigth
 */
 
+t_vec3 get_point_to_light_vector0(t_vec3 light_pos, t_ray ray, float distance) {
+    t_vec3 hit_point;
+
+    hit_point = get_sphere_hit_point(ray, distance);
+    return (vec3_normalize(vec3_substract(light_pos, hit_point)));
+}
 
 float	get_cylinder_point_distance(t_ray ray, t_vec3 center, t_vec3 axis_vec, float diameter, float height)
 {
@@ -105,8 +111,8 @@ static int get_diffuse_light_color(t_ray ray, float distance, t_vec3 cylinder_ce
 
     normal_vec = get_cylinder_normal(ray, distance, cylinder_center, axis_vec);
 	//calculate hit point to light vec
-    t_vec3 light_pos = vec3_create(50, 0, -75);
-	t_vec3 point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
+    t_vec3 light_pos = vec3_create(0, -100, 0);
+	t_vec3 point_to_light_vec = get_point_to_light_vector0(light_pos, ray, distance);
     brightness = fmax(vec3_get_dot_product(normal_vec, point_to_light_vec), 0.1);
     trgb[0] = 1;
     trgb[1] = roundf(255 * brightness);
@@ -128,8 +134,8 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 cylinder_c
     float shininess = 128.0;
 
     normal_vec = get_cylinder_normal(ray, distance, cylinder_center, axis_vec);
-    t_vec3 light_pos = vec3_create(50, 0, -75);
-    point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
+    t_vec3 light_pos = vec3_create(0, -100, 0);
+    point_to_light_vec = get_point_to_light_vector0(light_pos, ray, distance);
 
     // halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, ray.direction));
     halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, vec3_const_multiply(ray.direction, -1)));

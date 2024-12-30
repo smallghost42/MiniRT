@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:54:34 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/26 02:59:49 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:27:01 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,24 @@ float   get_x_image_plane(int x, int fov)
     return (x_image_plane);
 }
 
-float   get_y_image_plane(int y, int fov)
-{
-    float   aspect_ratio;
-    float	y_image_plane;
+// float   get_y_image_plane(int y, int fov)
+// {
+//     float   aspect_ratio;
+//     float	y_image_plane;
 
-    aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
-	// y_image_plane = 1 - 2.0f * (y + 0.5f) / WIN_HEIGHT;
-	y_image_plane = 1 - 2.0f * (y + 0.5f) / WIN_HEIGHT;
-	y_image_plane *= tan((PI * fov) / (180.0f * 2.0f));
-	return (y_image_plane);
+//     aspect_ratio = (float)WIN_WIDTH / (float)WIN_HEIGHT;
+// 	y_image_plane = 2.0f * (y + 0.5f) / WIN_HEIGHT - 1;
+// 	// y_image_plane = 1 - 2.0f * (y + 0.5f) / WIN_HEIGHT;
+// 	y_image_plane *= tan((PI * fov) / (180.0f * 2.0f));
+// 	return (y_image_plane);
+// }
+
+//y ambany
+float get_y_image_plane(int y, int fov)
+{
+    float aspect_ratio = (float)WIN_HEIGHT / WIN_WIDTH;
+    float viewport_height = 2.0 * tan((fov * PI / 180.0) / 2.0);
+    float viewport_width = viewport_height / aspect_ratio;
+
+    return (1.0 - 2.0 * (y / (float)WIN_HEIGHT)) * viewport_height / 2.0;
 }

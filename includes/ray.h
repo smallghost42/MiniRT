@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:48:01 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/28 04:20:28 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/30 16:58:51 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ t_ray   ray_create(t_vec3 origin, t_vec3 direction);
 t_vec3  get_intersection(t_ray ray, float ray_param);
 t_vec3  get_ray_direction(float coord[2]);
 t_vec3  get_point_to_light_vector(t_vec3 light_pos, t_ray ray, float distance);
-t_vec3 get_point_to_light_vector_sphere(t_vec3 light_pos, t_ray ray, float distance);
 t_vec3	get_sphere_hit_point(t_ray ray, float distance);
+t_vec3 get_point_to_light_vector0(t_vec3 light_pos, t_ray ray, float distance);
 
 //sphere
 float     get_sphere_pt_distance(t_ray ray, t_vec3 center, float radius);

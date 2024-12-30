@@ -6,12 +6,13 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/28 04:21:34 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:29:15 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+//note only sphere is need the one without 0 dude
 float get_sphere_pt_distance(t_ray ray, t_vec3 center, float radius)
 {
     t_vec3  oc;
@@ -64,12 +65,14 @@ t_vec3 get_sphere_normal(t_ray ray, float distance, t_vec3 sphere_center)
     return (normal_vec);
 }
 
-t_vec3 get_point_to_light_vector(t_vec3 light_pos, t_ray ray, float distance) {
-    t_vec3 hit_point = get_sphere_hit_point(ray, distance);
-    return vec3_normalize(vec3_substract(light_pos, hit_point));
-}
+// t_vec3 get_point_to_light_vector(t_vec3 light_pos, t_ray ray, float distance) {
+//     t_vec3 hit_point;
 
-t_vec3 get_point_to_light_vector_sphere(t_vec3 light_pos, t_ray ray, float distance)
+//     hit_point = get_sphere_hit_point(ray, distance);
+//     return (vec3_normalize(vec3_substract(light_pos, hit_point)));
+// }
+
+t_vec3  get_point_to_light_vector(t_vec3 light_pos, t_ray ray, float distance)
 {
 	t_vec3	point_to_light;
 	t_vec3	hit_point;
@@ -90,8 +93,8 @@ static int get_diffuse_light_color(t_ray ray, float distance, t_vec3 sphere_cent
 
     normal_vec = get_sphere_normal(ray, distance, sphere_center);
 	//calculate hit point to light vec
-    t_vec3 light_pos = vec3_create(-4000, -5000, -200.6);
-	t_vec3 point_to_light_vec = get_point_to_light_vector_sphere(light_pos, ray, distance);
+    t_vec3 light_pos = vec3_create(-100, -100, 0);
+	t_vec3 point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
     brightness = fmax(vec3_get_dot_product(normal_vec, point_to_light_vec), 0.1);
     trgb[0] = 1;
     trgb[1] = roundf(255 * brightness);
@@ -110,11 +113,11 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_cen
     float tmp;
     int color;
     int trgb[4];
-    float shininess = 64.0;
+    float shininess = 128.0;
 
     normal_vec = vec3_normalize(get_sphere_normal(ray, distance, sphere_center));
-    t_vec3 light_pos = vec3_create(-4000, -5000, -200.6);
-    point_to_light_vec = get_point_to_light_vector_sphere(light_pos, ray, distance);
+    t_vec3 light_pos = vec3_create(-100, -100, 0);
+    point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
 
     // halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, vec3_const_multiply(ray.direction, -1)));
     halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, ray.direction));
@@ -150,6 +153,28 @@ static int add_colors(int diffuse_color, int specular_color)
     free(specular_trgb);
     return get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
 }
+
+//test one
+int is_in_shadow(t_vec3 hit_point) 
+{
+    t_vec3 light_pos = vec3_create(100, 0, 0);
+    t_ray  ray;
+    t_vec3 sphere_center;
+    float  d;
+    float  radius;
+    float  distance_to_light;
+
+    sphere_center = vec3_create(0.0, 0, -20.6);    
+    radius = 12.6;
+    ray.origin = hit_point;
+    ray.direction = vec3_normalize(vec3_substract(light_pos, hit_point)); 
+    distance_to_light = vec3_get_norm(vec3_substract(light_pos, hit_point));
+    d = get_sphere_pt_distance(ray, sphere_center, radius);
+    if (d > 0 && d < distance_to_light)
+        return (1);
+    return (0);
+}
+
 
 int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float radius)
 {
@@ -187,7 +212,9 @@ int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float
 
 				// int color = get_diffuse_light_color(ray, current_distance, sphere_center);
 				// int color = get_specular_light_color(ray, current_distance, sphere_center);
-
+                // if (radius != 12.6 && is_in_shadow(get_sphere_hit_point(ray, current_distance)))
+                // my_mlx_pixel_put(scene, coord[0], coord[1], get_color_from_trgb(1, 20, 20, 10));
+                // else
                 my_mlx_pixel_put(scene, coord[0], coord[1], color);
                 // my_mlx_pixel_put(scene, coord[0], coord[1], COLOR);
             }
