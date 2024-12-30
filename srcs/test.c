@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:40:30 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/30 17:33:14 by trazanad         ###   ########.fr       */
+/*   Updated: 2024/12/30 17:46:07 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,15 @@ int	draw_some_plane(t_scene *scene)
 	
 
 // 	// Test case 2: Vertical plane (like a wall)
-// camera_pos = vec3_create(0.0, 0.0, 50.0);
-// plane_point = vec3_create(0.0, 0.0, -20.0);
-// plane_normal = vec3_normalize(vec3_create(0.0, 0.0, 1.0));  // Normal pointing towards camera
-// 	render_plane(scene, camera_pos, plane_point, plane_normal);
+camera_pos = vec3_create(0.0, 0.0, 50.0);
+plane_point = vec3_create(0.0, 0.0, -20.0);
+plane_normal = vec3_normalize(vec3_create(0.0, 0.0, 1.0));  // Normal pointing towards camera
+	render_plane(scene, camera_pos, plane_point, plane_normal);
 
 // // Test case 1: Horizontal Plane (Ceiling-like)
-// plane_point = vec3_create(0.0,50,-100.0);
-// 	plane_normal = vec3_normalize(vec3_create(0, 1,0));
-// 	render_plane(scene, camera_pos, plane_point, plane_normal);
+plane_point = vec3_create(0.0,50,-100.0);
+	plane_normal = vec3_normalize(vec3_create(0.0, 1,0.1));
+	render_plane(scene, camera_pos, plane_point, plane_normal);
 
 // // Test case 3: Tilted Plane
 // camera_pos = vec3_create(0.0, -20.0, -50.0);
@@ -127,11 +127,11 @@ int	draw_some_plane(t_scene *scene)
 // render_plane(scene, camera_pos, plane_point, plane_normal);
 
 // // Test case 4: Ground Plane (Floor-like)
-camera_pos = vec3_create(0.0, 10.0, 0.0);
-plane_point = vec3_create(0.0, 50.0, 0.0);
-plane_normal = vec3_normalize(vec3_create(0.0, 1.0, 0.0));  // Normal pointing upward
-// // light_pos = vec3_create(0.0, 20.0, 0.0);  // Light positioned above the plane
-render_plane(scene, camera_pos, plane_point, plane_normal);
+// camera_pos = vec3_create(0.0, 25.0, 0.0);
+// plane_point = vec3_create(0.0, 50.0, 0.0);
+// plane_normal = vec3_normalize(vec3_create(0.0, 1.0, 0.0));  // Normal pointing upward
+// // // light_pos = vec3_create(0.0, 20.0, 0.0);  // Light positioned above the plane
+// render_plane(scene, camera_pos, plane_point, plane_normal);
 
 	return (0);
 }
