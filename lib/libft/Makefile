@@ -8,7 +8,7 @@ CC = cc
 
 RM = rm -f
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fPIE
 
 .c.o:
 			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
