@@ -1,0 +1,202 @@
+void	translate_x(t_point *pt, float range)
+{
+	int	new_x;
+
+	new_x = (int)range;
+	pt->xyz[0] += new_x;
+	pt->init[0] += new_x;  
+}
+
+void	translate_y(t_point *pt, float range)
+{
+	int	new_y;
+
+	new_y = (int)range;
+	pt->xyz[1] += new_y; 
+	pt->init[1] += new_y;
+}
+
+void zoom_pt(t_point *pt, float scale) {
+    float offset_x;
+    float offset_y;
+
+	offset_x = pt->init[0] - x;
+	offset_y = pt->init[1] - y;
+    offset_x *= scale;
+    offset_y *= scale;
+    pt->xyz[0] = (int)round(x + offset_x);
+    pt->xyz[1] = (int)round(y + offset_y);
+}
+
+void zoom_c(t_point *pt, float scale) {
+    float offset_x;
+    float offset_y;
+
+	offset_x = pt->init[0];
+	offset_y = pt->init[1];
+    offset_x *= scale;
+    offset_y *= scale;
+    pt->xyz[0] = (int)round(offset_x);
+    pt->xyz[1] = (int)round(offset_y);
+	pt->init[0] = pt->xyz[0];
+	pt->init[1] = pt->xyz[1];
+}
+
+float	degree_to_rad(float angle)
+{
+	float	rad_angle;
+
+	rad_angle = PI * angle / 180.0;
+	return(rad_angle);
+}
+
+
+void	rotation_x(t_point *pt, float angle) 
+{
+    float	rad_anlge;
+	float	y;
+	float	z;
+
+	y = (float)pt->init[1];
+	z = (float)pt->init[2];
+	rad_anlge = degree_to_rad(angle);
+    pt->xyz[1] = y * cos(rad_anlge) - z * sin(rad_anlge);
+    pt->xyz[2] = y * sin(rad_anlge) + z * cos(rad_anlge);
+}
+
+void	rotation_y(t_point *pt, float angle) 
+{
+    float	rad_anlge;
+	float	x;
+	float	z;
+
+	x = (float)pt->init[0];
+	z = (float)pt->init[2];
+	rad_anlge = degree_to_rad(angle);
+    pt->xyz[0] = x * cos(rad_anlge) + z * sin(rad_anlge);
+    pt->xyz[2] = x * -sin(rad_anlge) + z * cos(rad_anlge);
+}
+
+void	rotation_z(t_point *pt, float angle) 
+{
+    float	rad_anlge;
+	float	x;
+	float	y;
+
+	x = (float)pt->init[0];
+	y = (float)pt->init[1];
+	rad_anlge = degree_to_rad(angle);
+    pt->xyz[0] = (int)round(x * cos(rad_anlge) - y * sin(rad_anlge));
+    pt->xyz[2] = (int)round(x * sin(rad_anlge) + y * cos(rad_anlge));
+}
+
+static int	on_destroy(t_fdf *fdf)
+{
+	map_clear(fdf->map);
+	mlx_destroy_image(fdf->mlx, fdf->img);
+	mlx_destroy_window(fdf->mlx, fdf->win);
+	mlx_destroy_display(fdf->mlx);
+	free(fdf->mlx);
+	free(fdf->center);
+	exit(EXIT_SUCCESS);
+	return (0);
+}
+
+static int	on_zoom(int keycode, t_fdf *fdf)
+{
+	static float	scale = 1;
+	int				center[2];
+
+	center[0] = fdf->center[0];
+	center[1] = fdf->center[1];
+	if (keycode == 65451)
+	{
+		scale = scale * 1.2;
+		transform_map(fdf, scale, zoom_pt);
+	}
+	else
+	{
+		scale = scale / 1.2; 
+		transform_map(fdf, scale, zoom_pt);
+	}
+}
+
+static int	on_translate(int keycode, t_fdf *fdf)
+{
+	if (keycode == 65364)
+		transform_map(fdf, 10, translate_y);
+	else if (keycode == 65363)
+		transform_map(fdf, 10, translate_x);
+	else if (keycode == 65362)
+		transform_map(fdf, -10, translate_y);
+	else
+		transform_map(fdf, -10, translate_x);
+	free(fdf->center);
+	fdf->center = take_center(fdf->map);
+}
+
+static int	on_rotate(int keycode, t_fdf *fdf)
+{
+	static float	new_angle[3];
+	static float	last_angle[3];
+	t_point			**map;
+	int				*offset;
+
+
+	if (!new_angle)
+	{
+		new_angle[0] = 0;
+		new_angle[1] = 0;
+		new_angle[2] = 0;
+	}
+	if (!last_angle)
+	{
+		last_angle[0] = 0;
+		last_angle[1] = 0;
+		last_angle[2] = 0;
+	}
+	if (keycode == 120)
+		new_angle[0] = new_angle[0] + 5;
+	else if (keycode == 121)
+		new_angle[1] = new_angle[1] + 5;
+	else
+		new_angle[2] = new_angle[2] + 5;
+	if (last_angle[0] != new_angle[0])
+	transform_map(fdf, new_angle[0], rotation_x);
+	if (last_angle[1] != new_angle[1])
+	transform_map(fdf, new_angle[1], rotation_y);
+	if (last_angle[2] != new_angle[2])
+	transform_map(fdf, new_angle[2], rotation_z);
+	map = fdf->map;
+	offset = take_offset(map);
+	transform_map(fdf, offset[0], translate_x);
+	transform_map(fdf, offset[1], translate_y);
+	free(offset);
+	free(fdf->center);
+	fdf->center = take_center(fdf->map);
+}
+
+static int	on_keydown(int keycode, t_fdf *fdf)
+{
+	// ft_printf("%d\n",keycode);
+	if (keycode == 65307)
+		on_destroy(fdf);
+	else if (keycode == 65535)
+		reset_img(fdf);
+	else if (keycode == 65364 || keycode == 65363)
+		on_translate(keycode, fdf);
+	else if (keycode == 65362 || keycode == 65361)
+		on_translate(keycode, fdf);
+	else if (keycode == 65451 ||keycode == 65453)
+		on_zoom(keycode, fdf);
+	else if (keycode == 120 || keycode == 121 || keycode == 122)
+		on_rotate(keycode, fdf);
+	return (0);
+}
+
+void	hook_loop(t_fdf fdf)
+{
+	mlx_hook(fdf.win, 2, 1L<<0, on_keydown, &fdf);
+	mlx_hook(fdf.win, 17, 0L, on_destroy, &fdf);
+	mlx_loop(fdf.mlx);
+}
