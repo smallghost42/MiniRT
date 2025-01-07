@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 13:18:47 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/23 11:21:24 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 11:01:10 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int valid_range_ambient(char **str2, t_data *data)
 	if (data->ambient_lightning->lightning_ratio < 0.0 ||
 		data->ambient_lightning->lightning_ratio > 1.0)
 		return (1);
-	if (check_valid_rgb(str2[2]))
+	if (check_valid_rgb(str2[2], &data->ambient_lightning->color))
 		return (1);
 	// data->ambient_lightning->color = ;
 	return (0);
@@ -47,7 +47,7 @@ int valid_range_light(char **str2, t_data *data)
 	data->light->brightness_ratio = ft_atof(str2[2]);
 	if (data->light->brightness_ratio < 0.0 || data->light->brightness_ratio > 1.0)
 		return (1);
-	if (check_valid_rgb(str2[3])) // for bonus only
+	if (check_valid_rgb(str2[3],&data->light->color)) // for bonus only
 		return (1);
 	// data->light->color = ;
 	return (0);

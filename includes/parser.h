@@ -61,7 +61,7 @@ double	ft_atof(const char *str);
 int		is_valid_float(char *str, int x);
 int		check_first_and_count_param(char *str, t_count *count, t_data *data);
 int		check_file_extention(char *filename);
-int		check_valid_rgb(char *color);
+int		check_valid_rgb(char *color, int *col);
 int		ft_atoi(const char *nptr);
 int		ft_valid_int(const char *str);
 int		check_valid_coordinate(char *cord, t_vec3 *vec3);

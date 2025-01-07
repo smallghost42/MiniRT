@@ -6,13 +6,14 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:46:25 by ferafano          #+#    #+#             */
-/*   Updated: 2025/01/07 09:43:32 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:58:19 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "minirt.h"
 
-int check_valid_rgb(char *color)
+int check_valid_rgb(char *color, int *col)
 {
 	char **rgb;
 	int i;
@@ -29,6 +30,7 @@ int check_valid_rgb(char *color)
 			free_split(rgb);
 			return (1);
 		}
+		*col = get_color_from_trgb(1, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 		i++;
 	}
 	if (i != 3)
@@ -57,8 +59,6 @@ int check_valid_coordinate(char *cord, t_vec3 *vec3)
 			return (1);
 		}
 		vec3->x = ft_atof(cord2[0]);
-		// vec3->x = 50.02;
-		printf("cord2 = %f\n", vec3->x);
 		vec3->y = ft_atof(cord2[1]);
 		vec3->z = ft_atof(cord2[2]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 07:25:29 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/23 11:28:04 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:57:34 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@ int valid_range_sphere(char **str2, t_data *data)
 	if (is_valid_float(str2[2], 2))
 		return (1);
 	sphere->diameter = ft_atof(str2[2]);
-	if (check_valid_rgb(str2[3]))
-		return (1);
-	// sphere->color = ;
+	if (check_valid_rgb(str2[3], &sphere->color))
+		return (1);	
 	sphere->next = NULL;
 	if (data->shape->sphere)
 		add_back_sphere(&(data->shape->sphere), sphere);
@@ -46,9 +45,8 @@ int valid_range_plane(char **str2, t_data *data)
 		return (1);
 	if (check_3dnormaliser(str2[2], &plane->orientation))
 		return (1);
-	if (check_valid_rgb(str2[3]))
+	if (check_valid_rgb(str2[3], &plane->color))
 		return (1);
-	// plane->color = ;
 	plane->next = NULL;
 	if (data->shape->plane)
 		add_back_plane(&(data->shape->plane), plane);
@@ -74,7 +72,7 @@ int valid_range_cylinder(char **str2, t_data *data)
 	if (is_valid_float(str2[4], 2))
 		return (1);
 	cylinder->height = ft_atof(str2[4]);
-	if (check_valid_rgb(str2[5]))
+	if (check_valid_rgb(str2[5], &cylinder->color))
 		return (1);
 	// cylinder->color = ;
 	cylinder->next = NULL;
