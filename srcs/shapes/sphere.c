@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/30 17:29:15 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 08:11:58 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ static int add_colors(int diffuse_color, int specular_color)
 	specular_trgb = get_trgb_from_color(specular_color);
 
     trgb[0] = 1;
-    trgb[1] = fmin(diffuse_trgb[1] * 0.8 + specular_trgb[1] * 0.5, 255);
-    trgb[2] = fmin(diffuse_trgb[2] * 0.8 + specular_trgb[2] * 0.5, 255);
-    trgb[3] = fmin(diffuse_trgb[3] * 0.8 + specular_trgb[3] * 0.5, 255); 
+    trgb[1] = fmin(diffuse_trgb[1] * 0.5 + specular_trgb[1] * 0.5 + 0.4 * 255, 255);
+    trgb[2] = fmin(diffuse_trgb[2] * 0.5 + specular_trgb[2] * 0.5 + 0.4 * 0, 255);
+    trgb[3] = fmin(diffuse_trgb[3] * 0.5 + specular_trgb[3] * 0.5 + 0.4 * 0, 255); 
     free(diffuse_trgb);
     free(specular_trgb);
     return get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);

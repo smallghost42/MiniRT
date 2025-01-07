@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:49:52 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/30 17:37:04 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 07:56:14 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	main(int argc, char **argv)
 	print_direction();
 	//draw_some_plane(&scene);
 	//draw_some_cylinder(&scene);
-	//draw_some_sphere(&scene);
+	draw_some_sphere(&scene);
     // Free memory
 	mlx_put_image_to_window(scene.mlx, scene.win, scene.img, 0, 0);
 	run_hook_cycle(scene);
