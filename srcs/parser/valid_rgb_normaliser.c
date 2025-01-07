@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:46:25 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/23 11:28:11 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 09:43:32 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ int check_valid_coordinate(char *cord, t_vec3 *vec3)
 			return (1);
 		}
 		vec3->x = ft_atof(cord2[0]);
+		// vec3->x = 50.02;
+		printf("cord2 = %f\n", vec3->x);
 		vec3->y = ft_atof(cord2[1]);
 		vec3->z = ft_atof(cord2[2]);
 		i++;

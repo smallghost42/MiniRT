@@ -76,5 +76,6 @@ void	add_back_sphere(t_sphere **lst, t_sphere *new);
 void	add_back_plane(t_plane **lst, t_plane *new);
 void	add_back_cylinder(t_cylinder **lst, t_cylinder *new);
 void	free_scene_data(t_data *data);
+void    print_data(t_data *data);
 
 #endif

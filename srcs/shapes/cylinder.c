@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 16:56:40 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/30 17:34:18 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 09:16:15 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 cylinder_c
     tmp = vec3_get_dot_product(normal_vec, halfway_vec);
     spec_brightness = powf(fmax(tmp, 0.1), shininess);
 
-    //suppose light reflexision is white nigga
+    //suppose light reflexision is white
     int surface_trgb[4] = {1, 255, 255, 255};
     trgb[0] = 1;
     trgb[1] = fmin(roundf(surface_trgb[1] * spec_brightness), 255);
@@ -163,11 +163,10 @@ static int add_colors(int diffuse_color, int specular_color)
     
 	diffuse_trgb = get_trgb_from_color(diffuse_color);
 	specular_trgb = get_trgb_from_color(specular_color);
-
     trgb[0] = 1;
-    trgb[1] = fmin(diffuse_trgb[1] * 0.8 + specular_trgb[1] * 0.5, 255);
-    trgb[2] = fmin(diffuse_trgb[2] * 0.8 + specular_trgb[2] * 0.5, 255);
-    trgb[3] = fmin(diffuse_trgb[3] * 0.8 + specular_trgb[3] * 0.5, 255); 
+    trgb[1] = fmin(diffuse_trgb[1] * 0.8 + specular_trgb[1] * 0.5 + 0.4 * 255, 255);
+    trgb[2] = fmin(diffuse_trgb[2] * 0.8 + specular_trgb[2] * 0.5 + 0.4 * 0, 255);
+    trgb[3] = fmin(diffuse_trgb[3] * 0.8 + specular_trgb[3] * 0.5 + 0.4 * 0, 255); 
     free(diffuse_trgb);
     free(specular_trgb);
     return get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:31:54 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/24 14:55:32 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 08:44:27 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,9 @@ t_vec3 vec3_cross_product(t_vec3 u, t_vec3 v)
     vector.z = u.x * v.y - u.y * v.x;
 
     return vector;
+}
+
+void    vec3_print(t_vec3 vector)
+{
+    printf("(x = %f, y = %f, z = %f)\n", vector.x, vector.y, vector.z);
 }

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:32:26 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/24 14:55:50 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 08:44:45 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ t_vec3  vec3_multiply(t_vec3 u, t_vec3 v);
 t_vec3  vec3_const_multiply(t_vec3 u, float k);
 t_vec3  vec3_divide(t_vec3 u, t_vec3 v);
 t_vec3 vec3_cross_product(t_vec3 u, t_vec3 v);
+void    vec3_print(t_vec3 vector); // to retire
 
 #endif
