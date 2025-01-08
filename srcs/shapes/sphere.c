@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/07 08:11:58 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/08 11:22:17 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,20 +195,21 @@ int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float
         coord[1] = 0;
         while (coord[1] < WIN_HEIGHT)
         {
-            image_plane_coord[0] = get_x_image_plane(coord[0], fov_angle);
-            image_plane_coord[1] = get_y_image_plane(coord[1], fov_angle);
+            image_plane_coord[0] = get_x_projected(coord[0], fov_angle);
+            image_plane_coord[1] = get_y_projected(coord[1], fov_angle);
 
             ray.direction = get_ray_direction(image_plane_coord);
             ray.origin = camera_pos;
-
             current_distance = get_sphere_pt_distance(ray, sphere_center, radius);
+		// printf("%f\n", current_distance);
             if (current_distance >= 0)
             {
                 if (distance > current_distance)
                     distance = current_distance;
                 //apply diffuse light from camera
-				int	color = add_colors(get_diffuse_light_color(ray, current_distance, sphere_center), 
-                           get_specular_light_color(ray, current_distance, sphere_center));
+                int color= 255;
+				// int	color = add_colors(get_diffuse_light_color(ray, current_distance, sphere_center), 
+                //            get_specular_light_color(ray, current_distance, sphere_center));
 
 				// int color = get_diffuse_light_color(ray, current_distance, sphere_center);
 				// int color = get_specular_light_color(ray, current_distance, sphere_center);

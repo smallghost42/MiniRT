@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/26 16:40:22 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/08 10:47:43 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ typedef struct s_scene
 	int		endian;
 	t_data	*data;
 }	t_scene;
+
+int render_scene(t_scene *scene);
 
 #endif

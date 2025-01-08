@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 16:56:40 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/07 09:16:15 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/08 08:35:38 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,8 @@ int render_cylinder(t_scene *scene, t_vec3 camera_pos, t_vec3 cylinder_center, t
         coord[1] = 0;
         while (coord[1] < WIN_HEIGHT)
         {
-            image_plane_coord[0] = get_x_image_plane(coord[0], fov_angle);
-            image_plane_coord[1] = get_y_image_plane(coord[1], fov_angle);
+            image_plane_coord[0] = get_x_projected(coord[0], fov_angle);
+            image_plane_coord[1] = get_y_projected(coord[1], fov_angle);
 
             ray.direction = get_ray_direction(image_plane_coord);
             ray.origin = camera_pos;

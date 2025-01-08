@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 08:00:47 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/24 15:32:05 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/08 08:35:38 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		*get_trgb_from_color(int color);
 
 //image plane
 float   get_aspect_ratio(void);
-float   get_x_image_plane(int x, int fov);
-float   get_y_image_plane(int y, int fov);
+float   get_x_projected(int x, int fov);
+float   get_y_projected(int y, int fov);
 
 #endif

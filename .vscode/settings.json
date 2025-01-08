@@ -13,6 +13,7 @@
         "algorithm": "c",
         "test.h": "c",
         "*.dude": "cpp",
-        "iterator": "c"
+        "iterator": "c",
+        "ranges": "c"
     }
 }
