@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 07:40:16 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/08 11:26:34 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/08 14:30:20 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,40 @@
 	// light = data->light;
 	// ambient_light = data->ambient_lightning;
 
-int	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape* visible_object)
+float	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape** visible_object)
 {
 	float		distance;
 	float		min_distance;
 	float		radius;
-	t_sphere*	tmp;
+	t_sphere*	sphere_next;
 	t_vec3		center;
 
 	min_distance = INFINITY;
-	tmp = NULL;
-	if (sphere)
-	tmp = sphere->next;
-	while (tmp)
+	if (!sphere)
+		return (INFINITY);
+	distance = get_sphere_pt_distance(ray, sphere->center, sphere->diameter / 2.0);
+	if (distance >= 0 && distance < min_distance)
 	{
-		center = tmp->center;
-		radius = tmp->diameter;
-		distance = get_sphere_pt_distance(ray, center, radius);
-		// printf("%f\n", distance);
-		// if (distance >= 0 && distance < min_distance)
-		// {
-		// 	min_distance = distance;
-		// 	visible_object->sphere = tmp;
-		// }
 		min_distance = distance;
-		tmp = tmp->next;
+		(*visible_object)->sphere = sphere;
+	}
+	sphere_next = sphere->next;
+	while (sphere_next)
+	{
+		center = sphere_next->center;
+		radius = sphere_next->diameter / 2.0;
+		distance = get_sphere_pt_distance(ray, center, radius);
+		if (distance >= 0 && distance < min_distance)
+		{
+			min_distance = distance;
+			(*visible_object)->sphere = sphere_next;
+		}
+		sphere_next = sphere_next->next;
 	}
 	return (min_distance);
 }
 
-int	get_object_distance(t_data* data, t_ray ray, t_shape* visible_object)
+float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 {
 	t_shape*	shape;
 	float		distance;
@@ -59,51 +63,47 @@ int	get_object_distance(t_data* data, t_ray ray, t_shape* visible_object)
 
 	distance = INFINITY;
 	shape = data->shape;
-	// obj_distance[0] = get_plane_distance(shape->plane, ray, visible_object->plane);
+	// obj_distance[0] = get_plane_distance(shape->plane, ray, visible_object);
 	// if (obj_distance[0] > 0 && obj_distance[0] < distance)
 	// 	distance = obj_distance[0];
 	obj_distance[1] = get_sphere_distance(shape->sphere, ray, visible_object);
-	// if (obj_distance[1] > 0 && obj_distance[1] < distance)
+	if (obj_distance[1] > 0 && obj_distance[1] < distance)
+	{
+		distance = obj_distance[1];
+		(*visible_object)->plane = NULL;
+	}
+	// obj_distance[2] = get_cylinder_distance(shape->cylinder, ray, visible_object);
+	// if (obj_distance[2] > 0 && obj_distance[2] < distance)
 	// {
-	// 	distance = obj_distance[1];
-	// 	visible_object->plane = NULL;
-	// }
-	distance = obj_distance[1];
-	// obj_distance[0] = get_plane_distance(shape->plane, ray, visible_object->plane);
-	// if (obj_distance[0] > 0 && obj_distance[0] < distance)
-	// {
-	// 	distance = obj_distance[0];
+	// 	distance = obj_distance[2];
 	// 	visible_object->plane = NULL;
 	// 	visible_object->sphere = NULL;
 	// }
 	return (distance);
 }
 
-int	get_object_color(t_data* data, t_ray ray, t_shape* visible_object, float distance)
+int	get_object_color(t_data* data, t_ray ray, t_shape** visible_object, float distance)
 {
 	int	color;
 
-	// if (visible_object->plane)
+	color = 0;
+	// if ((*visible_object)->plane)
 	// 	color = get_plane_pt_color();
-	color = 255;
-	if (visible_object->sphere)
+	if ((*visible_object)->sphere)
 		// color = get_sphere_pt_color();
-	{
-		color = visible_object->sphere->color;
-	}
-	// if (visible_object->cylinder)
+		color = (*visible_object)->sphere->color;
+	// if ((*visible_object)->cylinder)
 	// 	color = get_cylinder_pt_color();
 	//check is this visible_object in shadow;
 	return (color);
 }
 
-int	render_shape(t_data *data, t_ray ray, t_shape* visible_obj)
+int	render_shape(t_data *data, t_ray ray, t_shape** visible_obj)
 {
 	int			color;
 	float		distance;
 
 	distance = get_object_distance(data, ray, visible_obj);
-	printf("%f\n", distance);
 	if (distance == INFINITY || distance < 0)
 		return (-1);
 	color = get_object_color(data, ray, visible_obj, distance);
@@ -152,7 +152,7 @@ int render_scene(t_scene *scene)
 		while (coord[1] < WIN_HEIGHT)
 		{
 			ray = ray_from_screen(scene->data, coord);
-			color = render_shape(scene->data, ray, visible_obj);
+			color = render_shape(scene->data, ray, &visible_obj);
 			if (color > -1)
             	my_mlx_pixel_put(scene, coord[0], coord[1], color);
 			coord[1]++;
