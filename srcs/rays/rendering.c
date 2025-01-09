@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 07:40:16 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/09 08:46:45 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 09:10:55 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,43 @@ float	get_plane_distance(t_plane* plane, t_ray ray, t_shape** visible_object)
 	return (min_distance);
 }
 
+float	get_cylinder_distance(t_cylinder* cylinder, t_ray ray, t_shape** visible_object)
+{
+	float		distance;
+	float		min_distance;
+	t_cylinder*	cylinder_next;
+	float		diameter;
+	float		height;
+	t_vec3		orientation;
+	t_vec3		center;
+
+	min_distance = INFINITY;
+	if (!cylinder)
+		return (INFINITY);
+	distance = get_cylinder_pt_distance(ray, cylinder->center, cylinder->orientation, cylinder->diameter, cylinder->height);
+	if (distance >= 0 && distance < min_distance)
+	{
+		min_distance = distance;
+		(*visible_object)->cylinder = cylinder;
+	}
+	cylinder_next = cylinder->next;
+	while (cylinder_next)
+	{
+		center = cylinder_next->center;
+		orientation = cylinder_next->orientation;
+		diameter = cylinder_next->diameter;
+		height = cylinder_next->height;
+		distance = get_cylinder_pt_distance(ray, center, orientation, diameter, height);
+		if (distance >= 0 && distance < min_distance)
+		{
+			min_distance = distance;
+			(*visible_object)->cylinder = cylinder_next;
+		}
+		cylinder_next = cylinder_next->next;
+	}
+	return (min_distance);
+}
+
 float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 {
 	t_shape*	shape;
@@ -108,13 +145,13 @@ float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 		distance = obj_distance[1];
 		(*visible_object)->plane = NULL;
 	}
-	// obj_distance[2] = get_cylinder_distance(shape->cylinder, ray, visible_object);
-	// if (obj_distance[2] > 0 && obj_distance[2] < distance)
-	// {
-		// 	distance = obj_distance[2];
-	// 	(*visible_object)->plane = NULL;
-	// 	(*visible_object)->sphere = NULL;
-	// }
+	obj_distance[2] = get_cylinder_distance(shape->cylinder, ray, visible_object);
+	if (obj_distance[2] > 0 && obj_distance[2] < distance)
+	{
+		distance = obj_distance[2];
+		(*visible_object)->plane = NULL;
+		(*visible_object)->sphere = NULL;
+	}
 	return (distance);
 }
 
@@ -124,14 +161,14 @@ int	get_object_color(t_data* data, t_ray ray, t_shape** visible_object, float di
 
 	color = 0;
 	if ((*visible_object)->plane)
+		// 	color = get_plane_pt_color();
 		return ((*visible_object)->plane->color);
-
-	// 	color = get_plane_pt_color();
 	if ((*visible_object)->sphere)
 		// color = get_sphere_pt_color();
 		return (color = (*visible_object)->sphere->color);
-	// if ((*visible_object)->cylinder)
-	// 	color = get_cylinder_pt_color();
+	if ((*visible_object)->cylinder)
+		// color = get_cylinder_pt_color();
+		return (color = (*visible_object)->cylinder->color);
 	//check is this visible_object in shadow;
 	return (color);
 }

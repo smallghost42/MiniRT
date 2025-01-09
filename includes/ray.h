@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:48:01 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/09 08:36:34 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 09:00:06 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ int render_plane(t_scene *scene, t_vec3 camera_pos, t_vec3 plane_point, t_vec3 p
 float	get_plane_pt_distance(t_ray ray, t_vec3 plane_point, t_vec3 plane_normal);
 //cylinder
 int render_cylinder(t_scene *scene, t_vec3 camera_pos, t_vec3 cylinder_center, t_vec3 axis_vec, float diameter, float height);
+float	get_cylinder_pt_distance(t_ray ray, t_vec3 center, t_vec3 axis_vec, float diameter, float height);
 
 #endif

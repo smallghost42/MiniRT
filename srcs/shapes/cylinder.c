@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 16:56:40 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/08 08:35:38 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 08:59:41 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_vec3 get_point_to_light_vector0(t_vec3 light_pos, t_ray ray, float distance) {
     return (vec3_normalize(vec3_substract(light_pos, hit_point)));
 }
 
-float	get_cylinder_point_distance(t_ray ray, t_vec3 center, t_vec3 axis_vec, float diameter, float height)
+float	get_cylinder_pt_distance(t_ray ray, t_vec3 center, t_vec3 axis_vec, float diameter, float height)
 {
 	float	distance = -1;
 	float	discriminant;
@@ -196,7 +196,7 @@ int render_cylinder(t_scene *scene, t_vec3 camera_pos, t_vec3 cylinder_center, t
             ray.direction = get_ray_direction(image_plane_coord);
             ray.origin = camera_pos;
 
-			current_distance = get_cylinder_point_distance(ray, cylinder_center, axis_vec, diameter, height);
+			current_distance = get_cylinder_pt_distance(ray, cylinder_center, axis_vec, diameter, height);
             if (current_distance >= 0)
             {
                 if (distance > current_distance)
