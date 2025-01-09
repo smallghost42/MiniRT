@@ -6,13 +6,13 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:29:59 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/08 08:35:38 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 08:32:33 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-float	get_plane_point_distance(t_ray ray, t_vec3 plane_point, t_vec3 plane_normal)
+float	get_plane_pt_distance(t_ray ray, t_vec3 plane_point, t_vec3 plane_normal)
 {
 	float	distance;
 	t_vec3	camera_to_point;
@@ -115,7 +115,7 @@ int render_plane(t_scene *scene, t_vec3 camera_pos, t_vec3 plane_point, t_vec3 p
             ray.direction = get_ray_direction(image_plane_coord);
             ray.origin = camera_pos;
 
-            current_distance = get_plane_point_distance(ray, plane_point, plane_normal);
+            current_distance = get_plane_pt_distance(ray, plane_point, plane_normal);
             if (current_distance >= 0)
             {
                 if (distance > current_distance)

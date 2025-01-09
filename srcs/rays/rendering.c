@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 07:40:16 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/08 14:30:20 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 08:46:45 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,39 @@ float	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape** visible_object)
 	return (min_distance);
 }
 
+float	get_plane_distance(t_plane* plane, t_ray ray, t_shape** visible_object)
+{
+	float		distance;
+	float		min_distance;
+	t_plane*	plane_next;
+	t_vec3		orientation;
+	t_vec3		center;
+
+	min_distance = INFINITY;
+	if (!plane)
+		return (INFINITY);
+	distance = get_plane_pt_distance(ray, plane->center, plane->orientation);
+	if (distance >= 0 && distance < min_distance)
+	{
+		min_distance = distance;
+		(*visible_object)->plane = plane;
+	}
+	plane_next = plane->next;
+	while (plane_next)
+	{
+		center = plane_next->center;
+		orientation = plane_next->orientation;
+		distance = get_plane_pt_distance(ray, center, orientation);
+		if (distance >= 0 && distance < min_distance)
+		{
+			min_distance = distance;
+			(*visible_object)->plane = plane_next;
+		}
+		plane_next = plane_next->next;
+	}
+	return (min_distance);
+}
+
 float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 {
 	t_shape*	shape;
@@ -63,9 +96,12 @@ float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 
 	distance = INFINITY;
 	shape = data->shape;
-	// obj_distance[0] = get_plane_distance(shape->plane, ray, visible_object);
-	// if (obj_distance[0] > 0 && obj_distance[0] < distance)
-	// 	distance = obj_distance[0];
+	(*visible_object)->plane = NULL;
+	(*visible_object)->sphere = NULL;
+	(*visible_object)->cylinder = NULL;
+	obj_distance[0] = get_plane_distance(shape->plane, ray, visible_object);
+	if (obj_distance[0] > 0 && obj_distance[0] < distance)
+		distance = obj_distance[0];		
 	obj_distance[1] = get_sphere_distance(shape->sphere, ray, visible_object);
 	if (obj_distance[1] > 0 && obj_distance[1] < distance)
 	{
@@ -75,9 +111,9 @@ float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 	// obj_distance[2] = get_cylinder_distance(shape->cylinder, ray, visible_object);
 	// if (obj_distance[2] > 0 && obj_distance[2] < distance)
 	// {
-	// 	distance = obj_distance[2];
-	// 	visible_object->plane = NULL;
-	// 	visible_object->sphere = NULL;
+		// 	distance = obj_distance[2];
+	// 	(*visible_object)->plane = NULL;
+	// 	(*visible_object)->sphere = NULL;
 	// }
 	return (distance);
 }
@@ -87,11 +123,13 @@ int	get_object_color(t_data* data, t_ray ray, t_shape** visible_object, float di
 	int	color;
 
 	color = 0;
-	// if ((*visible_object)->plane)
+	if ((*visible_object)->plane)
+		return ((*visible_object)->plane->color);
+
 	// 	color = get_plane_pt_color();
 	if ((*visible_object)->sphere)
 		// color = get_sphere_pt_color();
-		color = (*visible_object)->sphere->color;
+		return (color = (*visible_object)->sphere->color);
 	// if ((*visible_object)->cylinder)
 	// 	color = get_cylinder_pt_color();
 	//check is this visible_object in shadow;

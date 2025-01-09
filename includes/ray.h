@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:48:01 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/30 16:58:51 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 08:36:34 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int     render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, f
 
 //plane
 int render_plane(t_scene *scene, t_vec3 camera_pos, t_vec3 plane_point, t_vec3 plane_normal);
-
+float	get_plane_pt_distance(t_ray ray, t_vec3 plane_point, t_vec3 plane_normal);
 //cylinder
 int render_cylinder(t_scene *scene, t_vec3 camera_pos, t_vec3 cylinder_center, t_vec3 axis_vec, float diameter, float height);
 
