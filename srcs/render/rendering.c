@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 07:40:16 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/09 09:10:55 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 10:11:28 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,19 +158,22 @@ float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 int	get_object_color(t_data* data, t_ray ray, t_shape** visible_object, float distance)
 {
 	int	color;
-
+	int	is_shadowed;
+	
 	color = 0;
+	is_shadowed = 0;
 	if ((*visible_object)->plane)
 		// 	color = get_plane_pt_color();
-		return ((*visible_object)->plane->color);
-	if ((*visible_object)->sphere)
+		color = (*visible_object)->plane->color;
+	else if ((*visible_object)->sphere)
 		// color = get_sphere_pt_color();
-		return (color = (*visible_object)->sphere->color);
-	if ((*visible_object)->cylinder)
+		color = (*visible_object)->sphere->color;
+	else if ((*visible_object)->cylinder)
 		// color = get_cylinder_pt_color();
-		return (color = (*visible_object)->cylinder->color);
+		color = (*visible_object)->cylinder->color;
 	//check is this visible_object in shadow;
-	return (color);
+	is_shadowed = is_shadowed(data, ray, visible_object, distance);
+	return (color * is_shadowed);
 }
 
 int	render_shape(t_data *data, t_ray ray, t_shape** visible_obj)
