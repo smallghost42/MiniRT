@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 07:40:16 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/09 10:11:28 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/10 13:49:06 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ float	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape** visible_object)
 	if (distance >= 0 && distance < min_distance)
 	{
 		min_distance = distance;
+		if(*visible_object)
 		(*visible_object)->sphere = sphere;
 	}
 	sphere_next = sphere->next;
@@ -48,6 +49,7 @@ float	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape** visible_object)
 		if (distance >= 0 && distance < min_distance)
 		{
 			min_distance = distance;
+			if(*visible_object)
 			(*visible_object)->sphere = sphere_next;
 		}
 		sphere_next = sphere_next->next;
@@ -70,6 +72,7 @@ float	get_plane_distance(t_plane* plane, t_ray ray, t_shape** visible_object)
 	if (distance >= 0 && distance < min_distance)
 	{
 		min_distance = distance;
+		if(*visible_object)
 		(*visible_object)->plane = plane;
 	}
 	plane_next = plane->next;
@@ -81,6 +84,7 @@ float	get_plane_distance(t_plane* plane, t_ray ray, t_shape** visible_object)
 		if (distance >= 0 && distance < min_distance)
 		{
 			min_distance = distance;
+			if(*visible_object)
 			(*visible_object)->plane = plane_next;
 		}
 		plane_next = plane_next->next;
@@ -105,6 +109,7 @@ float	get_cylinder_distance(t_cylinder* cylinder, t_ray ray, t_shape** visible_o
 	if (distance >= 0 && distance < min_distance)
 	{
 		min_distance = distance;
+		if(*visible_object)
 		(*visible_object)->cylinder = cylinder;
 	}
 	cylinder_next = cylinder->next;
@@ -118,6 +123,7 @@ float	get_cylinder_distance(t_cylinder* cylinder, t_ray ray, t_shape** visible_o
 		if (distance >= 0 && distance < min_distance)
 		{
 			min_distance = distance;
+			if(*visible_object)
 			(*visible_object)->cylinder = cylinder_next;
 		}
 		cylinder_next = cylinder_next->next;
@@ -133,9 +139,12 @@ float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 
 	distance = INFINITY;
 	shape = data->shape;
-	(*visible_object)->plane = NULL;
-	(*visible_object)->sphere = NULL;
-	(*visible_object)->cylinder = NULL;
+	if (*visible_object)
+	{
+		(*visible_object)->plane = NULL;
+		(*visible_object)->sphere = NULL;
+		(*visible_object)->cylinder = NULL;
+	}
 	obj_distance[0] = get_plane_distance(shape->plane, ray, visible_object);
 	if (obj_distance[0] > 0 && obj_distance[0] < distance)
 		distance = obj_distance[0];		
@@ -143,14 +152,18 @@ float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 	if (obj_distance[1] > 0 && obj_distance[1] < distance)
 	{
 		distance = obj_distance[1];
-		(*visible_object)->plane = NULL;
+		if (*visible_object)
+			(*visible_object)->plane = NULL;
 	}
 	obj_distance[2] = get_cylinder_distance(shape->cylinder, ray, visible_object);
 	if (obj_distance[2] > 0 && obj_distance[2] < distance)
 	{
 		distance = obj_distance[2];
-		(*visible_object)->plane = NULL;
-		(*visible_object)->sphere = NULL;
+		if (*visible_object)
+		{
+			(*visible_object)->plane = NULL;
+			(*visible_object)->sphere = NULL;
+		}
 	}
 	return (distance);
 }
@@ -172,7 +185,7 @@ int	get_object_color(t_data* data, t_ray ray, t_shape** visible_object, float di
 		// color = get_cylinder_pt_color();
 		color = (*visible_object)->cylinder->color;
 	//check is this visible_object in shadow;
-	is_shadowed = is_shadowed(data, ray, visible_object, distance);
+	// is_shadowed = is_shadowed(data, ray, visible_object, distance);
 	return (color * is_shadowed);
 }
 
@@ -188,7 +201,7 @@ int	render_shape(t_data *data, t_ray ray, t_shape** visible_obj)
 	return (color);
 }
 
-t_ray	ray_from_screen(t_data* data, int coord[2])
+t_ray	visibility_ray(t_data* data, int coord[2])
 {
 	t_ray		ray;
 	float		img_coord[2];
@@ -229,7 +242,7 @@ int render_scene(t_scene *scene)
 		coord[1] = 0;
 		while (coord[1] < WIN_HEIGHT)
 		{
-			ray = ray_from_screen(scene->data, coord);
+			ray = visibility_ray(scene->data, coord);
 			color = render_shape(scene->data, ray, &visible_obj);
 			if (color > -1)
             	my_mlx_pixel_put(scene, coord[0], coord[1], color);

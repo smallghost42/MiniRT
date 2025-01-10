@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:54:34 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/08 08:35:38 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:33:00 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ float get_y_projected(int y, int fov)
     float viewport_height = 2.0 * tan((fov * PI / 180.0) / 2.0);
     float viewport_width = viewport_height / aspect_ratio;
 
-    return (1.0 - 2.0 * (y / (float)WIN_HEIGHT)) * viewport_height / 2.0;
+    return ((1.0 - 2.0 * (y/ (float)WIN_HEIGHT)) * viewport_height / 2.0);
 }

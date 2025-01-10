@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/08 11:22:17 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 16:25:51 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static int get_diffuse_light_color(t_ray ray, float distance, t_vec3 sphere_cent
 
     normal_vec = get_sphere_normal(ray, distance, sphere_center);
 	//calculate hit point to light vec
-    t_vec3 light_pos = vec3_create(-100, -100, 0);
+    t_vec3 light_pos = vec3_create(0, 70, 0);
 	t_vec3 point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
     brightness = fmax(vec3_get_dot_product(normal_vec, point_to_light_vec), 0.1);
     trgb[0] = 1;
@@ -113,10 +113,10 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_cen
     float tmp;
     int color;
     int trgb[4];
-    float shininess = 128.0;
+    float shininess = 32.0;
 
     normal_vec = vec3_normalize(get_sphere_normal(ray, distance, sphere_center));
-    t_vec3 light_pos = vec3_create(-100, -100, 0);
+    t_vec3 light_pos = vec3_create(0, 70, 0);
     point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
 
     // halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, vec3_const_multiply(ray.direction, -1)));
@@ -207,9 +207,9 @@ int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float
                 if (distance > current_distance)
                     distance = current_distance;
                 //apply diffuse light from camera
-                int color= 255;
-				// int	color = add_colors(get_diffuse_light_color(ray, current_distance, sphere_center), 
-                //            get_specular_light_color(ray, current_distance, sphere_center));
+                // int color= 255;
+				int	color = add_colors(get_diffuse_light_color(ray, current_distance, sphere_center), 
+                           get_specular_light_color(ray, current_distance, sphere_center));
 
 				// int color = get_diffuse_light_color(ray, current_distance, sphere_center);
 				// int color = get_specular_light_color(ray, current_distance, sphere_center);

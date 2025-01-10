@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/08 10:47:43 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/10 13:49:03 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@
 
 # define COLOR 10523517
 
-# define EPSILON 0.000001
+// # define EPSILON 0.000001
+
+#define EPSILON 1e-4
 
 # include "clib.h"
 
