@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 09:54:34 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/30 17:27:01 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/09 15:33:00 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ float   get_aspect_ratio(void)
     return (WIN_WIDTH / WIN_HEIGHT);
 }
 
-float   get_x_image_plane(int x, int fov)
+float   get_x_projected(int x, int fov)
 {
     float   aspect_ratio;
     float	x_image_plane;
@@ -28,7 +28,7 @@ float   get_x_image_plane(int x, int fov)
     return (x_image_plane);
 }
 
-// float   get_y_image_plane(int y, int fov)
+// float   get_y_projected(int y, int fov)
 // {
 //     float   aspect_ratio;
 //     float	y_image_plane;
@@ -41,11 +41,11 @@ float   get_x_image_plane(int x, int fov)
 // }
 
 //y ambany
-float get_y_image_plane(int y, int fov)
+float get_y_projected(int y, int fov)
 {
     float aspect_ratio = (float)WIN_HEIGHT / WIN_WIDTH;
     float viewport_height = 2.0 * tan((fov * PI / 180.0) / 2.0);
     float viewport_width = viewport_height / aspect_ratio;
 
-    return (1.0 - 2.0 * (y / (float)WIN_HEIGHT)) * viewport_height / 2.0;
+    return ((1.0 - 2.0 * (y/ (float)WIN_HEIGHT)) * viewport_height / 2.0);
 }

@@ -61,7 +61,7 @@ double	ft_atof(const char *str);
 int		is_valid_float(char *str, int x);
 int		check_first_and_count_param(char *str, t_count *count, t_data *data);
 int		check_file_extention(char *filename);
-int		check_valid_rgb(char *color);
+int		check_valid_rgb(char *color, int *col);
 int		ft_atoi(const char *nptr);
 int		ft_valid_int(const char *str);
 int		check_valid_coordinate(char *cord, t_vec3 *vec3);
@@ -76,5 +76,6 @@ void	add_back_sphere(t_sphere **lst, t_sphere *new);
 void	add_back_plane(t_plane **lst, t_plane *new);
 void	add_back_cylinder(t_cylinder **lst, t_cylinder *new);
 void	free_scene_data(t_data *data);
+void    print_data(t_data *data);
 
 #endif

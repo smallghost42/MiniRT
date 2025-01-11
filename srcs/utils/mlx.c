@@ -6,11 +6,21 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/24 15:35:37 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/11 10:31:17 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	free_hit_pt(t_hit_pt* hit_pt)
+{
+	if (!hit_pt)
+		return ;
+	if (hit_pt->shape)
+		free(hit_pt->shape);
+	free(hit_pt);
+	hit_pt = NULL;
+}
 
 void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color)
 {
@@ -34,12 +44,13 @@ void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color)
 
 static int	on_destroy(t_scene *scene)
 {
-	// free_scene_data(scene->data);
+	free_scene_data(scene->data);
 	// free(scene->data);
 	mlx_destroy_image(scene->mlx, scene->img);
 	mlx_destroy_window(scene->mlx, scene->win);
 	mlx_destroy_display(scene->mlx);
 	free(scene->mlx);
+	free_hit_pt(scene->hit_pt);
 	exit(EXIT_SUCCESS);
 }
 

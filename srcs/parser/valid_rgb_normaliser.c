@@ -6,13 +6,14 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/07 14:46:25 by ferafano          #+#    #+#             */
-/*   Updated: 2024/12/23 11:28:11 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/07 10:58:19 by ferafano         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "minirt.h"
 
-int check_valid_rgb(char *color)
+int check_valid_rgb(char *color, int *col)
 {
 	char **rgb;
 	int i;
@@ -29,6 +30,7 @@ int check_valid_rgb(char *color)
 			free_split(rgb);
 			return (1);
 		}
+		*col = get_color_from_trgb(1, ft_atoi(rgb[0]), ft_atoi(rgb[1]), ft_atoi(rgb[2]));
 		i++;
 	}
 	if (i != 3)

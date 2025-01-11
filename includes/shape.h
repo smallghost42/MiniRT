@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:27 by trazanad          #+#    #+#             */
-/*   Updated: 2024/12/23 13:52:40 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/11 09:16:15 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ typedef struct s_shape
 	t_cylinder *cylinder;
 	t_plane *plane;
 } t_shape;
+
+void    print_shape(t_shape *shape);
 
 #endif
