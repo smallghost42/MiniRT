@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 09:31:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/07 08:44:27 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/11 09:03:41 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ t_vec3  *vec3_allocate(float x, float y, float z)
     return (vector);
 }
 
-float   vec3_get_dot_product(t_vec3 u, t_vec3 v)
+float   vec3_dot_product(t_vec3 u, t_vec3 v)
 {
     return (u.x * v.x + u.y * v.y + u.z * v.z);
 }
 
-float   vec3_get_norm(t_vec3 vector)
+float   vec3_norm(t_vec3 vector)
 {
     return (sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z));
 }
@@ -60,7 +60,7 @@ t_vec3  vec3_multiply(t_vec3 u, t_vec3 v)
     return (vec3_create(u.x * v.x, u.y * v.y, u.z * v.z));
 }
 
-t_vec3  vec3_const_multiply(t_vec3 u, float k)
+t_vec3  vec3_scalar_mult(t_vec3 u, float k)
 {
     return (vec3_create(u.x * k, u.y * k, u.z * k));
 }
@@ -87,8 +87,8 @@ t_vec3  vec3_normalize(t_vec3 vector)
 {
     float   vector_norm;
 
-    vector_norm = vec3_get_norm(vector);
-    return (vec3_const_multiply(vector, 1.0f / vector_norm));
+    vector_norm = vec3_norm(vector);
+    return (vec3_scalar_mult(vector, 1.0f / vector_norm));
 }
 
 t_vec3 vec3_cross_product(t_vec3 u, t_vec3 v)

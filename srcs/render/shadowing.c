@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 09:13:48 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/10 13:49:19 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/11 09:03:41 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int is_obj_shadowed(t_data* data, t_ray ray, t_shape** visible_object, float dis
 	hitted_pt = get_sphere_hit_point(ray, distance);
 	//for every light
 	light = data->light;
-	pt_light_distance = vec3_get_norm(vec3_substract(light->position, hitted_pt));
+	pt_light_distance = vec3_norm(vec3_substract(light->position, hitted_pt));
 	secondary_ray.direction = hitted_pt;
 	secondary_ray.direction = vec3_normalize(vec3_substract(light->position, hitted_pt));
 	is_shadowed = obj_is_shadowed(data, secondary_ray, pt_light_distance);

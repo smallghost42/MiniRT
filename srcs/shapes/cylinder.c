@@ -5,213 +5,111 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/26 16:56:40 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/09 08:59:41 by trazanad         ###   ########.fr       */
+/*   Created: 2025/01/11 15:42:11 by trazanad          #+#    #+#             */
+/*   Updated: 2025/01/11 17:32:24 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-/*
-	p is hit point
-	C is cylinder center
-	V is normalized cylinder axis unit vector
-	m is distance ||C - A|| such as (P - A).V = 0
-	D is the ray direction
-	t is the distance
-	O is the camera postion
-	r is the rayon
-	X = O - C
-*/
-
-
-/*
-	* To calculate distance, we have
-		- a = D.D - (D.V)^2
-		- c = X.X - (X.V)^2 - r^2
-		- b = 2 * (D.X - (D.V) * (X.V))
-	and we have then,
-		x = (-b -/+ sqrt(delta)) / 2a  and delta = b^2 - 4ac;
-	
-	and for finite cylinder we have to calculate the height
-		m = D.V*t + X.V  and check m is in 0, heigth
-*/
-
-t_vec3 get_point_to_light_vector0(t_vec3 light_pos, t_ray ray, float distance) {
-    t_vec3 hit_point;
-
-    hit_point = get_sphere_hit_point(ray, distance);
-    return (vec3_normalize(vec3_substract(light_pos, hit_point)));
-}
-
-float	get_cylinder_pt_distance(t_ray ray, t_vec3 center, t_vec3 axis_vec, float diameter, float height)
+float   quadratic_solution(float params[5], t_vec3 vec[3], t_ray ray, float h)
 {
-	float	distance = -1;
-	float	discriminant;
-	float	a, b, c, x1, x2, m1, m2;
-	float	radius;
-	t_vec3	x;
+    float   tmp;
+    float   x[2];
+    float   m[2];
+    float   distance;
 
-	radius = diameter / 2.0;
-	x = vec3_substract(ray.origin, center);
-	a = vec3_get_dot_product(ray.direction, ray.direction) - powf(vec3_get_dot_product(ray.direction, axis_vec), 2.0);
-	c = vec3_get_dot_product(x,x) - powf(vec3_get_dot_product(x, axis_vec), 2.0) - powf(radius, 2.0);
-	b = 2 * (vec3_get_dot_product(ray.direction, x) - (vec3_get_dot_product(ray.direction, axis_vec) * vec3_get_dot_product(x, axis_vec)));
-	discriminant = b * b - 4 * a * c;
-	if (discriminant < 0)
-		return (-1);
-	discriminant = sqrt(discriminant);
-	x1 = (-b - discriminant) / ( 2 * a);
-	x2 = (-b + discriminant) / ( 2 * a);
-	m1 = vec3_get_dot_product(ray.direction, vec3_const_multiply(axis_vec, x1)) + vec3_get_dot_product(x, axis_vec);
-    m2 = vec3_get_dot_product(ray.direction, vec3_const_multiply(axis_vec, x2)) + vec3_get_dot_product(x, axis_vec);
-
-    if (x1 > 0 && m1 >= 0 && m1 <= height)
-        distance = x1; // First intersection valid
-    if (x2 > 0 && m2 >= 0 && m2 <= height)
+    distance = -1;
+    tmp = vec3_dot_product(vec[2], vec[1]);
+    x[0] = (-params[1] - params[4]) / (2.0 * params[0]);
+    x[1] = (-params[1] + params[4]) / (2.0 * params[0]);
+    m[0] = vec3_dot_product(ray.direction, vec3_scalar_mult(vec[1], x[0]));
+    m[0] += tmp;
+    m[1] = vec3_dot_product(ray.direction, vec3_scalar_mult(vec[1], x[1]));
+    m[1] += tmp;
+    if (x[0] > 0 && m[0] >= -h &&  m[0] <= h)
+        distance = x[0];
+    if (x[1] > 0 && m[1] >= -h &&  m[1] <= h)
     {
-        if (distance < 0 || x2 < distance)
-            distance = x2;
+        if (distance < 0 || x[1] < distance)
+            distance = x[1];
     }
     if (distance < 0)
         return (-1);
     return (distance);
 }
 
-float	get_point_heigh(t_ray ray, t_vec3 axis_vec, t_vec3 cylinder_center, float distance)
+float   cylinder_quadratic(t_vec3 vec[2], float  params[2], t_ray ray)
 {
-	t_vec3	x;
-	float	m;
-
-	x = vec3_substract(ray.origin, cylinder_center);
-	m = vec3_get_dot_product(ray.direction, vec3_const_multiply(axis_vec, distance)) + vec3_get_dot_product(x, axis_vec);
-	return (m);
-}
-
-//N = nrm( P-C-V*m )
-t_vec3 get_cylinder_normal(t_ray ray, float distance, t_vec3 cylinder_center, t_vec3 axis_vec)
-{
-    t_vec3 hit_point;
-    t_vec3 normal_vec, tmp;
-	float	m;
-
-	hit_point = get_sphere_hit_point(ray, distance);
-    m = get_point_heigh(ray, axis_vec, cylinder_center, distance);
-	tmp = vec3_add(cylinder_center, vec3_const_multiply(axis_vec, m));
-    normal_vec = vec3_normalize(vec3_substract(hit_point, tmp));
-    return (normal_vec);
-}
-
-static int get_diffuse_light_color(t_ray ray, float distance, t_vec3 cylinder_center, t_vec3 axis_vec)
-{
-    t_vec3  normal_vec;
-    float   brightness;
-    int     color;
-    int     trgb[4];
-
-    normal_vec = get_cylinder_normal(ray, distance, cylinder_center, axis_vec);
-	//calculate hit point to light vec
-    t_vec3 light_pos = vec3_create(0, -100, 0);
-	t_vec3 point_to_light_vec = get_point_to_light_vector0(light_pos, ray, distance);
-    brightness = fmax(vec3_get_dot_product(normal_vec, point_to_light_vec), 0.1);
-    trgb[0] = 1;
-    trgb[1] = roundf(255 * brightness);
-    trgb[2] = roundf(5 * brightness);
-    trgb[3] = roundf(10 * brightness);
-    color = get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
-    return (color);
-}
-
-static int get_specular_light_color(t_ray ray, float distance, t_vec3 cylinder_center, t_vec3 axis_vec) 
-{
-    t_vec3 normal_vec;
-    t_vec3 point_to_light_vec;
-    t_vec3 halfway_vec;
-    float spec_brightness;
-    float tmp;
-    int color;
-    int trgb[4];
-    float shininess = 128.0;
-
-    normal_vec = get_cylinder_normal(ray, distance, cylinder_center, axis_vec);
-    t_vec3 light_pos = vec3_create(0, -100, 0);
-    point_to_light_vec = get_point_to_light_vector0(light_pos, ray, distance);
-
-    // halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, ray.direction));
-    halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, vec3_const_multiply(ray.direction, -1)));
-
-
-    tmp = vec3_get_dot_product(normal_vec, halfway_vec);
-    spec_brightness = powf(fmax(tmp, 0.1), shininess);
-
-    //suppose light reflexision is white
-    int surface_trgb[4] = {1, 255, 255, 255};
-    trgb[0] = 1;
-    trgb[1] = fmin(roundf(surface_trgb[1] * spec_brightness), 255);
-    trgb[2] = fmin(roundf(surface_trgb[2] * spec_brightness), 255);
-    trgb[3] = fmin(roundf(surface_trgb[3] * spec_brightness), 255);
-
-    color = get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
-    return (color);
-}
-
-static int add_colors(int diffuse_color, int specular_color) 
-{
-    int trgb[4];
-    int *diffuse_trgb;
-    int *specular_trgb;
-    
-	diffuse_trgb = get_trgb_from_color(diffuse_color);
-	specular_trgb = get_trgb_from_color(specular_color);
-    trgb[0] = 1;
-    trgb[1] = fmin(diffuse_trgb[1] * 0.8 + specular_trgb[1] * 0.5 + 0.4 * 255, 255);
-    trgb[2] = fmin(diffuse_trgb[2] * 0.8 + specular_trgb[2] * 0.5 + 0.4 * 0, 255);
-    trgb[3] = fmin(diffuse_trgb[3] * 0.8 + specular_trgb[3] * 0.5 + 0.4 * 0, 255); 
-    free(diffuse_trgb);
-    free(specular_trgb);
-    return get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
-}
-
-int render_cylinder(t_scene *scene, t_vec3 camera_pos, t_vec3 cylinder_center, t_vec3 axis_vec, float diameter, float height)
-{
-	int     coord[2]; //x, y
-    float   image_plane_coord[2];
-    float   fov_angle;
-    float   current_distance;
+    t_vec3  oc;
+    t_vec3  q_params[3];
     float   distance;
-    t_ray   ray;
-    t_vec3  normal_vec;
+    float   quadratic_params[5]; //a, b, c , discriminant, root of discriminant
 
-    coord[0] = 0;
-    fov_angle = 70.0;
-    distance = INFINITY;
-    while (coord[0] < WIN_WIDTH)
-    {
-        coord[1] = 0;
-        while (coord[1] < WIN_HEIGHT)
-        {
-            image_plane_coord[0] = get_x_projected(coord[0], fov_angle);
-            image_plane_coord[1] = get_y_projected(coord[1], fov_angle);
+    oc = vec3_substract(ray.origin, vec[0]);
+    // oc = vec3_substract(vec[0], ray.origin);
+    quadratic_params[0] = vec3_dot_product(ray.direction, ray.direction);
+    quadratic_params[0] -= powf(vec3_dot_product(ray.direction, vec[1]), 2.0);
+    quadratic_params[1] = vec3_dot_product(ray.direction, vec[1]);
+    quadratic_params[1] *= vec3_dot_product(oc, vec[1]);
+    quadratic_params[1] -= vec3_dot_product(ray.direction, oc);
+    quadratic_params[1] *= -2;
+    quadratic_params[2] = vec3_dot_product(oc, oc) - (params[0] * params[0]);
+    quadratic_params[2] -= powf(vec3_dot_product(oc, vec[1]), 2.0);
+    quadratic_params[3] = quadratic_params[1] * quadratic_params[1];
+    quadratic_params[3] -= 4.0 * quadratic_params[0] * quadratic_params[2];
+    if (quadratic_params[3] < 0)
+        return (-1);
+    quadratic_params[4] = sqrt(quadratic_params[3]);
+    q_params[0] = vec[0];
+    q_params[1] = vec[1];
+    q_params[2] = oc;
+    distance = quadratic_solution(quadratic_params, q_params, ray, params[1]);
+    return (distance);
+}
 
-            ray.direction = get_ray_direction(image_plane_coord);
-            ray.origin = camera_pos;
+float   cylinder_ray_hit_distance(t_ray ray, t_cylinder* cylinder)
+{
+    float   distance;
+    t_vec3  cylinder_vec[2]; //center, axis_vec
+    float   cylinder_params[2]; //radius, height
 
-			current_distance = get_cylinder_pt_distance(ray, cylinder_center, axis_vec, diameter, height);
-            if (current_distance >= 0)
-            {
-                if (distance > current_distance)
-                    distance = current_distance;
-				// int color = get_color_from_trgb(1, 255, 0, 0);
-				int	color = add_colors(get_diffuse_light_color(ray, current_distance, cylinder_center, axis_vec), 
-                           get_specular_light_color(ray, current_distance, cylinder_center, axis_vec));
+    cylinder_vec[0] = cylinder->center;
+    cylinder_vec[1] = cylinder->orientation;
+    cylinder_params[0] = cylinder->diameter / 2.0;
+    cylinder_params[1] = cylinder->height;
+    distance = cylinder_quadratic(cylinder_vec, cylinder_params, ray);
+    return (distance);
+}
 
-				// int color = get_diffuse_light_color(ray, current_distance, cylinder_center, axis_vec);
-				// int color = get_specular_light_color(ray, current_distance, cylinder_center, axis_vec);
-                my_mlx_pixel_put(scene, coord[0], coord[1], color);
-            }
-            coord[1]++;
-        }
-        coord[0]++;
-    }
-    return (0);
+float   cylinder_pt_height(t_ray ray, t_vec3 cylinder_vec[2], float distance)
+{
+    t_vec3  oc;
+    t_vec3 tmp;
+    float   m;
+
+    oc = vec3_substract(ray.origin, cylinder_vec[0]);
+    tmp = vec3_scalar_mult(cylinder_vec[1], distance);
+    m = vec3_dot_product(ray.direction, tmp);
+    m += vec3_dot_product(oc, cylinder_vec[1]);
+    return (m);
+}
+
+t_vec3  cylinder_normal_vec(t_ray ray, t_cylinder* cylinder, float distance)
+{
+    float   m;
+    t_vec3  res[2];
+    t_vec3  intersected_pt;
+    t_vec3  cylinder_vec[2];
+    float   cylinder_params[2];
+
+    cylinder_vec[0] = cylinder->center;
+    cylinder_vec[1] = cylinder->orientation;
+    cylinder_params[0] = cylinder->diameter / 2.0;
+    cylinder_params[1] = cylinder->height;
+    intersected_pt = ray_intersection_pt(ray, distance);
+    m = cylinder_pt_height(ray, cylinder_vec, distance);
+    res[0] = vec3_add(cylinder_vec[0], vec3_scalar_mult(cylinder_vec[1], m));
+    res[1] = vec3_normalize(vec3_substract(intersected_pt, res[0]));
+    return (res[1]);
 }

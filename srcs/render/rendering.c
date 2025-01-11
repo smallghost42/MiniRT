@@ -6,22 +6,12 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 07:40:16 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/10 13:49:06 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/11 17:38:56 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
     
-	// t_shape*				shape;
-    // t_camera*				camera;
-    // t_light*				light;
-    // t_ambient_lightning*	ambient_light;
-
-	// shape = data->shape;
-	// camera = data->shape;
-	// light = data->light;
-	// ambient_light = data->ambient_lightning;
-
 float	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape** visible_object)
 {
 	float		distance;
@@ -33,11 +23,10 @@ float	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape** visible_object)
 	min_distance = INFINITY;
 	if (!sphere)
 		return (INFINITY);
-	distance = get_sphere_pt_distance(ray, sphere->center, sphere->diameter / 2.0);
+	distance = sphere_ray_hit_distance(ray, sphere->center, sphere->diameter / 2.0);
 	if (distance >= 0 && distance < min_distance)
 	{
 		min_distance = distance;
-		if(*visible_object)
 		(*visible_object)->sphere = sphere;
 	}
 	sphere_next = sphere->next;
@@ -45,11 +34,10 @@ float	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape** visible_object)
 	{
 		center = sphere_next->center;
 		radius = sphere_next->diameter / 2.0;
-		distance = get_sphere_pt_distance(ray, center, radius);
+		distance = sphere_ray_hit_distance(ray, center, radius);
 		if (distance >= 0 && distance < min_distance)
 		{
 			min_distance = distance;
-			if(*visible_object)
 			(*visible_object)->sphere = sphere_next;
 		}
 		sphere_next = sphere_next->next;
@@ -68,11 +56,10 @@ float	get_plane_distance(t_plane* plane, t_ray ray, t_shape** visible_object)
 	min_distance = INFINITY;
 	if (!plane)
 		return (INFINITY);
-	distance = get_plane_pt_distance(ray, plane->center, plane->orientation);
+	distance = plane_ray_hit_distance(ray, plane->center, plane->orientation);
 	if (distance >= 0 && distance < min_distance)
 	{
 		min_distance = distance;
-		if(*visible_object)
 		(*visible_object)->plane = plane;
 	}
 	plane_next = plane->next;
@@ -80,11 +67,10 @@ float	get_plane_distance(t_plane* plane, t_ray ray, t_shape** visible_object)
 	{
 		center = plane_next->center;
 		orientation = plane_next->orientation;
-		distance = get_plane_pt_distance(ray, center, orientation);
+		distance = plane_ray_hit_distance(ray, center, orientation);
 		if (distance >= 0 && distance < min_distance)
 		{
 			min_distance = distance;
-			if(*visible_object)
 			(*visible_object)->plane = plane_next;
 		}
 		plane_next = plane_next->next;
@@ -105,11 +91,10 @@ float	get_cylinder_distance(t_cylinder* cylinder, t_ray ray, t_shape** visible_o
 	min_distance = INFINITY;
 	if (!cylinder)
 		return (INFINITY);
-	distance = get_cylinder_pt_distance(ray, cylinder->center, cylinder->orientation, cylinder->diameter, cylinder->height);
+	distance = cylinder_ray_hit_distance(ray, cylinder);
 	if (distance >= 0 && distance < min_distance)
 	{
 		min_distance = distance;
-		if(*visible_object)
 		(*visible_object)->cylinder = cylinder;
 	}
 	cylinder_next = cylinder->next;
@@ -119,11 +104,10 @@ float	get_cylinder_distance(t_cylinder* cylinder, t_ray ray, t_shape** visible_o
 		orientation = cylinder_next->orientation;
 		diameter = cylinder_next->diameter;
 		height = cylinder_next->height;
-		distance = get_cylinder_pt_distance(ray, center, orientation, diameter, height);
+		distance = cylinder_ray_hit_distance(ray, cylinder_next);
 		if (distance >= 0 && distance < min_distance)
 		{
 			min_distance = distance;
-			if(*visible_object)
 			(*visible_object)->cylinder = cylinder_next;
 		}
 		cylinder_next = cylinder_next->next;
@@ -139,12 +123,9 @@ float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 
 	distance = INFINITY;
 	shape = data->shape;
-	if (*visible_object)
-	{
-		(*visible_object)->plane = NULL;
-		(*visible_object)->sphere = NULL;
-		(*visible_object)->cylinder = NULL;
-	}
+	(*visible_object)->plane = NULL;
+	(*visible_object)->sphere = NULL;
+	(*visible_object)->cylinder = NULL;
 	obj_distance[0] = get_plane_distance(shape->plane, ray, visible_object);
 	if (obj_distance[0] > 0 && obj_distance[0] < distance)
 		distance = obj_distance[0];		
@@ -152,52 +133,80 @@ float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object)
 	if (obj_distance[1] > 0 && obj_distance[1] < distance)
 	{
 		distance = obj_distance[1];
-		if (*visible_object)
-			(*visible_object)->plane = NULL;
+		(*visible_object)->plane = NULL;
 	}
 	obj_distance[2] = get_cylinder_distance(shape->cylinder, ray, visible_object);
 	if (obj_distance[2] > 0 && obj_distance[2] < distance)
 	{
 		distance = obj_distance[2];
-		if (*visible_object)
-		{
-			(*visible_object)->plane = NULL;
-			(*visible_object)->sphere = NULL;
-		}
+		(*visible_object)->plane = NULL;
+		(*visible_object)->sphere = NULL;
 	}
 	return (distance);
 }
 
-int	get_object_color(t_data* data, t_ray ray, t_shape** visible_object, float distance)
+int	get_object_color(t_data* data, t_ray ray, t_hit_pt** hit_pt)
 {
 	int	color;
 	int	is_shadowed;
-	
+	t_shape	*visible_obj;
+
+	visible_obj = (*hit_pt)->shape;
 	color = 0;
-	is_shadowed = 0;
-	if ((*visible_object)->plane)
-		// 	color = get_plane_pt_color();
-		color = (*visible_object)->plane->color;
-	else if ((*visible_object)->sphere)
-		// color = get_sphere_pt_color();
-		color = (*visible_object)->sphere->color;
-	else if ((*visible_object)->cylinder)
-		// color = get_cylinder_pt_color();
-		color = (*visible_object)->cylinder->color;
-	//check is this visible_object in shadow;
-	// is_shadowed = is_shadowed(data, ray, visible_object, distance);
-	return (color * is_shadowed);
+	if (visible_obj->plane)
+		color = visible_obj->plane->color;
+	else if (visible_obj->sphere)
+		color = visible_obj->sphere->color;
+	else if (visible_obj->cylinder)
+		color = visible_obj->cylinder->color;
+	// color = get_shade_lighting(data, ray, *hit_pt);
+	//get shadow attenuation
+	return (color);
+}
+// typedef struct s_hit_pt
+// {
+//     t_shape *shape;ok
+//     int     type; //0, 1, 2
+// 	t_vec3	pt;
+//     t_vec3  normal_vec;
+//     float   distance;
+// } t_hit_pt;
+void	update_hit_pt(t_hit_pt** hit_pt, float distance, t_ray ray)
+{
+	t_shape* shape;
+
+	(*hit_pt)->distance = distance;
+	shape = (*hit_pt)->shape;
+	(*hit_pt)->normal_vec = ray_intersection_pt(ray, distance);
+	if (shape->plane)
+	{
+		(*hit_pt)->type = 0;
+		(*hit_pt)->normal_vec = shape->plane->orientation;
+	}
+	else if (shape->sphere)
+	{
+		(*hit_pt)->type = 1;
+		(*hit_pt)->normal_vec = sphere_normal_vec(ray, distance, shape->sphere);
+	}
+	else if (shape->cylinder)
+	{
+		(*hit_pt)->type = 2;
+		(*hit_pt)->normal_vec = cylinder_normal_vec(ray, shape->cylinder, distance);
+	}
 }
 
-int	render_shape(t_data *data, t_ray ray, t_shape** visible_obj)
+int	pixel_color(t_data *data, t_ray ray, t_hit_pt** hit_pt)
 {
 	int			color;
 	float		distance;
+	t_shape		**visible_obj;
 
+	visible_obj = &((*hit_pt)->shape);
 	distance = get_object_distance(data, ray, visible_obj);
 	if (distance == INFINITY || distance < 0)
 		return (-1);
-	color = get_object_color(data, ray, visible_obj, distance);
+	update_hit_pt(hit_pt, distance, ray);
+	color = get_object_color(data, ray, hit_pt);
 	return (color);
 }
 
@@ -231,25 +240,22 @@ int render_scene(t_scene *scene)
 {
 	int			color;
 	int			coord[2];
-	t_shape*	visible_obj;
 	t_ray		ray;
 
 	coord[0] = 0;
 	color = 0;
-	visible_obj = init_visible_obj();
 	while (coord[0] < WIN_WIDTH)
 	{
 		coord[1] = 0;
 		while (coord[1] < WIN_HEIGHT)
 		{
 			ray = visibility_ray(scene->data, coord);
-			color = render_shape(scene->data, ray, &visible_obj);
+			color = pixel_color(scene->data, ray, &(scene->hit_pt));
 			if (color > -1)
             	my_mlx_pixel_put(scene, coord[0], coord[1], color);
 			coord[1]++;
 		}
 		coord[0]++;
 	}
-	free(visible_obj);
 	return (0);
 }

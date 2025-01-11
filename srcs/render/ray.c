@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:31:05 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/09 09:46:56 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/11 08:48:12 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_vec3  get_intersection(t_ray ray, float ray_param)
     t_vec3  vector;
     t_vec3  tmp;
 
-    tmp = vec3_const_multiply(ray.direction, ray_param);
+    tmp = vec3_scalar_mult(ray.direction, ray_param);
     vector = vec3_add(ray.origin, tmp);
     return (vector);
 }
@@ -62,8 +62,8 @@ t_vec3  get_ray_direction(float coord[2])
     camera_up = vec3_normalize(vec3_cross_product(camera_orientation, camera_right));
     ray_direction = vec3_add(
         vec3_add(
-            vec3_const_multiply(camera_right, -coord[0]),
-            vec3_const_multiply(camera_up, -coord[1])
+            vec3_scalar_mult(camera_right, -coord[0]),
+            vec3_scalar_mult(camera_up, -coord[1])
         ),
         camera_orientation
     );
