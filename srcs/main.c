@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:49:52 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 07:19:10 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 12:49:38 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,3 +98,4 @@ int	main(int argc, char **argv)
 	run_hook_cycle(scene);
 	return (0);
 }
+//https://computergraphics.stackexchange.com/questions/8213/raytracing-why-are-the-spheres-in-the-image-below-appear-stretched

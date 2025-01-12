@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 08:44:35 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 08:25:59 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 13:05:18 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ t_vec3  pt_to_lightvec(t_light  *light, t_ray ray, t_hit_pt *hit_pt)
     shape = hit_pt->shape;
     distance = hit_pt->distance;
     light_pos = light->position;
-    if (shape->sphere)
-        vector = sp_pt_to_lightvec(light_pos, ray, distance);
-    else
-        vector = ot_pt_to_lightvec(light_pos, ray, distance);
+    // if (shape->sphere)
+    //     vector = sp_pt_to_lightvec(light_pos, ray, distance);
+    // else
+    vector = ot_pt_to_lightvec(light_pos, ray, distance);
     return (vector);
 }
 
@@ -76,10 +76,10 @@ float   get_shiness(t_vec3 lightvec, t_vec3 normal_vec, t_ray ray, int type)
 
     coef = 0.5;
     shiness_coef = 128.0;
-    if (type == 1)
-        halfway_vec = vec3_add(lightvec, ray.direction);
-    else
-        halfway_vec = vec3_add(lightvec, vec3_scalar_mult(ray.direction, -1));
+    // if (type == 7)
+    //     halfway_vec = vec3_add(lightvec, ray.direction);
+    // else
+    halfway_vec = vec3_add(lightvec, vec3_scalar_mult(ray.direction, -1));
     halfway_vec = vec3_normalize(halfway_vec);
     shiness = vec3_dot_product(normal_vec, halfway_vec);
     shiness = fmax(shiness, 0.1);

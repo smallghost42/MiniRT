@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 17:36:38 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 13:11:52 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 
 // # define EPSILON 0.000001
 
-#define EPSILON 1e-4
+#define EPSILON 1e-1
 
 # include "clib.h"
 
@@ -79,5 +79,8 @@ float	plane_ray_hit_distance(t_ray ray, t_vec3 plane_pt, t_vec3 plane_normal);
 //cylinder
 t_vec3  cylinder_normal_vec(t_ray ray, t_cylinder* cylinder, float distance);
 float   cylinder_ray_hit_distance(t_ray ray, t_cylinder* cylinder);
+
+//shadow
+int is_obj_shadowed(t_data* data, t_ray ray, t_hit_pt** hit_pt);
 
 #endif
