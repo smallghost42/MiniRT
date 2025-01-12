@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 07:40:16 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 17:38:56 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 07:04:43 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int	get_object_color(t_data* data, t_ray ray, t_hit_pt** hit_pt)
 		color = visible_obj->sphere->color;
 	else if (visible_obj->cylinder)
 		color = visible_obj->cylinder->color;
-	// color = get_shade_lighting(data, ray, *hit_pt);
+	color = get_shade_lighting(data, ray, *hit_pt);
 	//get shadow attenuation
 	return (color);
 }
@@ -181,7 +181,8 @@ void	update_hit_pt(t_hit_pt** hit_pt, float distance, t_ray ray)
 	if (shape->plane)
 	{
 		(*hit_pt)->type = 0;
-		(*hit_pt)->normal_vec = shape->plane->orientation;
+		// (*hit_pt)->normal_vec = shape->plane->orientation;
+		(*hit_pt)->normal_vec = vec3_normalize(shape->plane->orientation);
 	}
 	else if (shape->sphere)
 	{

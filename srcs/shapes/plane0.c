@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:29:59 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 14:34:35 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 06:10:46 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static int get_diffuse_light_color(t_ray ray, float distance, t_vec3 normal_vec)
     int     trgb[4];
 
 	//calculate hit point to light vec
-    t_vec3 light_pos = vec3_create(0.0, 50.0, 0.0);
+    t_vec3 light_pos = vec3_create(0.0,0,100);
 	t_vec3 point_to_light_vec = get_point_to_light_vector0(light_pos, ray, distance);
     brightness = fmax(vec3_dot_product(normal_vec, point_to_light_vec), 0.1);
     trgb[0] = 1;
-    trgb[1] = roundf(0 * brightness);
-    trgb[2] = roundf(10 * brightness);
-    trgb[3] = roundf(255 * brightness);
+    trgb[1] = roundf(255 * brightness);
+    trgb[2] = roundf(0 * brightness);
+    trgb[3] = roundf(0 * brightness);
     color = get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
     return (color);
 }
@@ -49,9 +49,9 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 normal_vec
     float tmp;
     int color;
     int trgb[4];
-    float shininess = 128.0;
+    float shininess = 64.0;
 
-    t_vec3 light_pos = vec3_create(0.0, 50.0, 0.0);
+    t_vec3 light_pos = vec3_create(0.0, 0.0, 100.0);
     point_to_light_vec = get_point_to_light_vector0(light_pos, ray, distance);
 
     // halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, ray.direction));
@@ -59,7 +59,7 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 normal_vec
 
 
     tmp = vec3_dot_product(normal_vec, halfway_vec);
-    spec_brightness = powf(fmax(tmp, 0.1), shininess);
+    spec_brightness = powf(fmax(tmp, 0.2), shininess);
 
     //suppose light reflexision is white nigga
     int surface_trgb[4] = {1, 255, 255, 255};
@@ -82,9 +82,9 @@ static int add_colors(int diffuse_color, int specular_color)
 	specular_trgb = get_trgb_from_color(specular_color);
 
     trgb[0] = 1;
-    trgb[1] = fmin(diffuse_trgb[1] * 0.8 + specular_trgb[1] * 0.5 + 0.4 * 0, 255);
-    trgb[2] = fmin(diffuse_trgb[2] * 0.8 + specular_trgb[2] * 0.5 + 0.4 * 10, 255);
-    trgb[3] = fmin(diffuse_trgb[3] * 0.8 + specular_trgb[3] * 0.5 + 0.4 * 255, 255); 
+    trgb[1] = fmin(diffuse_trgb[1] * 0.5 + specular_trgb[1] * 0.5 + 0.1 * 255, 255);
+    trgb[2] = fmin(diffuse_trgb[2] * 0.5 + specular_trgb[2] * 0.5 + 0.1 * 0, 255);
+    trgb[3] = fmin(diffuse_trgb[3] * 0.5 + specular_trgb[3] * 0.5 + 0.1 * 0, 255); 
     free(diffuse_trgb);
     free(specular_trgb);
     return get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
