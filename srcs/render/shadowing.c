@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 09:13:48 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 13:13:19 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 14:12:13 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,33 @@ int sphere_shadow(t_sphere* spheres, t_ray ray, float distance, t_shape* shape)
 			break;
         center = spheres->center;
         radius = spheres->diameter / 2.0;
-        d = get_sphere_pt_distance(ray, center, radius);
+        d = sphere_sray_hit_distance(ray, center, radius);
         if (d > EPSILON && d < distance)
             return (1);
         spheres = spheres->next;
+    }
+    return (0);
+}
+
+int cylinder_shadow(t_cylinder* cylinders, t_ray ray, float distance, t_shape* shape)
+{
+    float d;
+    float radius;
+    t_vec3 center;
+    t_cylinder* cylinder_next;
+
+    while (cylinders)
+    {
+		if (shape->cylinder != NULL && shape->cylinder == cylinders)
+        	cylinders = cylinders->next;
+		if (cylinders == NULL)
+			break;
+        center = cylinders->center;
+        radius = cylinders->diameter / 2.0;
+        d = cylinder_ray_hit_distance(ray, cylinders);
+        if (d > EPSILON && d < distance)
+            return (1);
+        cylinders = cylinders->next;
     }
     return (0);
 }

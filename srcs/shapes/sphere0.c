@@ -6,13 +6,14 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 06:47:08 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 14:00:51 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 //note only sphere is need the one without 0 dude
+
 float get_sphere_pt_distance(t_ray ray, t_vec3 center, float radius)
 {
     t_vec3  oc;

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 13:11:52 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 14:02:31 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int		get_shade_lighting(t_data *data, t_ray ray, t_hit_pt *hit_pt);
 
 //sphere
 float   sphere_ray_hit_distance(t_ray ray, t_vec3 center, float radius);
+float   sphere_sray_hit_distance(t_ray ray, t_vec3 center, float radius);
 t_vec3  sphere_normal_vec(t_ray ray, float distance, t_sphere* sphere);
 
 //plane

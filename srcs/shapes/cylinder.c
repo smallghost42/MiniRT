@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:42:11 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 13:16:08 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 14:35:31 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ float   cylinder_quadratic(t_vec3 vec[2], float  params[2], t_ray ray)
     float   quadratic_params[5]; //a, b, c , discriminant, root of discriminant
 
     oc = vec3_substract(ray.origin, vec[0]);
-    // oc = vec3_substract(vec[0], ray.origin);
     quadratic_params[0] = vec3_dot_product(ray.direction, ray.direction);
     quadratic_params[0] -= powf(vec3_dot_product(ray.direction, vec[1]), 2.0);
     quadratic_params[1] = vec3_dot_product(ray.direction, vec[1]);
