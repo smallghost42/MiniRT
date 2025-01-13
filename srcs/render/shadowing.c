@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 09:13:48 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/13 10:57:56 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:39:00 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	obj_is_shadowed(t_data* data, t_ray ray, float distance, t_shape *s)
         shadow = shape_shadow[2];
 	// shadow = fmax(shadow, shape_shadow[1]);
 	// shadow = fmax(shadow, shape_shadow[2]);
+    // shadow = 0;
 	return (shadow);
 }
 
