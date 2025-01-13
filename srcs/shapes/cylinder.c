@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:42:11 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 17:32:24 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:47:33 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,12 @@ float   quadratic_solution(float params[5], t_vec3 vec[3], t_ray ray, float h)
     m[1] += tmp;
     if (x[0] > 0 && m[0] >= -h &&  m[0] <= h)
         distance = x[0];
-    if (x[1] > 0 && m[1] >= -h &&  m[1] <= h)
+    // else if (x[1] > 0 && m[1] >= -h &&  m[1] <= h)
+    // {
+    //     if (distance < 0 || x[1] < distance)
+    //         distance = x[1];
+    // }
+   else if (x[1] > 0 && m[1] >= -h &&  m[1] <= h)
     {
         if (distance < 0 || x[1] < distance)
             distance = x[1];
@@ -47,7 +52,6 @@ float   cylinder_quadratic(t_vec3 vec[2], float  params[2], t_ray ray)
     float   quadratic_params[5]; //a, b, c , discriminant, root of discriminant
 
     oc = vec3_substract(ray.origin, vec[0]);
-    // oc = vec3_substract(vec[0], ray.origin);
     quadratic_params[0] = vec3_dot_product(ray.direction, ray.direction);
     quadratic_params[0] -= powf(vec3_dot_product(ray.direction, vec[1]), 2.0);
     quadratic_params[1] = vec3_dot_product(ray.direction, vec[1]);

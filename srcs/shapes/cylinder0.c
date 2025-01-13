@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 16:56:40 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 17:32:44 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 06:49:35 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static int get_diffuse_light_color(t_ray ray, float distance, t_vec3 cylinder_ce
 
     normal_vec = get_cylinder_normal(ray, distance, cylinder_center, axis_vec);
 	//calculate hit point to light vec
-    t_vec3 light_pos = vec3_create(0, -100, 0);
+    t_vec3 light_pos = vec3_create(500, 100, 0);
 	t_vec3 point_to_light_vec = get_point_to_light_vector0(light_pos, ray, distance);
     brightness = fmax(vec3_dot_product(normal_vec, point_to_light_vec), 0.1);
     trgb[0] = 1;
@@ -134,7 +134,7 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 cylinder_c
     float shininess = 128.0;
 
     normal_vec = get_cylinder_normal(ray, distance, cylinder_center, axis_vec);
-    t_vec3 light_pos = vec3_create(0, -100, 0);
+    t_vec3 light_pos = vec3_create(500, 100, 0);
     point_to_light_vec = get_point_to_light_vector0(light_pos, ray, distance);
 
     // halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, ray.direction));

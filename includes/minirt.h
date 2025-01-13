@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 17:36:38 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 07:56:45 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 
 # define INCLUDE_H
 
-# define WIN_WIDTH 1366
+// # define WIN_WIDTH 1366
 
-# define WIN_HEIGHT 768
+// # define WIN_HEIGHT 768
+
+# define WIN_WIDTH 1920
+
+# define WIN_HEIGHT 1080
 
 # define PI 3.14162
 
@@ -24,7 +28,7 @@
 
 // # define EPSILON 0.000001
 
-#define EPSILON 1e-4
+#define EPSILON 1e-1
 
 # include "clib.h"
 
@@ -71,6 +75,7 @@ int		get_shade_lighting(t_data *data, t_ray ray, t_hit_pt *hit_pt);
 
 //sphere
 float   sphere_ray_hit_distance(t_ray ray, t_vec3 center, float radius);
+float   sphere_sray_hit_distance(t_ray ray, t_vec3 center, float radius);
 t_vec3  sphere_normal_vec(t_ray ray, float distance, t_sphere* sphere);
 
 //plane
@@ -79,5 +84,8 @@ float	plane_ray_hit_distance(t_ray ray, t_vec3 plane_pt, t_vec3 plane_normal);
 //cylinder
 t_vec3  cylinder_normal_vec(t_ray ray, t_cylinder* cylinder, float distance);
 float   cylinder_ray_hit_distance(t_ray ray, t_cylinder* cylinder);
+
+//shadow
+int is_obj_shadowed(t_data* data, t_ray ray, t_hit_pt** hit_pt);
 
 #endif

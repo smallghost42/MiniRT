@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 07:40:16 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 17:38:56 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/12 13:12:32 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,39 +149,35 @@ int	get_object_color(t_data* data, t_ray ray, t_hit_pt** hit_pt)
 {
 	int	color;
 	int	is_shadowed;
-	t_shape	*visible_obj;
+	// t_shape	*visible_obj;
 
-	visible_obj = (*hit_pt)->shape;
+	// visible_obj = (*hit_pt)->shape;
+	// if (visible_obj->plane)
+	// 	color = visible_obj->plane->color;
+	// else if (visible_obj->sphere)
+	// 	color = visible_obj->sphere->color;
+	// else if (visible_obj->cylinder)
+	// 	color = visible_obj->cylinder->color;
 	color = 0;
-	if (visible_obj->plane)
-		color = visible_obj->plane->color;
-	else if (visible_obj->sphere)
-		color = visible_obj->sphere->color;
-	else if (visible_obj->cylinder)
-		color = visible_obj->cylinder->color;
-	// color = get_shade_lighting(data, ray, *hit_pt);
+	if (is_obj_shadowed(data, ray, hit_pt))
+		return (0);
+	color = get_shade_lighting(data, ray, *hit_pt);
 	//get shadow attenuation
 	return (color);
 }
-// typedef struct s_hit_pt
-// {
-//     t_shape *shape;ok
-//     int     type; //0, 1, 2
-// 	t_vec3	pt;
-//     t_vec3  normal_vec;
-//     float   distance;
-// } t_hit_pt;
+
 void	update_hit_pt(t_hit_pt** hit_pt, float distance, t_ray ray)
 {
 	t_shape* shape;
 
 	(*hit_pt)->distance = distance;
 	shape = (*hit_pt)->shape;
-	(*hit_pt)->normal_vec = ray_intersection_pt(ray, distance);
+	(*hit_pt)->pt = ray_intersection_pt(ray, distance);
 	if (shape->plane)
 	{
 		(*hit_pt)->type = 0;
-		(*hit_pt)->normal_vec = shape->plane->orientation;
+		// (*hit_pt)->normal_vec = shape->plane->orientation;
+		(*hit_pt)->normal_vec = vec3_normalize(shape->plane->orientation);
 	}
 	else if (shape->sphere)
 	{

@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere0                                            :+:      :+:    :+:   */
+/*   sphere0.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 14:09:51 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:14:31 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 //note only sphere is need the one without 0 dude
+
 float get_sphere_pt_distance(t_ray ray, t_vec3 center, float radius)
 {
     t_vec3  oc;
@@ -22,9 +23,10 @@ float get_sphere_pt_distance(t_ray ray, t_vec3 center, float radius)
     float   distance;
     float   discriminant;
     
-    oc = vec3_substract(center, ray.origin);
+    // oc = vec3_substract(center, ray.origin);
+	oc = vec3_substract(ray.origin, center);
     a = vec3_dot_product(ray.direction, ray.direction);
-    b = -2 * vec3_dot_product(oc, ray.direction);
+    b = 2 * vec3_dot_product(oc, ray.direction);
     c = vec3_dot_product(oc, oc) - radius * radius;
     discriminant = b * b - (4 * a * c);
     if (discriminant < 0)
@@ -79,7 +81,8 @@ t_vec3  get_point_to_light_vector(t_vec3 light_pos, t_ray ray, float distance)
 	t_vec3	ajusted_light_pos;
 
 	hit_point = get_sphere_hit_point(ray, distance);
-	ajusted_light_pos = vec3_create(-light_pos.x, -light_pos.y, light_pos.z);
+	// ajusted_light_pos = vec3_create(-light_pos.x, -light_pos.y, light_pos.z);
+	ajusted_light_pos = vec3_create(light_pos.x, light_pos.y, light_pos.z);
 	point_to_light = vec3_substract(hit_point, ajusted_light_pos);
 	return (vec3_normalize(point_to_light));
 }
@@ -93,7 +96,7 @@ static int get_diffuse_light_color(t_ray ray, float distance, t_vec3 sphere_cent
 
     normal_vec = get_sphere_normal(ray, distance, sphere_center);
 	//calculate hit point to light vec
-    t_vec3 light_pos = vec3_create(0, 70, 0);
+    t_vec3 light_pos = vec3_create(40, 0, 70);
 	t_vec3 point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
     brightness = fmax(vec3_dot_product(normal_vec, point_to_light_vec), 0.1);
     trgb[0] = 1;
@@ -113,11 +116,11 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 sphere_cen
     float tmp;
     int color;
     int trgb[4];
-    float shininess = 32.0;
+    float shininess = 64.0;
 
     normal_vec = vec3_normalize(get_sphere_normal(ray, distance, sphere_center));
-    t_vec3 light_pos = vec3_create(0, 70, 0);
-    point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
+    t_vec3 light_pos = vec3_create( 40, 0, 70);
+   point_to_light_vec = get_point_to_light_vector(light_pos, ray, distance);
 
     // halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, vec3_scalar_mult(ray.direction, -1)));
     halfway_vec = vec3_normalize(vec3_add(point_to_light_vec, ray.direction));
@@ -146,9 +149,9 @@ static int add_colors(int diffuse_color, int specular_color)
 	specular_trgb = get_trgb_from_color(specular_color);
 
     trgb[0] = 1;
-    trgb[1] = fmin(diffuse_trgb[1] * 0.5 + specular_trgb[1] * 0.5 + 0.4 * 255, 255);
-    trgb[2] = fmin(diffuse_trgb[2] * 0.5 + specular_trgb[2] * 0.5 + 0.4 * 0, 255);
-    trgb[3] = fmin(diffuse_trgb[3] * 0.5 + specular_trgb[3] * 0.5 + 0.4 * 0, 255); 
+    trgb[1] = fmin(diffuse_trgb[1] * 0.5 + specular_trgb[1] * 0.5 + 0.3 * 255, 255);
+    trgb[2] = fmin(diffuse_trgb[2] * 0.5 + specular_trgb[2] * 0.5 + 0.3 * 0, 255);
+    trgb[3] = fmin(diffuse_trgb[3] * 0.5 + specular_trgb[3] * 0.5 + 0.3 * 0, 255); 
     free(diffuse_trgb);
     free(specular_trgb);
     return get_color_from_trgb(trgb[0], trgb[1], trgb[2], trgb[3]);
@@ -208,11 +211,11 @@ int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float
                     distance = current_distance;
                 //apply diffuse light from camera
                 // int color= 255;
-				int	color = add_colors(get_diffuse_light_color(ray, current_distance, sphere_center), 
-                           get_specular_light_color(ray, current_distance, sphere_center));
+				// int	color = add_colors(get_diffuse_light_color(ray, current_distance, sphere_center), 
+                //            get_specular_light_color(ray, current_distance, sphere_center));
 
 				// int color = get_diffuse_light_color(ray, current_distance, sphere_center);
-				// int color = get_specular_light_color(ray, current_distance, sphere_center);
+				int color = get_specular_light_color(ray, current_distance, sphere_center);
                 // if (radius != 12.6 && is_in_shadow(get_sphere_hit_point(ray, current_distance)))
                 // my_mlx_pixel_put(scene, coord[0], coord[1], get_color_from_trgb(1, 20, 20, 10));
                 // else
