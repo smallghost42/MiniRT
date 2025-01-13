@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/13 07:56:45 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:00:14 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 # define INCLUDE_H
 
-// # define WIN_WIDTH 1366
+# define WIN_WIDTH 1366
 
-// # define WIN_HEIGHT 768
+# define WIN_HEIGHT 768
 
-# define WIN_WIDTH 1920
+// # define WIN_WIDTH 1920
 
-# define WIN_HEIGHT 1080
+// # define WIN_HEIGHT 1080
 
 # define PI 3.14162
 
@@ -28,7 +28,7 @@
 
 // # define EPSILON 0.000001
 
-#define EPSILON 1e-1
+#define EPSILON 1e-4
 
 # include "clib.h"
 
@@ -87,5 +87,13 @@ float   cylinder_ray_hit_distance(t_ray ray, t_cylinder* cylinder);
 
 //shadow
 int is_obj_shadowed(t_data* data, t_ray ray, t_hit_pt** hit_pt);
+
+//selecting
+void	select_object(int x, int y, t_scene *scene);
+t_ray	visibility_ray(t_data* data, int coord[2]);
+float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object);
+float	get_cylinder_distance(t_cylinder* cylinder, t_ray ray, t_shape** visible_object);
+float	get_plane_distance(t_plane* plane, t_ray ray, t_shape** visible_object);
+float	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape** visible_object);
 
 #endif
