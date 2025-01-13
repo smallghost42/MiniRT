@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 12:40:30 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 07:41:05 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:15:00 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ int	draw_some_plane(t_scene *scene)
 	plane_normal = vec3_normalize(vec3_create(0, -1,0));
 	render_plane(scene, camera_pos, plane_point, plane_normal);
 // 	// Test case 2: Vertical plane (like a wall)
-// camera_pos = vec3_create(0.0, 0.0, 50.0);
-// plane_point = vec3_create(0.0, 0.0, -20.0);
-// plane_normal = vec3_normalize(vec3_create(0.0, 0.0, 1.0));  // Normal pointing towards camera
-// 	render_plane(scene, camera_pos, plane_point, plane_normal);
+camera_pos = vec3_create(0.0, 0.0, 50.0);
+plane_point = vec3_create(0.0, 0.0, -20.0);
+plane_normal = vec3_normalize(vec3_create(0.0, 0.0, 1.0));  // Normal pointing towards camera
+	render_plane(scene, camera_pos, plane_point, plane_normal);
 
 
 

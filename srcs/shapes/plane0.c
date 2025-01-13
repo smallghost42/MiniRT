@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:29:59 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 06:10:46 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:13:15 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static int get_specular_light_color(t_ray ray, float distance, t_vec3 normal_vec
     tmp = vec3_dot_product(normal_vec, halfway_vec);
     spec_brightness = powf(fmax(tmp, 0.2), shininess);
 
-    //suppose light reflexision is white nigga
     int surface_trgb[4] = {1, 255, 255, 255};
     trgb[0] = 1;
     trgb[1] = fmin(roundf(surface_trgb[1] * spec_brightness), 255);
@@ -121,10 +120,10 @@ int render_plane(t_scene *scene, t_vec3 camera_pos, t_vec3 plane_point, t_vec3 p
                 if (distance > current_distance)
                     distance = current_distance;
 				// int color = get_color_from_trgb(1, 0, 255, 255);
-				int	color = add_colors(get_diffuse_light_color(ray, current_distance, plane_normal), 
-                           get_specular_light_color(ray, current_distance, plane_normal));
+				// int	color = add_colors(get_diffuse_light_color(ray, current_distance, plane_normal), 
+                //            get_specular_light_color(ray, current_distance, plane_normal));
 
-				// int color = get_diffuse_light_color(ray, current_distance, plane_normal);
+				int color = get_diffuse_light_color(ray, current_distance, plane_normal);
 				// int color = get_specular_light_color(ray, current_distance, plane_normal);
 
                 my_mlx_pixel_put(scene, coord[0], coord[1], color);

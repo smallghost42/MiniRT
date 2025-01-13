@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 09:13:48 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 14:12:13 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:57:56 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ int sphere_shadow(t_sphere* spheres, t_ray ray, float distance, t_shape* shape)
 int cylinder_shadow(t_cylinder* cylinders, t_ray ray, float distance, t_shape* shape)
 {
     float d;
-    float radius;
-    t_vec3 center;
     t_cylinder* cylinder_next;
 
     while (cylinders)
@@ -48,11 +46,11 @@ int cylinder_shadow(t_cylinder* cylinders, t_ray ray, float distance, t_shape* s
         	cylinders = cylinders->next;
 		if (cylinders == NULL)
 			break;
-        center = cylinders->center;
-        radius = cylinders->diameter / 2.0;
         d = cylinder_ray_hit_distance(ray, cylinders);
         if (d > EPSILON && d < distance)
+        {
             return (1);
+        }
         cylinders = cylinders->next;
     }
     return (0);
@@ -67,12 +65,14 @@ int	obj_is_shadowed(t_data* data, t_ray ray, float distance, t_shape *s)
 
 	shape = data->shape;
 	shape_shadow[0] = 0;
-	shape_shadow[1] = 0;
-	shape_shadow[2] = 0;
+	shape_shadow[1] = sphere_shadow(shape->sphere, ray, distance, s);
+	shape_shadow[2] = cylinder_shadow(shape->cylinder, ray, distance, s);
 	shadow = shape_shadow[1];
+    if (shadow < shape_shadow[2])
+        shadow = shape_shadow[2];
 	// shadow = fmax(shadow, shape_shadow[1]);
 	// shadow = fmax(shadow, shape_shadow[2]);
-	return (sphere_shadow(shape->sphere, ray, distance, s));
+	return (shadow);
 }
 
 int is_obj_shadowed(t_data* data, t_ray ray, t_hit_pt** hit_pt)

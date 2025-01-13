@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 10:31:17 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 12:14:44 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,13 @@ static int	on_destroy(t_scene *scene)
 	exit(EXIT_SUCCESS);
 }
 
+int mouse_hook(int button, int x, int y, void *param) 
+{
+    (void)param;
+    printf("Mouse clicked: Button %d at (%d, %d)\n", button, x, y);
+    return (0);
+}
+
 static int	on_keydown(int keycode, t_scene *scene)
 {
 	if (keycode == XK_Escape)
@@ -63,6 +70,7 @@ static int	on_keydown(int keycode, t_scene *scene)
 
 void	run_hook_cycle(t_scene scene)
 {
+	mlx_mouse_hook(scene.win, mouse_hook, NULL); //add data to this params
 	mlx_hook(scene.win, 2, 1L << 0, on_keydown, &scene);
 	mlx_hook(scene.win, 17, 0L, on_destroy, &scene);
 	mlx_loop(scene.mlx);

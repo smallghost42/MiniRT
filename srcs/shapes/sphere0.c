@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/09 07:46:11 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 14:00:51 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 11:14:31 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,11 +211,11 @@ int render_sphere(t_scene *scene, t_vec3 camera_pos, t_vec3 sphere_center, float
                     distance = current_distance;
                 //apply diffuse light from camera
                 // int color= 255;
-				int	color = add_colors(get_diffuse_light_color(ray, current_distance, sphere_center), 
-                           get_specular_light_color(ray, current_distance, sphere_center));
+				// int	color = add_colors(get_diffuse_light_color(ray, current_distance, sphere_center), 
+                //            get_specular_light_color(ray, current_distance, sphere_center));
 
 				// int color = get_diffuse_light_color(ray, current_distance, sphere_center);
-				// int color = get_specular_light_color(ray, current_distance, sphere_center);
+				int color = get_specular_light_color(ray, current_distance, sphere_center);
                 // if (radius != 12.6 && is_in_shadow(get_sphere_hit_point(ray, current_distance)))
                 // my_mlx_pixel_put(scene, coord[0], coord[1], get_color_from_trgb(1, 20, 20, 10));
                 // else

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:42:11 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/12 14:35:31 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 10:47:33 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ float   quadratic_solution(float params[5], t_vec3 vec[3], t_ray ray, float h)
     //     if (distance < 0 || x[1] < distance)
     //         distance = x[1];
     // }
-    if (x[1] > 0 && m[1] >= -h &&  m[1] <= h)
+   else if (x[1] > 0 && m[1] >= -h &&  m[1] <= h)
     {
         if (distance < 0 || x[1] < distance)
             distance = x[1];
