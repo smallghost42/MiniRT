@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 10:37:07 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 10:04:05 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:24:16 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	select_object(int x, int y, t_scene *scene)
 	int g = rand()*255;
 	int color = get_color_from_trgb(1,r, g, b);  
 	if ((*hit_pt)->shape->cylinder)
-		(*hit_pt)->shape->cylinder->color = color;
+		(*hit_pt)->shape->cylinder->color = 412;
 	else if ((*hit_pt)->shape->sphere)
 		(*hit_pt)->shape->sphere->color = color;
 	else if ((*hit_pt)->shape->plane)

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 08:44:35 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/13 12:37:43 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:47:40 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,9 @@ int get_shade_lighting(t_data *data, t_ray ray, t_hit_pt *hit_pt)
     int color = get_colorss(hit_pt);
     int *trgb = get_trgb_from_color(color);
     trgb[0] = 1;
-    trgb[1] = fmin(255 * shade_coef + trgb[1] * bright_coef, 255);
-    trgb[2] = fmin(255 * shade_coef + trgb[2] * bright_coef, 255);
-    trgb[3] = fmin(255 * shade_coef + trgb[3] * bright_coef, 255);
+    trgb[1] = fmin(255 * shade_coef + trgb[1] * bright_coef + trgb[1] * 0.2, 255);
+    trgb[2] = fmin(255 * shade_coef + trgb[2] * bright_coef + trgb[1] * 0.2, 255);
+    trgb[3] = fmin(255 * shade_coef + trgb[3] * bright_coef + trgb[1] * 0.2, 255);
     color = get_color_from_trgb(1, trgb[1], trgb[2], trgb[3]);
     free(trgb);
     return (color);

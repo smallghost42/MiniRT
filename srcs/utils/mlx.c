@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 09:54:16 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:39:54 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ void	reset_img(t_scene *scene)
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img, 0, 0);
 }
 
+int	update_rendu(t_scene *scene, t_vec3 (*f)(t_vec3))
+{
+	// if (!(*hit_pt))
+	// 	return (1);
+	// else if ((*hit_pt)->shape->plane)
+	// 	return (0);
+	// reset_img(scene);
+}
+
 static int	on_destroy(t_scene *scene)
 {
 	print_data(scene->data);
@@ -77,12 +86,20 @@ static int	on_keydown(int keycode, t_scene *scene)
 {
 	if (keycode == XK_Escape)
 		on_destroy(scene);
+	// else if (keycode == XK_Left)
+	// else if (keycode == XK_Right)
+		// update_rendu(hit_pt, translate_x);
+	// else if (keycode == XK_Up)
+	// else if (keycode == XK_Down)
+	// else if (keycode == XK_plus)
+	// else if (keycode == XK_minus)
+	// print_data(scene->data);
 	return (0);
 }
 
 void	run_hook_cycle(t_scene scene)
 {
-	mlx_mouse_hook(scene.win, mouse_hook, &scene); //add data to this params
+	mlx_mouse_hook(scene.win, mouse_hook, &scene);
 	mlx_hook(scene.win, 2, 1L << 0, on_keydown, &scene);
 	mlx_hook(scene.win, 17, 0L, on_destroy, &scene);
 	mlx_loop(scene.mlx);

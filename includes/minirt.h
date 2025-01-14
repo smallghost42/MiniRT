@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 10:40:46 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 13:45:53 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,14 @@ float	get_object_distance(t_data* data, t_ray ray, t_shape** visible_object);
 float	get_cylinder_distance(t_cylinder* cylinder, t_ray ray, t_shape** visible_object);
 float	get_plane_distance(t_plane* plane, t_ray ray, t_shape** visible_object);
 float	get_sphere_distance(t_sphere* sphere, t_ray ray, t_shape** visible_object);
+
+//transformation
+float   to_rad_angle(float angle);
+t_vec3  rotate_x(t_vec3 u);
+t_vec3  rotate_y(t_vec3 u);
+t_vec3  rotate_z(t_vec3 u);
+t_vec3  translate_x(t_vec3 u);
+t_vec3  translate_y(t_vec3 u);
+t_vec3  translate_z(t_vec3 u);
 
 #endif
