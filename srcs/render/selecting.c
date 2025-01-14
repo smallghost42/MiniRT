@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 10:37:07 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 14:24:16 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:40:00 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,28 @@ void	select_object(int x, int y, t_scene *scene)
 	int r = rand()*255;  
 	int b = rand()*255;  
 	int g = rand()*255;
-	int color = get_color_from_trgb(1,r, g, b);  
-	if ((*hit_pt)->shape->cylinder)
-		(*hit_pt)->shape->cylinder->color = 412;
-	else if ((*hit_pt)->shape->sphere)
+	int color = get_color_from_trgb(1,r, g, b);
+	if ((*hit_pt)->shape->sphere)
+	{
 		(*hit_pt)->shape->sphere->color = color;
+		scene->selected_obj->sphere = (*hit_pt)->shape->sphere;
+		scene->selected_obj->cylinder = NULL;
+		scene->selected_obj->plane = NULL;
+	}
+	else if ((*hit_pt)->shape->cylinder)
+	{
+		(*hit_pt)->shape->cylinder->color = color;
+		scene->selected_obj->cylinder = (*hit_pt)->shape->cylinder;
+		scene->selected_obj->sphere = NULL;
+		scene->selected_obj->plane = NULL;
+	}
 	else if ((*hit_pt)->shape->plane)
+	{
 		(*hit_pt)->shape->plane->color = color;
+		scene->selected_obj->plane = (*hit_pt)->shape->plane;
+		scene->selected_obj->sphere = NULL;
+		scene->selected_obj->cylinder = NULL;
+	}
 }
 
 // void	update_data(t_data **data, t_hit_pt **hit_pt)

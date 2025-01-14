@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 07:40:16 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 14:36:08 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:58:00 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,19 +217,6 @@ t_ray	visibility_ray(t_data* data, int coord[2])
 	img_coord[1] = get_y_projected(coord[1], camera->field_view);
 	ray = ray_create(camera->position, get_ray_direction(img_coord));
 	return (ray);
-}
-
-t_shape*	init_visible_obj()
-{
-	t_shape*	visible_object;
-
-	visible_object = malloc(sizeof(t_shape));
-	if (!visible_object)
-		return (NULL);
-	visible_object->plane = NULL;
-	visible_object->sphere = NULL;
-	visible_object->cylinder = NULL;
-	return (visible_object);
 }
 
 int render_scene(t_scene *scene)

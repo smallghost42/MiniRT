@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 14:39:54 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:34:13 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,27 @@ void	reset_img(t_scene *scene)
 
 int	update_rendu(t_scene *scene, t_vec3 (*f)(t_vec3))
 {
-	// if (!(*hit_pt))
-	// 	return (1);
-	// else if ((*hit_pt)->shape->plane)
-	// 	return (0);
-	// reset_img(scene);
+	if (!scene->selected_obj)
+		return (1);
+	if (scene->selected_obj->sphere)
+		scene->selected_obj->sphere->center = f(scene->selected_obj->sphere->center);
+	else if (scene->selected_obj->cylinder)
+		scene->selected_obj->cylinder->center = f(scene->selected_obj->cylinder->center);
+	// else if (scene->selected_obj->plane)
+	// 	scene->selected_obj->plane->color = 255;
+	reset_img(scene);
 }
 
 static int	on_destroy(t_scene *scene)
 {
-	print_data(scene->data);
+	free_hit_pt(scene->hit_pt);
+	free(scene->selected_obj);
 	free_scene_data(scene->data);
 	// free(scene->data);
 	mlx_destroy_image(scene->mlx, scene->img);
 	mlx_destroy_window(scene->mlx, scene->win);
 	mlx_destroy_display(scene->mlx);
 	free(scene->mlx);
-	free_hit_pt(scene->hit_pt);
 	exit(EXIT_SUCCESS);
 }
 
@@ -87,12 +91,47 @@ static int	on_keydown(int keycode, t_scene *scene)
 	if (keycode == XK_Escape)
 		on_destroy(scene);
 	// else if (keycode == XK_Left)
-	// else if (keycode == XK_Right)
-		// update_rendu(hit_pt, translate_x);
+	// {
+	// 	if (scene->selected_obj->sphere)
+	// 		scene->selected_obj->sphere->color = 255;
+	// 	else if (scene->selected_obj->cylinder)
+	// 		scene->selected_obj->cylinder->color = 255;
+	// 	else if (scene->selected_obj->plane)
+	// 		scene->selected_obj->plane->color = 255;
+	// 	reset_img(scene);
+	// }
+	else if (keycode == XK_Right)
+		update_rendu(scene, translate_x);
 	// else if (keycode == XK_Up)
-	// else if (keycode == XK_Down)
-	// else if (keycode == XK_plus)
+	else if (keycode == XK_Down)
+		update_rendu(scene, translate_y);
+	else if (keycode == XK_plus)
+		update_rendu(scene, translate_z);
 	// else if (keycode == XK_minus)
+	else if (keycode == XK_x)
+	{
+		if (scene->selected_obj->cylinder)
+		{
+		scene->selected_obj->cylinder->orientation = rotate_x(scene->selected_obj->cylinder->orientation);
+		reset_img(scene);
+		}
+	}
+	else if (keycode == XK_y)
+	{
+		if (scene->selected_obj->cylinder)
+		{
+		scene->selected_obj->cylinder->orientation = rotate_y(scene->selected_obj->cylinder->orientation);
+		reset_img(scene);
+		}
+	}
+	else if (keycode == XK_z)
+	{
+		if (scene->selected_obj->cylinder)
+		{
+		scene->selected_obj->cylinder->orientation = rotate_z(scene->selected_obj->cylinder->orientation);
+		reset_img(scene);
+		}
+	}
 	// print_data(scene->data);
 	return (0);
 }

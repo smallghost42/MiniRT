@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 13:45:53 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:26:42 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 # define INCLUDE_H
 
-// # define WIN_WIDTH 1366
+# define WIN_WIDTH 1366
 
-// # define WIN_HEIGHT 768
+# define WIN_HEIGHT 768
 
-# define WIN_WIDTH 1920
+// # define WIN_WIDTH 1920
 
-# define WIN_HEIGHT 1080
+// # define WIN_HEIGHT 1080
 
 # define PI 3.14162
 
@@ -32,7 +32,7 @@
 
 #define THETA 10
 
-#define DELTA 10
+#define DELTA 1
 
 # include "clib.h"
 
@@ -68,6 +68,7 @@ typedef struct s_scene
 	int			line_length;
 	int			endian;
 	t_data		*data;
+	t_shape		*selected_obj;
 	t_hit_pt	*hit_pt;
 }	t_scene;
 
