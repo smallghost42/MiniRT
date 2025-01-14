@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 10:37:07 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 09:46:42 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 10:04:05 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,16 @@ void	select_object(int x, int y, t_scene *scene)
 		print_sphere((*hit_pt)->shape->sphere);
 	if ((*hit_pt)->shape->cylinder)
 		print_cylinder((*hit_pt)->shape->cylinder);
+	int r = rand()*255;  
+	int b = rand()*255;  
+	int g = rand()*255;
+	int color = get_color_from_trgb(1,r, g, b);  
 	if ((*hit_pt)->shape->cylinder)
-		(*hit_pt)->shape->cylinder->color = 255;
+		(*hit_pt)->shape->cylinder->color = color;
 	else if ((*hit_pt)->shape->sphere)
-		(*hit_pt)->shape->sphere->color = 255;
+		(*hit_pt)->shape->sphere->color = color;
 	else if ((*hit_pt)->shape->plane)
-		(*hit_pt)->shape->plane->color = 255;
+		(*hit_pt)->shape->plane->color = color;
 }
 
 // void	update_data(t_data **data, t_hit_pt **hit_pt)

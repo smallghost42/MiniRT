@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:49:52 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/13 12:28:07 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 10:02:30 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	main(int argc, char **argv)
 {
 	t_scene	scene;
 
+	srand(time(NULL));   // dudejjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 	add_data(argc, argv, &scene);
 	// print_data(scene.data);
 	// mute_arg(argc, argv);

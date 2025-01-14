@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 08:52:37 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 10:40:46 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@
 
 #define EPSILON 1e-4
 
+#define THETA 10
+
+#define DELTA 10
+
 # include "clib.h"
 
 # include "vector.h"
@@ -41,6 +45,8 @@
 # include "parser.h"
 
 #include "test.h" //////////////////////to delete
+
+#include <time.h> //gykjhfgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
 
 typedef struct s_hit_pt
 {
