@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/13 16:01:32 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 09:54:16 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,18 @@ void	my_mlx_pixel_put(t_scene *scene, float x, float y, int color)
 	}
 }
 
+void	reset_img(t_scene *scene)
+{
+	mlx_destroy_image(scene->mlx, scene->img);
+	scene->img = mlx_new_image(scene->mlx, WIN_WIDTH, WIN_HEIGHT);
+	scene->addr = mlx_get_data_addr(scene->img, &(scene->bpp), &(scene->line_length), &(scene->endian));
+	render_scene(scene);//transformation and display
+	mlx_put_image_to_window(scene->mlx, scene->win, scene->img, 0, 0);
+}
+
 static int	on_destroy(t_scene *scene)
 {
+	print_data(scene->data);
 	free_scene_data(scene->data);
 	// free(scene->data);
 	mlx_destroy_image(scene->mlx, scene->img);
@@ -59,6 +69,7 @@ int mouse_hook(int button, int x, int y, void *param)
     // (void)param;
     // printf("Mouse clicked: Button %d at (%d, %d)\n", button, x, y);
 	select_object(x, y, (t_scene *)param);
+	reset_img((t_scene *)param);
     return (0);
 }
 
