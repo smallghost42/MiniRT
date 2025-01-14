@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 15:34:13 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 16:06:00 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ void	reset_img(t_scene *scene)
 	mlx_put_image_to_window(scene->mlx, scene->win, scene->img, 0, 0);
 }
 
-int	update_rendu(t_scene *scene, t_vec3 (*f)(t_vec3))
+int	update_rendu(t_scene *scene, t_vec3 (*f)(t_vec3, float), float param)
 {
 	if (!scene->selected_obj)
 		return (1);
 	if (scene->selected_obj->sphere)
-		scene->selected_obj->sphere->center = f(scene->selected_obj->sphere->center);
+		scene->selected_obj->sphere->center = f(scene->selected_obj->sphere->center, param);
 	else if (scene->selected_obj->cylinder)
-		scene->selected_obj->cylinder->center = f(scene->selected_obj->cylinder->center);
+		scene->selected_obj->cylinder->center = f(scene->selected_obj->cylinder->center, param);
 	// else if (scene->selected_obj->plane)
 	// 	scene->selected_obj->plane->color = 255;
 	reset_img(scene);
@@ -90,29 +90,23 @@ static int	on_keydown(int keycode, t_scene *scene)
 {
 	if (keycode == XK_Escape)
 		on_destroy(scene);
-	// else if (keycode == XK_Left)
-	// {
-	// 	if (scene->selected_obj->sphere)
-	// 		scene->selected_obj->sphere->color = 255;
-	// 	else if (scene->selected_obj->cylinder)
-	// 		scene->selected_obj->cylinder->color = 255;
-	// 	else if (scene->selected_obj->plane)
-	// 		scene->selected_obj->plane->color = 255;
-	// 	reset_img(scene);
-	// }
+	else if (keycode == XK_Left)
+		update_rendu(scene, translate_x, -DELTA);
 	else if (keycode == XK_Right)
-		update_rendu(scene, translate_x);
-	// else if (keycode == XK_Up)
+		update_rendu(scene, translate_x, DELTA);
+	else if (keycode == XK_Up)
+		update_rendu(scene, translate_y, -DELTA);
 	else if (keycode == XK_Down)
-		update_rendu(scene, translate_y);
+		update_rendu(scene, translate_y, DELTA);
 	else if (keycode == XK_plus)
-		update_rendu(scene, translate_z);
-	// else if (keycode == XK_minus)
+		update_rendu(scene, translate_z, DELTA);
+	else if (keycode == XK_minus)
+		update_rendu(scene, translate_z, -DELTA);
 	else if (keycode == XK_x)
 	{
 		if (scene->selected_obj->cylinder)
 		{
-		scene->selected_obj->cylinder->orientation = rotate_x(scene->selected_obj->cylinder->orientation);
+		scene->selected_obj->cylinder->orientation = rotate_x(scene->selected_obj->cylinder->orientation, THETA);
 		reset_img(scene);
 		}
 	}
@@ -120,7 +114,7 @@ static int	on_keydown(int keycode, t_scene *scene)
 	{
 		if (scene->selected_obj->cylinder)
 		{
-		scene->selected_obj->cylinder->orientation = rotate_y(scene->selected_obj->cylinder->orientation);
+		scene->selected_obj->cylinder->orientation = rotate_y(scene->selected_obj->cylinder->orientation, THETA);
 		reset_img(scene);
 		}
 	}
@@ -128,7 +122,7 @@ static int	on_keydown(int keycode, t_scene *scene)
 	{
 		if (scene->selected_obj->cylinder)
 		{
-		scene->selected_obj->cylinder->orientation = rotate_z(scene->selected_obj->cylinder->orientation);
+		scene->selected_obj->cylinder->orientation = rotate_z(scene->selected_obj->cylinder->orientation, THETA);
 		reset_img(scene);
 		}
 	}
