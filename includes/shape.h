@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 11:17:27 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 09:16:15 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:58:47 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,8 @@ typedef struct s_shape
 } t_shape;
 
 void    print_shape(t_shape *shape);
+void    print_plane(t_plane *plane);
+void    print_cylinder(t_cylinder *cylinder);
+void    print_sphere(t_sphere *sphere);
 
 #endif

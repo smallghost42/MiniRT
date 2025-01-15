@@ -6,18 +6,13 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:31:05 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 08:48:12 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/15 12:06:57 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ray.h"
 #include "minirt.h"
 
-/*
-    - No transformation is yet applied to these calcul (no FOV transformation, projection, center translation)
-*/
-
-//change origin and direction to
 t_ray   *ray_allocate(t_vec3 origin, t_vec3 direction)
 {
     t_ray   *ray;
@@ -66,6 +61,26 @@ t_vec3  get_ray_direction(float coord[2])
             vec3_scalar_mult(camera_up, -coord[1])
         ),
         camera_orientation
+    );
+    return (vec3_normalize(ray_direction));
+}
+
+t_vec3  get_ray_direction0(float coord[2], t_camera *camera)
+{
+    t_vec3  ray_direction;
+    t_vec3  camera_right;
+    t_vec3  camera_up;
+
+    // ray_direction = vec3_create(coord[0], coord[1], -1);
+    camera->orientation = vec3_normalize(camera->orientation);
+    camera_right = vec3_normalize(vec3_cross_product(vec3_create(0, 1, 0), camera->orientation));
+    camera_up = vec3_normalize(vec3_cross_product(camera->orientation, camera_right));
+    ray_direction = vec3_add(
+        vec3_add(
+            vec3_scalar_mult(camera_right, -coord[0]),
+            vec3_scalar_mult(camera_up, -coord[1])
+        ),
+        camera->orientation
     );
     return (vec3_normalize(ray_direction));
 }

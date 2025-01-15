@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:49:52 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/13 11:14:47 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:41:00 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	init_mlx(t_scene *scene)
 	int	*_line_length;
 	int	*_endian;
 
-	// scene->data = NULL; //////////////////
 	scene->mlx = mlx_init();
 	if (!scene->mlx)
 		return (1);
@@ -31,6 +30,19 @@ int	init_mlx(t_scene *scene)
 	return (0);
 }
 
+t_shape*	init_selected_obj()
+{
+	t_shape*	shape;
+
+	shape = malloc(sizeof(t_shape));
+	if (!shape)
+		return (NULL);
+	shape->cylinder = NULL;
+	shape->sphere = NULL;
+	shape->plane = NULL;
+	return (shape);
+}
+
 t_hit_pt*	init_hit_pt()
 {
 	t_hit_pt*	hit_pt;
@@ -39,13 +51,8 @@ t_hit_pt*	init_hit_pt()
 	if (!hit_pt)
 		return (NULL);
 	hit_pt->distance = -1;
-	hit_pt->shape = malloc(sizeof(t_shape));
-	if (!hit_pt->shape)
-	{
-		free(hit_pt);
-		return (NULL);
-	}
-	hit_pt->type = 0;
+	hit_pt->shape = init_selected_obj();
+	hit_pt->type = -1;
 	hit_pt->pt = vec3_create(0, 0, 0);
 	hit_pt->normal_vec = vec3_create(0, 0, 0);
 	return (hit_pt);
@@ -73,26 +80,26 @@ int	add_data(int argc, char **argv, t_scene *scene)
 		exit(EXIT_FAILURE);
 	}
 	scene->data = data;
+	scene->select_camera = 1;
 	scene->hit_pt = init_hit_pt();
+	scene->selected_obj = init_selected_obj();
 	return (0);
 }
-
-
-
 
 int	main(int argc, char **argv)
 {
 	t_scene	scene;
 
+	srand(time(NULL));   // dudejjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
 	add_data(argc, argv, &scene);
 	// print_data(scene.data);
 	// mute_arg(argc, argv);
 	init_mlx(&scene);
 	// print_direction();
-	draw_some_plane(&scene);
+	// draw_some_plane(&scene);
 	// draw_some_cylinder(&scene);
-	draw_some_sphere(&scene);
-	// render_scene(&scene);
+	// draw_some_sphere(&scene);
+	render_scene(&scene);
     // Free memory
 	mlx_put_image_to_window(scene.mlx, scene.win, scene.img, 0, 0);
 	run_hook_cycle(scene);

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/09 09:13:48 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/13 10:57:56 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/14 14:39:14 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int sphere_shadow(t_sphere* spheres, t_ray ray, float distance, t_shape* shape)
 			break;
         center = spheres->center;
         radius = spheres->diameter / 2.0;
-        d = sphere_sray_hit_distance(ray, center, radius);
+        d = sphere_ray_hit_distance(ray, center, radius);
         if (d > EPSILON && d < distance)
             return (1);
         spheres = spheres->next;
@@ -72,6 +72,7 @@ int	obj_is_shadowed(t_data* data, t_ray ray, float distance, t_shape *s)
         shadow = shape_shadow[2];
 	// shadow = fmax(shadow, shape_shadow[1]);
 	// shadow = fmax(shadow, shape_shadow[2]);
+    // shadow = 0;
 	return (shadow);
 }
 
