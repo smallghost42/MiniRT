@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/15 10:41:42 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/15 12:08:17 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ t_vec3  ray_intersection_pt(t_ray ray, float distance);
 t_vec3  pt_to_lightvec(t_light  *light, t_ray ray, t_hit_pt *hit_pt);
 t_vec3  sp_pt_to_lightvec(t_vec3 light_pos, t_ray ray, float distance);
 int		get_shade_lighting(t_data *data, t_ray ray, t_hit_pt *hit_pt);
+t_vec3  get_ray_direction0(float coord[2], t_camera *camera);
+
 
 //sphere
 float   sphere_ray_hit_distance(t_ray ray, t_vec3 center, float radius);
