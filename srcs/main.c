@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 20:49:52 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 15:04:35 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:41:00 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int	init_mlx(t_scene *scene)
 	int	*_line_length;
 	int	*_endian;
 
-	// scene->data = NULL; //////////////////
 	scene->mlx = mlx_init();
 	if (!scene->mlx)
 		return (1);
@@ -81,6 +80,7 @@ int	add_data(int argc, char **argv, t_scene *scene)
 		exit(EXIT_FAILURE);
 	}
 	scene->data = data;
+	scene->select_camera = 1;
 	scene->hit_pt = init_hit_pt();
 	scene->selected_obj = init_selected_obj();
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 10:37:07 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 15:40:00 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:39:05 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	select_object(int x, int y, t_scene *scene)
 		scene->selected_obj->sphere = (*hit_pt)->shape->sphere;
 		scene->selected_obj->cylinder = NULL;
 		scene->selected_obj->plane = NULL;
+		scene->select_camera = 0;
 	}
 	else if ((*hit_pt)->shape->cylinder)
 	{
@@ -49,6 +50,7 @@ void	select_object(int x, int y, t_scene *scene)
 		scene->selected_obj->cylinder = (*hit_pt)->shape->cylinder;
 		scene->selected_obj->sphere = NULL;
 		scene->selected_obj->plane = NULL;
+		scene->select_camera = 0;
 	}
 	else if ((*hit_pt)->shape->plane)
 	{
@@ -56,16 +58,7 @@ void	select_object(int x, int y, t_scene *scene)
 		scene->selected_obj->plane = (*hit_pt)->shape->plane;
 		scene->selected_obj->sphere = NULL;
 		scene->selected_obj->cylinder = NULL;
+		scene->select_camera = 0;
 	}
 }
 
-// void	update_data(t_data **data, t_hit_pt **hit_pt)
-// {
-// 	t_camera*	camera;
-// 	t_shape*	shape;
-
-// 	shape = (*hit_pt)->shape;
-// 	camera = (*data)->camera;
-// 	if (!shape)
-// 		return ;
-// }

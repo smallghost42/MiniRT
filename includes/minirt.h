@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 22:48:54 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 16:02:54 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:41:42 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_scene
 	int			bpp;
 	int			line_length;
 	int			endian;
+	int			select_camera;
 	t_data		*data;
 	t_shape		*selected_obj;
 	t_hit_pt	*hit_pt;

@@ -6,7 +6,7 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 14:45:47 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/14 16:06:00 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/15 11:02:48 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,28 @@ int	update_rendu(t_scene *scene, t_vec3 (*f)(t_vec3, float), float param)
 	reset_img(scene);
 }
 
+int	translate_camera(t_scene *scene, t_vec3 (*f)(t_vec3, float), float param)
+{
+	if (scene->selected_obj->cylinder && scene->selected_obj->plane && scene->selected_obj->sphere)
+		return (1);
+	scene->data->camera->position = f(scene->data->camera->position, param);
+	// else if (scene->selected_obj->plane)
+	// 	scene->selected_obj->plane->color = 255;
+	reset_img(scene);
+	return (0);
+}
+
+int	rotate_camera(t_scene *scene, t_vec3 (*f)(t_vec3, float), float param)
+{
+	if (scene->selected_obj->cylinder && scene->selected_obj->plane && scene->selected_obj->sphere)
+		return (1);
+	scene->data->camera->orientation = f(scene->data->camera->orientation, param);
+	// else if (scene->selected_obj->plane)
+	// 	scene->selected_obj->plane->color = 255;
+	reset_img(scene);
+	return (0);
+}
+
 static int	on_destroy(t_scene *scene)
 {
 	free_hit_pt(scene->hit_pt);
@@ -90,20 +112,53 @@ static int	on_keydown(int keycode, t_scene *scene)
 {
 	if (keycode == XK_Escape)
 		on_destroy(scene);
+	else if (keycode == XK_c)
+	{
+		scene->selected_obj->cylinder = NULL;
+		scene->selected_obj->sphere = NULL;
+		scene->selected_obj->plane = NULL;
+		scene->select_camera = 1;
+	}
 	else if (keycode == XK_Left)
+	{
+		if (scene->select_camera)
+		translate_camera(scene, translate_x, -DELTA);
 		update_rendu(scene, translate_x, -DELTA);
+	}
 	else if (keycode == XK_Right)
+	{
+		if (scene->select_camera)
+		translate_camera(scene, translate_x, DELTA);
 		update_rendu(scene, translate_x, DELTA);
+	}
 	else if (keycode == XK_Up)
+	{
+		if (scene->select_camera)
+		translate_camera(scene, translate_y, -DELTA);
 		update_rendu(scene, translate_y, -DELTA);
+	}
 	else if (keycode == XK_Down)
+	{
+		if (scene->select_camera)
+		translate_camera(scene, translate_y, DELTA);
 		update_rendu(scene, translate_y, DELTA);
-	else if (keycode == XK_plus)
+	}
+	else if (keycode == 65451)
+	{
+		if (scene->select_camera)
+		translate_camera(scene, translate_z, DELTA);
 		update_rendu(scene, translate_z, DELTA);
-	else if (keycode == XK_minus)
+	}
+	else if (keycode == 65453)
+	{
+		if (scene->select_camera)
+		translate_camera(scene, translate_z, -DELTA);
 		update_rendu(scene, translate_z, -DELTA);
+	}
 	else if (keycode == XK_x)
 	{
+		if (scene->select_camera)
+		rotate_camera(scene, rotate_x, THETA);
 		if (scene->selected_obj->cylinder)
 		{
 		scene->selected_obj->cylinder->orientation = rotate_x(scene->selected_obj->cylinder->orientation, THETA);
@@ -112,6 +167,8 @@ static int	on_keydown(int keycode, t_scene *scene)
 	}
 	else if (keycode == XK_y)
 	{
+		if (scene->select_camera)
+		rotate_camera(scene, rotate_y, THETA);
 		if (scene->selected_obj->cylinder)
 		{
 		scene->selected_obj->cylinder->orientation = rotate_y(scene->selected_obj->cylinder->orientation, THETA);
@@ -120,6 +177,8 @@ static int	on_keydown(int keycode, t_scene *scene)
 	}
 	else if (keycode == XK_z)
 	{
+		if (scene->select_camera)
+		rotate_camera(scene, rotate_z, THETA);
 		if (scene->selected_obj->cylinder)
 		{
 		scene->selected_obj->cylinder->orientation = rotate_z(scene->selected_obj->cylinder->orientation, THETA);

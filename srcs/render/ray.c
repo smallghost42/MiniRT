@@ -6,18 +6,13 @@
 /*   By: trazanad <trazanad@student.42antananari    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 08:31:05 by trazanad          #+#    #+#             */
-/*   Updated: 2025/01/11 08:48:12 by trazanad         ###   ########.fr       */
+/*   Updated: 2025/01/15 10:59:22 by trazanad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ray.h"
 #include "minirt.h"
 
-/*
-    - No transformation is yet applied to these calcul (no FOV transformation, projection, center translation)
-*/
-
-//change origin and direction to
 t_ray   *ray_allocate(t_vec3 origin, t_vec3 direction)
 {
     t_ray   *ray;
